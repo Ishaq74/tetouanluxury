@@ -1,6 +1,8 @@
 
 // FRONTEND DATA LAYER
-import * as Seed from './database/seed';
+// Note: Seed data is now in src/db/seed.ts and managed by Drizzle ORM
+// The following constants are kept for backward compatibility with existing React components
+// import * as Seed from './database/seed';
 
 // --- UI CONSTANTS ---
 export const COLORS = {
@@ -485,6 +487,11 @@ export const TRANSLATIONS = {
   }
 };
 
+
+// Note: Mock data exports commented out - use database queries instead
+// In Astro, fetch data using API routes or direct database queries
+// Example: const villas = await db.select().from(villas);
+/*
 export const VILLAS = Seed.VILLAS;
 export const MOCK_BOOKINGS = Seed.MOCK_BOOKINGS;
 export const MOCK_CLIENTS = Seed.MOCK_CLIENTS;
@@ -510,6 +517,7 @@ export const MOCK_SERVICE_REQUESTS = Seed.MOCK_SERVICE_REQUESTS;
 export const MOCK_MARKETING_CAMPAIGNS = Seed.MOCK_MARKETING_CAMPAIGNS;
 
 export const MOCK_CATEGORIES = Seed.MOCK_CATEGORIES;
+*/
 
 // Mock Page Settings
 export const MOCK_INDEX_SETTINGS = [
