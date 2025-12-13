@@ -1,0 +1,104 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+
+const lang = 'en';
+
+const activities = [
+  {
+    id: 1,
+    name: "Medina Walking Tour",
+    category: "activities",
+    description: "Guided tour through the historic UNESCO World Heritage medina",
+    rating: 4.9,
+    priceRange: "$$",
+    image: "/images/placeholder-activity.jpg",
+    type: "Cultural Tour",
+    duration: "3 hours"
+  },
+  {
+    id: 2,
+    name: "Beach Horseback Riding",
+    category: "activities",
+    description: "Scenic horseback riding along the Mediterranean coast",
+    rating: 4.7,
+    priceRange: "$$",
+    image: "/images/placeholder-activity.jpg",
+    type: "Outdoor Adventure",
+    duration: "2 hours"
+  },
+  {
+    id: 3,
+    name: "Cooking Class",
+    category: "activities",
+    description: "Learn to prepare authentic Moroccan dishes with a local chef",
+    rating: 4.8,
+    priceRange: "$$$",
+    image: "/images/placeholder-activity.jpg",
+    type: "Culinary Experience",
+    duration: "4 hours"
+  }
+];
+---
+
+<MainLayout title="Activities in Tétouan - Local Guide" lang={lang}>
+  <div class="py-20">
+    <div class="container-custom">
+      <div class="mb-12">
+        <a href="/guide" class="text-primary hover:underline mb-4 inline-block">← Back to Guide</a>
+        <h1 class="text-5xl font-serif font-bold mb-6">Activities in Tétouan</h1>
+        <p class="text-lg text-gray-600 max-w-2xl">
+          Explore exciting experiences and adventures in Tétouan and its surroundings.
+        </p>
+      </div>
+
+      <div class="mb-8 flex gap-4 flex-wrap">
+        <input 
+          type="text" 
+          placeholder="Search activities..." 
+          class="px-4 py-2 border rounded-lg flex-1 min-w-[200px]"
+        />
+        <select class="px-4 py-2 border rounded-lg">
+          <option value="">All Types</option>
+          <option value="cultural">Cultural</option>
+          <option value="adventure">Adventure</option>
+          <option value="culinary">Culinary</option>
+        </select>
+        <select class="px-4 py-2 border rounded-lg">
+          <option value="">All Prices</option>
+          <option value="$">Budget ($)</option>
+          <option value="$$">Moderate ($$)</option>
+          <option value="$$$">Premium ($$$)</option>
+        </select>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {activities.map(activity => (
+          <a 
+            href={`/guide/activities/${activity.id}`}
+            class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <div class="aspect-video bg-gray-200">
+              <img 
+                src={activity.image} 
+                alt={activity.name}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-2xl font-serif font-bold">{activity.name}</h3>
+                <span class="text-primary font-semibold">{activity.priceRange}</span>
+              </div>
+              <p class="text-sm text-gray-500 mb-2">{activity.type} • {activity.duration}</p>
+              <p class="text-gray-600 mb-4">{activity.description}</p>
+              <div class="flex items-center gap-2">
+                <span class="text-yellow-500">★</span>
+                <span class="font-semibold">{activity.rating}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</MainLayout>

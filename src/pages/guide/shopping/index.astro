@@ -1,0 +1,103 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+
+const lang = 'en';
+
+const shops = [
+  {
+    id: 1,
+    name: "Artisan Souk",
+    category: "shopping",
+    description: "Traditional crafts, pottery, and textiles in the old medina",
+    rating: 4.7,
+    priceRange: "$$",
+    image: "/images/placeholder-shopping.jpg",
+    type: "Traditional Market",
+    location: "Old Medina"
+  },
+  {
+    id: 2,
+    name: "Modern Morocco Gallery",
+    category: "shopping",
+    description: "Contemporary Moroccan art and design pieces",
+    rating: 4.8,
+    priceRange: "$$$",
+    image: "/images/placeholder-shopping.jpg",
+    type: "Art Gallery",
+    location: "New Town"
+  },
+  {
+    id: 3,
+    name: "Spice Market",
+    category: "shopping",
+    description: "Aromatic spices, herbs, and traditional remedies",
+    rating: 4.9,
+    priceRange: "$",
+    image: "/images/placeholder-shopping.jpg",
+    type: "Market",
+    location: "Medina"
+  }
+];
+---
+
+<MainLayout title="Shopping in Tétouan - Local Guide" lang={lang}>
+  <div class="py-20">
+    <div class="container-custom">
+      <div class="mb-12">
+        <a href="/guide" class="text-primary hover:underline mb-4 inline-block">← Back to Guide</a>
+        <h1 class="text-5xl font-serif font-bold mb-6">Shopping in Tétouan</h1>
+        <p class="text-lg text-gray-600 max-w-2xl">
+          Find unique treasures in traditional markets, artisan workshops, and boutique stores.
+        </p>
+      </div>
+
+      <div class="mb-8 flex gap-4 flex-wrap">
+        <input 
+          type="text" 
+          placeholder="Search shops..." 
+          class="px-4 py-2 border rounded-lg flex-1 min-w-[200px]"
+        />
+        <select class="px-4 py-2 border rounded-lg">
+          <option value="">All Types</option>
+          <option value="market">Markets</option>
+          <option value="boutique">Boutiques</option>
+          <option value="gallery">Galleries</option>
+        </select>
+        <select class="px-4 py-2 border rounded-lg">
+          <option value="">All Locations</option>
+          <option value="medina">Medina</option>
+          <option value="new-town">New Town</option>
+        </select>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {shops.map(shop => (
+          <a 
+            href={`/guide/shopping/${shop.id}`}
+            class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <div class="aspect-video bg-gray-200">
+              <img 
+                src={shop.image} 
+                alt={shop.name}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-2xl font-serif font-bold">{shop.name}</h3>
+                <span class="text-primary font-semibold">{shop.priceRange}</span>
+              </div>
+              <p class="text-sm text-gray-500 mb-2">{shop.type} • {shop.location}</p>
+              <p class="text-gray-600 mb-4">{shop.description}</p>
+              <div class="flex items-center gap-2">
+                <span class="text-yellow-500">★</span>
+                <span class="font-semibold">{shop.rating}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</MainLayout>
