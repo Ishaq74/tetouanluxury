@@ -125,7 +125,7 @@ const services = [
           </div>
           <div class="bg-white rounded-lg shadow-lg p-6">
             <h3 class="text-gray-600 text-sm font-medium mb-2">Avg. Rating</h3>
-            <p class="text-3xl font-bold">{(services.reduce((sum, s) => sum + s.rating, 0) / services.length).toFixed(1)} ⭐</p>
+            <p class="text-3xl font-bold">{services.length > 0 ? (services.reduce((sum, s) => sum + s.rating, 0) / services.length).toFixed(1) : '0.0'} ⭐</p>
           </div>
           <div class="bg-white rounded-lg shadow-lg p-6">
             <h3 class="text-gray-600 text-sm font-medium mb-2">Revenue (Est.)</h3>

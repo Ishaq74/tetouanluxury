@@ -11,7 +11,10 @@ const inventory = [
   { id: 'INV-004', name: 'Coffee Capsules', category: 'KITCHEN', quantity: 200, minLevel: 100, unit: 'pcs', status: 'OK' },
   { id: 'INV-005', name: 'Dish Soap', category: 'KITCHEN', quantity: 12, minLevel: 15, unit: 'bottles', status: 'CRITICAL' },
   { id: 'INV-006', name: 'Toilet Paper', category: 'TOILETRIES', quantity: 80, minLevel: 50, unit: 'rolls', status: 'OK' },
-];
+].map(item => ({
+  ...item,
+  status: item.quantity < item.minLevel ? 'CRITICAL' : 'OK'
+}));
 ---
 
 <MainLayout title="Inventory Management - Admin" lang={lang}>
