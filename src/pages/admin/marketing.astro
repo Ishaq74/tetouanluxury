@@ -1,0 +1,237 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const lang = 'en';
+
+// Mock marketing campaigns data
+const campaigns = [
+  {
+    id: 'MC-001',
+    name: 'Summer 2024 Promotion',
+    type: 'EMAIL',
+    status: 'SENT',
+    date: '2024-06-15',
+    sentCount: 450,
+    openRate: 68,
+    clickRate: 32,
+  },
+  {
+    id: 'MC-002',
+    name: 'WhatsApp Welcome Series',
+    type: 'WHATSAPP',
+    status: 'SENT',
+    date: '2024-12-01',
+    sentCount: 120,
+    openRate: 92,
+    clickRate: 45,
+  },
+  {
+    id: 'MC-003',
+    name: 'Holiday Special Offers',
+    type: 'EMAIL',
+    status: 'SCHEDULED',
+    date: '2024-12-20',
+    sentCount: 0,
+    openRate: 0,
+    clickRate: 0,
+  },
+  {
+    id: 'MC-004',
+    name: 'New Villa Launch',
+    type: 'EMAIL',
+    status: 'DRAFT',
+    date: '2025-01-10',
+    sentCount: 0,
+    openRate: 0,
+    clickRate: 0,
+  },
+];
+
+const analytics = {
+  totalCampaigns: campaigns.length,
+  activeCampaigns: campaigns.filter(c => c.status === 'SENT' || c.status === 'SCHEDULED').length,
+  avgOpenRate: Math.round(campaigns.filter(c => c.status === 'SENT').reduce((sum, c) => sum + c.openRate, 0) / campaigns.filter(c => c.status === 'SENT').length),
+  totalReach: campaigns.reduce((sum, c) => sum + c.sentCount, 0),
+};
+---
+
+<MainLayout title="Marketing Management - Admin" lang={lang}>
+  <div class="min-h-screen bg-gray-100">
+    <div class="flex">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-primary text-white min-h-screen">
+        <div class="p-6">
+          <h2 class="text-2xl font-serif font-bold mb-8">
+            <a href="/admin">Admin Panel</a>
+          </h2>
+          
+          <nav class="space-y-2">
+            <div class="mb-6">
+              <h3 class="text-xs uppercase text-gray-400 mb-2">Commercial</h3>
+              <a href="/admin/bookings" class="block px-4 py-2 rounded hover:bg-white/10">Bookings</a>
+              <a href="/admin/clients" class="block px-4 py-2 rounded hover:bg-white/10">Clients</a>
+              <a href="/admin/villas" class="block px-4 py-2 rounded hover:bg-white/10">Villas</a>
+              <a href="/admin/finance" class="block px-4 py-2 rounded hover:bg-white/10">Finance</a>
+              <a href="/admin/marketing" class="block px-4 py-2 rounded bg-white/20">Marketing</a>
+            </div>
+            <div class="mb-6">
+              <h3 class="text-xs uppercase text-gray-400 mb-2">Operations</h3>
+              <a href="/admin/staff" class="block px-4 py-2 rounded hover:bg-white/10">Staff</a>
+              <a href="/admin/maintenance" class="block px-4 py-2 rounded hover:bg-white/10">Maintenance</a>
+              <a href="/admin/inventory" class="block px-4 py-2 rounded hover:bg-white/10">Inventory</a>
+              <a href="/admin/concierge" class="block px-4 py-2 rounded hover:bg-white/10">Concierge</a>
+            </div>
+            <div class="mb-6">
+              <h3 class="text-xs uppercase text-gray-400 mb-2">Content</h3>
+              <a href="/admin/blog" class="block px-4 py-2 rounded hover:bg-white/10">Blog</a>
+              <a href="/admin/guide" class="block px-4 py-2 rounded hover:bg-white/10">Guide</a>
+              <a href="/admin/services" class="block px-4 py-2 rounded hover:bg-white/10">Services</a>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-8">
+        <div class="mb-8 flex items-center justify-between">
+          <div>
+            <h1 class="text-4xl font-serif font-bold mb-2">Marketing Management</h1>
+            <p class="text-gray-600">Email & WhatsApp campaigns</p>
+          </div>
+          <button class="btn-primary">
+            <span class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+              New Campaign
+            </span>
+          </button>
+        </div>
+
+        <!-- Analytics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-gray-600 text-sm font-medium">Total Campaigns</h3>
+              <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path>
+              </svg>
+            </div>
+            <p class="text-3xl font-bold">{analytics.totalCampaigns}</p>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-gray-600 text-sm font-medium">Active Campaigns</h3>
+              <svg class="w-8 h-8 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <p class="text-3xl font-bold">{analytics.activeCampaigns}</p>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-gray-600 text-sm font-medium">Avg. Open Rate</h3>
+              <svg class="w-8 h-8 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+            </div>
+            <p class="text-3xl font-bold">{analytics.avgOpenRate}%</p>
+          </div>
+
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-gray-600 text-sm font-medium">Total Reach</h3>
+              <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <p class="text-3xl font-bold">{analytics.totalReach.toLocaleString()}</p>
+          </div>
+        </div>
+
+        <!-- Campaigns Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {campaigns.map((campaign) => (
+            <div class="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition relative overflow-hidden group">
+              <div class={`absolute top-0 left-0 w-1 h-full ${campaign.status === 'SENT' ? 'bg-green-500' : campaign.status === 'SCHEDULED' ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+              
+              <div class="flex justify-between items-start mb-4 pl-2">
+                <div class="flex items-center">
+                  <div class={`w-10 h-10 rounded-full flex items-center justify-center mr-3 ${campaign.type === 'EMAIL' ? 'bg-blue-100 text-blue-600' : 'bg-green-100 text-green-600'}`}>
+                    {campaign.type === 'EMAIL' ? (
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                      </svg>
+                    ) : (
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                      </svg>
+                    )}
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-gray-900 text-sm">{campaign.name}</h4>
+                    <p class="text-xs text-gray-500">{new Date(campaign.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                  </div>
+                </div>
+                <span class={`text-[10px] font-bold uppercase px-2 py-1 rounded ${campaign.status === 'SENT' ? 'bg-green-100 text-green-700' : campaign.status === 'SCHEDULED' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 text-gray-600'}`}>
+                  {campaign.status}
+                </span>
+              </div>
+              
+              {campaign.status === 'SENT' ? (
+                <div class="space-y-4 pl-2">
+                  <div>
+                    <div class="flex justify-between text-xs mb-1">
+                      <span class="text-gray-500">Sent</span>
+                      <span class="font-bold">{campaign.sentCount}</span>
+                    </div>
+                    <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                      <div class="bg-gray-800 h-full w-full"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between text-xs mb-1">
+                      <span class="text-gray-500">Open Rate</span>
+                      <span class="font-bold text-accent">{campaign.openRate}%</span>
+                    </div>
+                    <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                      <div class="bg-accent h-full transition-all duration-1000" style={`width: ${campaign.openRate}%`}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between text-xs mb-1">
+                      <span class="text-gray-500">Click Rate</span>
+                      <span class="font-bold text-success">{campaign.clickRate}%</span>
+                    </div>
+                    <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                      <div class="bg-success h-full transition-all duration-1000" style={`width: ${campaign.clickRate}%`}></div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div class="pl-2 pt-2">
+                  <p class="text-xs text-gray-500 italic mb-4">
+                    {campaign.status === 'SCHEDULED' ? 'Scheduled for delivery' : 'Draft - not yet scheduled'}
+                  </p>
+                  <div class="flex gap-2">
+                    <button class="flex-1 py-2 border border-gray-200 rounded text-xs font-bold uppercase hover:bg-gray-50 transition text-gray-600">
+                      Edit
+                    </button>
+                    {campaign.status === 'DRAFT' && (
+                      <button class="flex-1 py-2 bg-accent text-white rounded text-xs font-bold uppercase hover:bg-accent/90 transition">
+                        Schedule
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  </div>
+</MainLayout>
