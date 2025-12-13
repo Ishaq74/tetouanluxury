@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { db } from '../../db';
+// import { db } from '../../db'; // TODO: Implement database integration
 
 export const GET: APIRoute = async ({ request }) => {
   try {
@@ -82,9 +82,26 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
+    // Validate data types
+    if (typeof body.villaId !== 'number' || body.villaId <= 0) {
+      return new Response(JSON.stringify({ success: false, error: 'Invalid villaId' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Validate priority enum
+    const validPriorities = ['low', 'medium', 'high'];
+    if (!validPriorities.includes(body.priority)) {
+      return new Response(JSON.stringify({ success: false, error: 'Invalid priority value' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     // Create new ticket (would insert into database)
     const newTicket = {
-      id: Date.now(),
+      id: crypto.randomUUID(),
       ...body,
       status: 'open',
       createdAt: new Date().toISOString(),

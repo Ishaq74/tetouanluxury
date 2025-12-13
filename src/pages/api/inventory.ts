@@ -43,8 +43,32 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
+    // Validate data types and ranges
+    if (typeof body.quantity !== 'number' || body.quantity < 0) {
+      return new Response(JSON.stringify({ success: false, error: 'Quantity must be a non-negative number' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (typeof body.minLevel !== 'number' || body.minLevel < 0) {
+      return new Response(JSON.stringify({ success: false, error: 'Min level must be a non-negative number' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Validate category enum
+    const validCategories = ['linen', 'kitchen', 'toiletries'];
+    if (!validCategories.includes(body.category)) {
+      return new Response(JSON.stringify({ success: false, error: 'Invalid category value' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const newItem = {
-      id: Date.now(),
+      id: crypto.randomUUID(),
       ...body,
       lastRestocked: new Date().toISOString().split('T')[0],
     };

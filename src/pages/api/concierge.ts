@@ -78,8 +78,32 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
+    // Validate data types
+    if (typeof body.clientId !== 'number' || body.clientId <= 0) {
+      return new Response(JSON.stringify({ success: false, error: 'Invalid clientId' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (typeof body.villaId !== 'number' || body.villaId <= 0) {
+      return new Response(JSON.stringify({ success: false, error: 'Invalid villaId' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    // Validate date format
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(body.requestedDate)) {
+      return new Response(JSON.stringify({ success: false, error: 'Invalid date format. Use YYYY-MM-DD' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const newRequest = {
-      id: Date.now(),
+      id: crypto.randomUUID(),
       ...body,
       status: 'pending',
       createdAt: new Date().toISOString().split('T')[0],
