@@ -1,0 +1,98 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { translations } from '../../lib/translations';
+
+const lang = 'es';
+const t = translations[lang];
+---
+
+<MainLayout title="Tétouan Luxury Villas - Inicio" lang={lang}>
+  <!-- Hero Section -->
+  <section class="relative h-screen flex items-center justify-center bg-gradient-to-br from-primary to-gray-800">
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="relative z-10 text-center text-white px-4">
+      <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6">
+        Experimenta el Lujo en Tétouan
+      </h1>
+      <p class="text-xl md:text-2xl mb-8 text-gray-200">
+        Villas Privadas y Conciergerie
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/es/villas" class="btn-primary text-lg">
+          Las Villas
+        </a>
+        <a href="/es/contact" class="btn-secondary text-lg">
+          Contacto
+        </a>
+      </div>
+    </div>
+    
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="py-20 bg-white">
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6">
+          Lujo Moderno y Herencia Marroquí
+        </h2>
+        <p class="text-lg text-gray-700 leading-relaxed">
+          Ubicadas en la costa prístina de Cabo Negro, nuestra colección de siete villas idénticas ofrece un santuario de privacidad, elegancia y confort.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="container-custom">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-serif font-bold mb-4">Seguridad y Privacidad</h3>
+          <p class="text-gray-600">Seguridad 24/7 en una comunidad cerrada que garantiza total tranquilidad.</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-serif font-bold mb-4">Servicio Premium</h3>
+          <p class="text-gray-600">Conciergerie, limpieza diaria y opciones de chef privado a su servicio.</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-serif font-bold mb-4">Amenidades Modernas</h3>
+          <p class="text-gray-600">WiFi de fibra óptica, domótica y piscinas privadas climatizadas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-20 bg-primary text-white">
+    <div class="container-custom text-center">
+      <h2 class="text-4xl font-serif font-bold mb-6">¿Listo para Experimentar el Lujo?</h2>
+      <p class="text-xl mb-8 text-gray-200">Reserve su villa hoy y comience a planear su escapada marroquí de ensueño.</p>
+      <a href="/es/villas" class="btn-secondary text-lg">
+        Ver Detalles
+      </a>
+    </div>
+  </section>
+</MainLayout>

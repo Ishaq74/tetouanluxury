@@ -1,0 +1,230 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const lang = 'en';
+
+// Mock user data - would come from session in production
+const user = {
+  name: 'John Smith',
+  email: 'john.smith@example.com',
+  memberSince: '2023-06-15',
+};
+
+// Mock bookings
+const upcomingBookings = [
+  {
+    id: 'BK-2024-001',
+    villa: 'Villa Azure',
+    checkIn: '2024-12-20',
+    checkOut: '2024-12-27',
+    guests: 4,
+    status: 'CONFIRMED',
+    accessCode: '4857',
+  },
+];
+
+const pastBookings = [
+  {
+    id: 'BK-2023-156',
+    villa: 'Villa Serenity',
+    checkIn: '2023-08-15',
+    checkOut: '2023-08-22',
+    guests: 6,
+    status: 'COMPLETED',
+  },
+];
+---
+
+<MainLayout title="Client Portal - Tétouan Luxury Villas" lang={lang}>
+  <div class="min-h-screen bg-gray-50">
+    <!-- Header -->
+    <div class="bg-primary text-white">
+      <div class="container-custom py-8">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-serif font-bold mb-2">Welcome, {user.name}!</h1>
+            <p class="text-gray-300">Member since {new Date(user.memberSince).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+          </div>
+          <a href="/login" class="btn-secondary">Logout</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="bg-white border-b">
+      <div class="container-custom">
+        <nav class="flex space-x-8">
+          <a href="/portal" class="px-4 py-4 border-b-2 border-accent font-medium text-accent">
+            Dashboard
+          </a>
+          <a href="/portal/bookings" class="px-4 py-4 border-b-2 border-transparent hover:text-accent transition-colors">
+            My Stays
+          </a>
+          <a href="/portal/services" class="px-4 py-4 border-b-2 border-transparent hover:text-accent transition-colors">
+            Services
+          </a>
+          <a href="/portal/profile" class="px-4 py-4 border-b-2 border-transparent hover:text-accent transition-colors">
+            Profile
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container-custom py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Column -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- Upcoming Stays -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-serif font-bold mb-4">Upcoming Stays</h2>
+            {upcomingBookings.length > 0 ? (
+              <div class="space-y-4">
+                {upcomingBookings.map((booking) => (
+                  <div class="border border-gray-200 rounded-lg p-4">
+                    <div class="flex items-start justify-between mb-3">
+                      <div>
+                        <h3 class="text-xl font-bold">{booking.villa}</h3>
+                        <p class="text-gray-600">{booking.id}</p>
+                      </div>
+                      <span class="px-3 py-1 bg-success/10 text-success rounded-full text-sm">
+                        {booking.status}
+                      </span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <p class="text-sm text-gray-600">Check-in</p>
+                        <p class="font-medium">{new Date(booking.checkIn).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                      </div>
+                      <div>
+                        <p class="text-sm text-gray-600">Check-out</p>
+                        <p class="font-medium">{new Date(booking.checkOut).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 pt-4 border-t">
+                      <div class="flex-1">
+                        <p class="text-sm text-gray-600">Access Code</p>
+                        <p class="text-2xl font-mono font-bold">{booking.accessCode}</p>
+                      </div>
+                      <a href={`/portal/bookings/${booking.id}`} class="btn-primary">
+                        View Details
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p class="text-gray-500">No upcoming stays</p>
+            )}
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-serif font-bold mb-4">Quick Actions</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <a href="/villas" class="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:border-accent hover:bg-accent/5 transition-colors">
+                <svg class="w-8 h-8 text-accent mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                <span class="text-sm font-medium">Book Villa</span>
+              </a>
+
+              <a href="/portal/services" class="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:border-accent hover:bg-accent/5 transition-colors">
+                <svg class="w-8 h-8 text-accent mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                </svg>
+                <span class="text-sm font-medium">Services</span>
+              </a>
+
+              <a href="/contact" class="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:border-accent hover:bg-accent/5 transition-colors">
+                <svg class="w-8 h-8 text-accent mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-sm font-medium">Contact</span>
+              </a>
+
+              <a href="/guide" class="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:border-accent hover:bg-accent/5 transition-colors">
+                <svg class="w-8 h-8 text-accent mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                </svg>
+                <span class="text-sm font-medium">Guide</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Past Stays -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-serif font-bold mb-4">Past Stays</h2>
+            {pastBookings.length > 0 ? (
+              <div class="space-y-3">
+                {pastBookings.map((booking) => (
+                  <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                    <div>
+                      <h3 class="font-bold">{booking.villa}</h3>
+                      <p class="text-sm text-gray-600">
+                        {new Date(booking.checkIn).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {new Date(booking.checkOut).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <a href={`/portal/bookings/${booking.id}`} class="text-accent hover:underline">
+                        View
+                      </a>
+                      <button class="text-accent hover:underline">
+                        Book Again
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p class="text-gray-500">No past stays</p>
+            )}
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="lg:col-span-1 space-y-6">
+          <!-- Profile Card -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-lg font-bold mb-4">Profile</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-600">Name</p>
+                <p class="font-medium">{user.name}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Email</p>
+                <p class="font-medium">{user.email}</p>
+              </div>
+              <a href="/portal/profile" class="block text-accent hover:underline text-sm">
+                Edit Profile →
+              </a>
+            </div>
+          </div>
+
+          <!-- Support Card -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-lg font-bold mb-4">Need Help?</h3>
+            <p class="text-gray-600 mb-4">Our concierge team is available 24/7</p>
+            <div class="space-y-2">
+              <a href="tel:+212123456789" class="flex items-center gap-2 text-accent hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                </svg>
+                Call Us
+              </a>
+              <a href="/contact" class="flex items-center gap-2 text-accent hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                Email Us
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>

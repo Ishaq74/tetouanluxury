@@ -1,0 +1,223 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const lang = 'en';
+const { villa } = Astro.url.searchParams;
+
+// Mock villa data
+const selectedVilla = {
+  id: villa || '1',
+  name: 'Villa Azure',
+  pricePerNight: 450,
+  image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=400',
+};
+---
+
+<MainLayout title="Complete Booking - Tétouan Luxury Villas" lang={lang}>
+  <div class="py-12 bg-gray-50">
+    <div class="container-custom">
+      <!-- Progress Steps -->
+      <div class="mb-12">
+        <div class="flex items-center justify-center">
+          <div class="flex items-center">
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-accent text-white rounded-full flex items-center justify-center font-bold">1</div>
+              <span class="ml-2 font-medium">Dates</span>
+            </div>
+            <div class="w-24 h-1 bg-gray-300 mx-4"></div>
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold">2</div>
+              <span class="ml-2 text-gray-600">Details</span>
+            </div>
+            <div class="w-24 h-1 bg-gray-300 mx-4"></div>
+            <div class="flex items-center">
+              <div class="w-10 h-10 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center font-bold">3</div>
+              <span class="ml-2 text-gray-600">Confirm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Form Column -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-serif font-bold mb-6">Complete Your Booking</h1>
+
+            <form class="space-y-6">
+              <!-- Dates Section -->
+              <div>
+                <h2 class="text-xl font-bold mb-4">Select Dates</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Check-in Date</label>
+                    <input 
+                      type="date" 
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Check-out Date</label>
+                    <input 
+                      type="date" 
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Guests Section -->
+              <div>
+                <h2 class="text-xl font-bold mb-4">Guest Information</h2>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Number of Guests</label>
+                    <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent">
+                      <option value="1">1 guest</option>
+                      <option value="2">2 guests</option>
+                      <option value="3">3 guests</option>
+                      <option value="4">4 guests</option>
+                      <option value="5">5 guests</option>
+                      <option value="6">6 guests</option>
+                      <option value="7">7 guests</option>
+                      <option value="8">8 guests</option>
+                    </select>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                      <input 
+                        type="text" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                      <input 
+                        type="text" 
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input 
+                      type="email" 
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                    <input 
+                      type="tel" 
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Special Requests (Optional)</label>
+                    <textarea 
+                      rows="4"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                      placeholder="Allergies, early check-in, crib needed, etc."
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Payment Section -->
+              <div>
+                <h2 class="text-xl font-bold mb-4">Payment Method</h2>
+                <div class="space-y-3">
+                  <label class="flex items-start p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-accent">
+                    <input type="radio" name="payment" value="card" class="mt-1" checked />
+                    <div class="ml-3">
+                      <p class="font-medium">Credit Card (Stripe)</p>
+                      <p class="text-sm text-gray-600">Secure encrypted payment. Visa, Mastercard, Amex.</p>
+                    </div>
+                  </label>
+                  
+                  <label class="flex items-start p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-accent">
+                    <input type="radio" name="payment" value="transfer" class="mt-1" />
+                    <div class="ml-3">
+                      <p class="font-medium">Bank Transfer</p>
+                      <p class="text-sm text-gray-600">Manual verification required (24-48h).</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Terms -->
+              <div class="border-t pt-6">
+                <label class="flex items-start">
+                  <input type="checkbox" class="mt-1" required />
+                  <span class="ml-2 text-sm text-gray-700">
+                    I agree to the <a href="/terms" class="text-accent hover:underline">rental agreement</a> and <a href="/privacy" class="text-accent hover:underline">privacy policy</a>
+                  </span>
+                </label>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" class="btn-primary w-full text-lg py-4">
+                Proceed to Payment
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Summary Sidebar -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
+            <h3 class="text-lg font-bold mb-4">Booking Summary</h3>
+            
+            <div class="flex gap-4 mb-6 pb-6 border-b">
+              <img src={selectedVilla.image} alt={selectedVilla.name} class="w-24 h-24 object-cover rounded-lg" />
+              <div>
+                <h4 class="font-bold">{selectedVilla.name}</h4>
+                <p class="text-sm text-gray-600">Cabo Negro, Tétouan</p>
+              </div>
+            </div>
+
+            <div class="space-y-3 mb-6 pb-6 border-b">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">€{selectedVilla.pricePerNight} × 7 nights</span>
+                <span class="font-medium">€{selectedVilla.pricePerNight * 7}</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Cleaning fee</span>
+                <span class="font-medium">€150</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Service fee</span>
+                <span class="font-medium">€100</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Taxes (10%)</span>
+                <span class="font-medium">€{Math.round((selectedVilla.pricePerNight * 7 + 150 + 100) * 0.1)}</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between text-lg font-bold mb-6">
+              <span>Total</span>
+              <span>€{Math.round((selectedVilla.pricePerNight * 7 + 150 + 100) * 1.1)}</span>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm">
+              <p class="font-medium text-blue-900 mb-1">Security Deposit</p>
+              <p class="text-blue-700">A pre-authorization of €500 will be held on your card upon check-in and released after check-out.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>
