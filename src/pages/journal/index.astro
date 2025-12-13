@@ -1,19 +1,118 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import { translations } from '../../lib/translations';
 
-const lang = 'en';
+const lang = 'en'; // TODO: Get from route
+const t = translations[lang];
+
+// Mock blog posts - in production, fetch from database
+const blogPosts = [
+  {
+    id: 'hidden-gems-tetouan',
+    title: { en: 'Discovering Tétouan\'s Hidden Gems', fr: 'Découvrir les joyaux cachés de Tétouan', es: 'Descubriendo las joyas ocultas de Tetuán', ar: 'اكتشاف جواهر تطوان المخفية' },
+    excerpt: { en: 'A journey through the less-traveled paths of Morocco\'s white dove.', fr: 'Un voyage à travers les chemins moins fréquentés.', es: 'Un viaje por los caminos menos transitados.', ar: 'رحلة عبر الممرات الأقل ترددًا.' },
+    category: 'local-life',
+    image: 'https://picsum.photos/800/500?random=1',
+    date: '2024-01-15',
+    author: 'Maria Rodriguez',
+  },
+  {
+    id: 'moroccan-cuisine',
+    title: { en: 'Moroccan Cuisine: A Culinary Journey', fr: 'Cuisine Marocaine: Un Voyage Culinaire', es: 'Cocina Marroquí: Un Viaje Culinario', ar: 'المطبخ المغربي: رحلة طهي' },
+    excerpt: { en: 'From tagines to pastillas, explore the rich flavors of Morocco.', fr: 'Des tajines aux pastillas, explorez les saveurs riches du Maroc.', es: 'De los tajines a las pastillas, explora los ricos sabores de Marruecos.', ar: 'من الطواجن إلى البسطيلة، استكشف النكهات الغنية للمغرب.' },
+    category: 'gastronomy',
+    image: 'https://picsum.photos/800/500?random=2',
+    date: '2024-01-10',
+    author: 'Chef Hassan',
+  },
+  {
+    id: 'andalusian-architecture',
+    title: { en: 'Andalusian Architecture in Tétouan', fr: 'Architecture Andalouse à Tétouan', es: 'Arquitectura Andaluza en Tetuán', ar: 'العمارة الأندلسية في تطوان' },
+    excerpt: { en: 'UNESCO heritage meets modern preservation efforts.', fr: 'Le patrimoine de l\'UNESCO rencontre les efforts de préservation modernes.', es: 'El patrimonio de la UNESCO se encuentra con los esfuerzos de preservación modernos.', ar: 'تراث اليونسكو يلتقي بجهود الحفاظ الحديثة.' },
+    category: 'culture',
+    image: 'https://picsum.photos/800/500?random=3',
+    date: '2024-01-05',
+    author: 'Dr. Fatima Zahra',
+  },
+  {
+    id: 'beach-guide',
+    title: { en: 'Best Beaches Near Tétouan', fr: 'Meilleures Plages près de Tétouan', es: 'Mejores Playas cerca de Tetuán', ar: 'أفضل الشواطئ بالقرب من تطوان' },
+    excerpt: { en: 'Your complete guide to the Mediterranean coastline.', fr: 'Votre guide complet du littoral méditerranéen.', es: 'Tu guía completa de la costa mediterránea.', ar: 'دليلك الكامل لساحل البحر الأبيض المتوسط.' },
+    category: 'travel-tips',
+    image: 'https://picsum.photos/800/500?random=4',
+    date: '2023-12-28',
+    author: 'Travel Team',
+  },
+];
+
+const categories = [
+  { id: 'all', name: { en: 'All', fr: 'Tout', es: 'Todos', ar: 'الكل' } },
+  { id: 'local-life', name: { en: 'Local Life', fr: 'Vie Locale', es: 'Vida Local', ar: 'الحياة المحلية' } },
+  { id: 'gastronomy', name: { en: 'Gastronomy', fr: 'Gastronomie', es: 'Gastronomía', ar: 'فن الطهي' } },
+  { id: 'culture', name: { en: 'Culture', fr: 'Culture', es: 'Cultura', ar: 'الثقافة' } },
+  { id: 'travel-tips', name: { en: 'Travel Tips', fr: 'Conseils Voyage', es: 'Consejos de Viaje', ar: 'نصائح السفر' } },
+];
 ---
 
-<MainLayout title="Journal - Tétouan Luxury Villas" lang={lang}>
-  <div class="py-20">
-    <div class="container-custom">
-      <h1 class="text-5xl font-serif font-bold mb-6 text-center">Journal</h1>
-      <p class="text-lg text-gray-600 mb-12 text-center max-w-2xl mx-auto">
-        Stories, news, and insights from Tétouan and our luxury villas.
-      </p>
-      <div class="text-center text-gray-500">
-        <p>Blog posts coming soon...</p>
-      </div>
+<MainLayout title={t.blog_title} lang={lang}>
+  <!-- Hero Section -->
+  <div class="bg-slate-900 text-white py-24 px-4 text-center">
+    <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">{t.blog_title}</h1>
+    <p class="text-slate-300 text-lg max-w-2xl mx-auto">{t.blog_subtitle}</p>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 py-16">
+    <!-- Category Filter -->
+    <div class="flex flex-wrap gap-3 mb-12 justify-center">
+      {categories.map((cat) => (
+        <button class={`px-4 py-2 rounded-full font-medium transition ${cat.id === 'all' ? 'bg-amber-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>
+          {cat.name[lang]}
+        </button>
+      ))}
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {blogPosts.map((post) => (
+        <article class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+          <a href={`/journal/${post.id}`}>
+            <img src={post.image} alt={post.title[lang]} class="w-full h-56 object-cover" />
+          </a>
+          
+          <div class="p-6">
+            <div class="flex items-center gap-3 text-sm text-slate-600 mb-3">
+              <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full font-medium capitalize">
+                {post.category.replace('-', ' ')}
+              </span>
+              <span>{post.date}</span>
+            </div>
+            
+            <a href={`/journal/${post.id}`}>
+              <h2 class="text-xl font-serif font-bold text-slate-900 mb-3 hover:text-amber-600 transition">
+                {post.title[lang]}
+              </h2>
+            </a>
+            
+            <p class="text-slate-600 mb-4">
+              {post.excerpt[lang]}
+            </p>
+            
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-slate-500">By {post.author}</span>
+              <a href={`/journal/${post.id}`} class="text-amber-600 hover:text-amber-700 font-medium text-sm">
+                {t.blog_read_more} →
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Load More Button -->
+    <div class="text-center mt-12">
+      <button class="px-8 py-3 bg-slate-900 text-white rounded font-medium hover:bg-slate-800 transition">
+        Load More Articles
+      </button>
     </div>
   </div>
 </MainLayout>

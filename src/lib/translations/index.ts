@@ -1,11 +1,13 @@
 import { en } from './en';
 import { fr } from './fr';
+import { es } from './es';
+import { ar } from './ar';
 
 export const translations = {
   en,
   fr,
-  es: en, // Fallback to English for Spanish (can be expanded later)
-  ar: en, // Fallback to English for Arabic (can be expanded later)
+  es,
+  ar,
 };
 
 export type TranslationKey = keyof typeof en;
