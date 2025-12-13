@@ -90,6 +90,12 @@ Tétouan Luxury Villas (Astro)
 │   ├── Drizzle ORM
 │   └── PostgreSQL
 │
+├── Four User Portals
+│   ├── Public Website (Guests & Visitors)
+│   ├── Client Portal (Authenticated Guests)
+│   ├── Staff Portal (Operations Team)
+│   └── Admin Portal (Management)
+│
 ├── Multilingual (i18n)
 │   ├── EN (English)
 │   ├── FR (Français)
@@ -105,10 +111,12 @@ Tétouan Luxury Villas (Astro)
 1. ✅ **Development Server** - Runs on http://localhost:4321
 2. ✅ **Public Website** - All main pages functional
 3. ✅ **Multilingual Routing** - Language switching works
-4. ✅ **Admin Layout** - Dashboard foundation ready
-5. ✅ **Database Schema** - Ready for data operations
-6. ✅ **API Routes** - Villa and booking endpoints
-7. ✅ **Styling** - Tailwind CSS with custom theme
+4. ✅ **Admin Portal** - Dashboard foundation ready
+5. ✅ **Client Portal** - Guest dashboard complete
+6. ✅ **Staff Portal** - Operations interface ready
+7. ✅ **Database Schema** - Ready for data operations
+8. ✅ **API Routes** - Villa, booking, client, and task endpoints
+9. ✅ **Styling** - Tailwind CSS with custom theme
 
 ## 📋 What's Next
 
