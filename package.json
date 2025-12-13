@@ -6,23 +6,42 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "db:generate": "drizzle-kit generate:pg",
+    "db:push": "drizzle-kit push:pg",
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "tsx database/migrate.ts",
+    "db:seed": "tsx database/seed-runner.ts",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
   },
   "dependencies": {
+    "@tanstack/react-query": "5.29.0",
+    "@tanstack/react-router": "1.58.3",
+    "better-auth": "^1.4.6",
+    "dotenv": "^17.2.3",
+    "drizzle-kit": "^0.31.8",
+    "drizzle-orm": "^0.30.10",
+    "jspdf": "2.5.1",
+    "lucide-react": "0.460.0",
+    "pg": "^8.16.3",
+    "postgres": "^3.4.7",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "recharts": "2.13.0",
-    "lucide-react": "0.460.0",
-    "@tanstack/react-router": "1.58.3",
     "react-helmet-async": "2.0.5",
-    "drizzle-orm": "0.30.10",
-    "@tanstack/react-query": "5.29.0",
-    "jspdf": "2.5.1"
+    "recharts": "2.13.0"
   },
   "devDependencies": {
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "@vitest/ui": "^4.0.15",
+    "jsdom": "^27.3.0",
+    "tsx": "^4.21.0",
     "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "vite": "^6.2.0",
+    "vitest": "^4.0.15"
   }
 }
