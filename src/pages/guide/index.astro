@@ -1,0 +1,117 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const lang = 'en';
+
+const categories = [
+  {
+    name: "Restaurants",
+    slug: "restaurants",
+    description: "Discover the finest dining experiences in Tétouan",
+    icon: "🍽️",
+    count: 12
+  },
+  {
+    name: "Activities",
+    slug: "activities",
+    description: "Explore exciting activities and adventures",
+    icon: "🎯",
+    count: 8
+  },
+  {
+    name: "Shopping",
+    slug: "shopping",
+    description: "Find unique treasures in local markets and boutiques",
+    icon: "🛍️",
+    count: 10
+  },
+  {
+    name: "Wellness",
+    slug: "wellness",
+    description: "Relax and rejuvenate with spa and wellness services",
+    icon: "💆",
+    count: 6
+  }
+];
+
+const featuredPlaces = [
+  {
+    id: 1,
+    name: "La Table de Tétouan",
+    category: "restaurants",
+    description: "Fine dining with traditional Moroccan cuisine",
+    rating: 4.8,
+    image: "/images/placeholder-restaurant.jpg"
+  },
+  {
+    id: 2,
+    name: "Medina Walking Tour",
+    category: "activities",
+    description: "Guided tour through the historic medina",
+    rating: 4.9,
+    image: "/images/placeholder-activity.jpg"
+  },
+  {
+    id: 3,
+    name: "Artisan Souk",
+    category: "shopping",
+    description: "Traditional crafts and local products",
+    rating: 4.7,
+    image: "/images/placeholder-shopping.jpg"
+  }
+];
+---
+
+<MainLayout title="Discover Tétouan - Local Guide" lang={lang}>
+  <div class="py-20">
+    <div class="container-custom">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-5xl font-serif font-bold mb-6">Discover Tétouan</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Your comprehensive guide to the best attractions, restaurants, and experiences in Tétouan.
+        </p>
+      </div>
+
+      <!-- Categories Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        {categories.map(category => (
+          <a 
+            href={`/guide/${category.slug}`}
+            class="bg-white rounded-xl shadow-md p-8 text-center hover:shadow-xl transition-all hover:-translate-y-1"
+          >
+            <div class="text-5xl mb-4">{category.icon}</div>
+            <h3 class="text-2xl font-serif font-bold mb-2">{category.name}</h3>
+            <p class="text-gray-600 mb-4">{category.description}</p>
+            <span class="text-sm text-primary font-semibold">{category.count} places</span>
+          </a>
+        ))}
+      </div>
+
+      <!-- Featured Places -->
+      <section>
+        <h2 class="text-3xl font-serif font-bold mb-8">Featured Recommendations</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          {featuredPlaces.map(place => (
+            <a 
+              href={`/guide/${place.category}/${place.id}`}
+              class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+            >
+              <div class="aspect-video bg-gray-200">
+                <img src={place.image} alt={place.name} class="w-full h-full object-cover" />
+              </div>
+              <div class="p-6">
+                <h3 class="text-2xl font-serif font-bold mb-2">{place.name}</h3>
+                <p class="text-gray-600 mb-4">{place.description}</p>
+                <div class="flex items-center gap-2">
+                  <span class="text-yellow-500">★</span>
+                  <span class="font-semibold">{place.rating}</span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+  </div>
+</MainLayout>

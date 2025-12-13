@@ -1,0 +1,87 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { translations } from '../lib/translations';
+
+const lang = 'en';
+const t = translations[lang];
+
+// Mock villas data - in production, this would come from the database
+const villas = [
+  {
+    id: '1',
+    name: 'Villa Azure',
+    pricePerNight: 450,
+    bedrooms: 4,
+    bathrooms: 3,
+    pool: true,
+    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=800',
+  },
+  {
+    id: '2',
+    name: 'Villa Serenity',
+    pricePerNight: 450,
+    bedrooms: 4,
+    bathrooms: 3,
+    pool: true,
+    image: 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=800',
+  },
+  {
+    id: '3',
+    name: 'Villa Paradise',
+    pricePerNight: 450,
+    bedrooms: 4,
+    bathrooms: 3,
+    pool: true,
+    image: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?q=80&w=800',
+  },
+];
+---
+
+<MainLayout title="Our Villas - Tétouan Luxury Villas" lang={lang}>
+  <div class="py-20">
+    <div class="container-custom">
+      <h1 class="text-5xl font-serif font-bold mb-6 text-center">{t.title_our_collection}</h1>
+      <p class="text-lg text-gray-600 mb-12 text-center max-w-2xl mx-auto">
+        Choose from our exclusive collection of luxury villas, each offering the perfect blend of comfort and elegance.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {villas.map((villa) => (
+          <div class="card group hover:shadow-xl transition-shadow duration-300">
+            <div class="relative overflow-hidden rounded-lg mb-4">
+              <img 
+                src={villa.image} 
+                alt={villa.name}
+                class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+              />
+              <div class="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-semibold">
+                €{villa.pricePerNight} {t.label_night}
+              </div>
+            </div>
+
+            <h3 class="text-2xl font-serif font-bold mb-3">{villa.name}</h3>
+            
+            <div class="flex items-center gap-4 text-gray-600 mb-4">
+              <span class="flex items-center gap-1">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                {villa.bedrooms} {t.label_bedrooms}
+              </span>
+              <span class="flex items-center gap-1">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+                {villa.bathrooms} {t.label_bathrooms}
+              </span>
+            </div>
+
+            <a href={`/villas/${villa.id}`} class="btn-primary w-full text-center block">
+              {t.cta_view_details}
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</MainLayout>

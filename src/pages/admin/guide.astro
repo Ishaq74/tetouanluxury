@@ -1,0 +1,176 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const lang = 'en';
+
+// Mock guide content
+const guideCategories = [
+  {
+    id: 'restaurants',
+    name: 'Restaurants & Dining',
+    icon: 'utensils',
+    count: 12,
+    items: [
+      { name: 'Restaurant Al Mandari', type: 'Traditional', price: '€€€', rating: 4.8 },
+      { name: 'Le Pigeon Blanc', type: 'French', price: '€€€€', rating: 4.9 },
+      { name: 'Café Clock', type: 'Café', price: '€€', rating: 4.5 },
+    ],
+  },
+  {
+    id: 'activities',
+    name: 'Activities & Tours',
+    icon: 'compass',
+    count: 8,
+    items: [
+      { name: 'Medina Walking Tour', type: 'Cultural', price: '€50', rating: 4.7 },
+      { name: 'Day Trip to Chefchaouen', type: 'Excursion', price: '€120', rating: 4.9 },
+      { name: 'Cooking Class', type: 'Experience', price: '€80', rating: 4.6 },
+    ],
+  },
+  {
+    id: 'shopping',
+    name: 'Shopping',
+    icon: 'shopping-bag',
+    count: 6,
+    items: [
+      { name: 'Souk Artisanat', type: 'Crafts', price: '€-€€€', rating: 4.5 },
+      { name: 'Marché Central', type: 'Market', price: '€', rating: 4.3 },
+    ],
+  },
+  {
+    id: 'wellness',
+    name: 'Wellness & Spa',
+    icon: 'heart',
+    count: 5,
+    items: [
+      { name: 'Hammam Andalous', type: 'Traditional Spa', price: '€€€', rating: 4.8 },
+      { name: 'Yoga Retreat Center', type: 'Wellness', price: '€€', rating: 4.7 },
+    ],
+  },
+];
+---
+
+<MainLayout title="Local Guide Management - Admin" lang={lang}>
+  <div class="min-h-screen bg-gray-100">
+    <div class="flex">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-primary text-white min-h-screen">
+        <div class="p-6">
+          <h2 class="text-2xl font-serif font-bold mb-8">
+            <a href="/admin">Admin Panel</a>
+          </h2>
+          
+          <nav class="space-y-2">
+            <div class="mb-6">
+              <h3 class="text-xs uppercase text-gray-400 mb-2">Commercial</h3>
+              <a href="/admin/bookings" class="block px-4 py-2 rounded hover:bg-white/10">Bookings</a>
+              <a href="/admin/clients" class="block px-4 py-2 rounded hover:bg-white/10">Clients</a>
+              <a href="/admin/villas" class="block px-4 py-2 rounded hover:bg-white/10">Villas</a>
+            </div>
+            <div class="mb-6">
+              <h3 class="text-xs uppercase text-gray-400 mb-2">Operations</h3>
+              <a href="/admin/staff" class="block px-4 py-2 rounded hover:bg-white/10">Staff</a>
+              <a href="/admin/maintenance" class="block px-4 py-2 rounded hover:bg-white/10">Maintenance</a>
+            </div>
+            <div class="mb-6">
+              <h3 class="text-xs uppercase text-gray-400 mb-2">Content</h3>
+              <a href="/admin/blog" class="block px-4 py-2 rounded hover:bg-white/10">Blog</a>
+              <a href="/admin/guide" class="block px-4 py-2 rounded bg-white/20">Guide</a>
+              <a href="/admin/services" class="block px-4 py-2 rounded hover:bg-white/10">Services</a>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-8">
+        <div class="mb-8 flex items-center justify-between">
+          <div>
+            <h1 class="text-4xl font-serif font-bold mb-2">Local Guide Management</h1>
+            <p class="text-gray-600">Curated recommendations for guests</p>
+          </div>
+          <button class="btn-primary">
+            <span class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+              New Recommendation
+            </span>
+          </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-gray-600 text-sm font-medium mb-2">Total Recommendations</h3>
+            <p class="text-3xl font-bold">{guideCategories.reduce((sum, cat) => sum + cat.count, 0)}</p>
+          </div>
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-gray-600 text-sm font-medium mb-2">Categories</h3>
+            <p class="text-3xl font-bold">{guideCategories.length}</p>
+          </div>
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-gray-600 text-sm font-medium mb-2">Most Popular</h3>
+            <p class="text-lg font-bold">Restaurants</p>
+          </div>
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-gray-600 text-sm font-medium mb-2">Avg. Rating</h3>
+            <p class="text-3xl font-bold">4.7 ⭐</p>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="space-y-6">
+          {guideCategories.map((category) => (
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+              <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-primary/5 to-transparent">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white">
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="text-xl font-bold text-gray-900">{category.name}</h3>
+                      <p class="text-sm text-gray-600">{category.count} places</p>
+                    </div>
+                  </div>
+                  <button class="btn-secondary text-sm">
+                    Add New
+                  </button>
+                </div>
+              </div>
+
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {category.items.map((item) => (
+                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                      <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-bold text-gray-900">{item.name}</h4>
+                        <span class="text-accent font-bold text-sm">★ {item.rating}</span>
+                      </div>
+                      <div class="flex justify-between items-center text-sm">
+                        <span class="text-gray-600">{item.type}</span>
+                        <span class="font-mono text-gray-700">{item.price}</span>
+                      </div>
+                      <div class="mt-3 flex gap-2">
+                        <button class="flex-1 text-xs py-1 border border-gray-300 rounded hover:bg-gray-50">
+                          Edit
+                        </button>
+                        <button class="flex-1 text-xs py-1 border border-gray-300 rounded hover:bg-gray-50">
+                          View
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  </div>
+</MainLayout>

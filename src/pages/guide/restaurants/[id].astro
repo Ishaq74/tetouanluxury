@@ -1,0 +1,303 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+
+const { id } = Astro.params;
+const lang = 'en';
+
+// Mock data - in production this would come from the database
+const restaurants = {
+  "1": {
+    id: 1,
+    name: "La Table de Tétouan",
+    category: "restaurants",
+    description: "Fine dining with traditional Moroccan cuisine and modern twists. Our chefs blend centuries-old recipes with contemporary techniques to create unforgettable dining experiences.",
+    rating: 4.8,
+    priceRange: "$$$",
+    cuisine: "Moroccan Fine Dining",
+    location: "Medina, Tétouan",
+    address: "45 Rue de la Kasbah, Tétouan 93000",
+    phone: "+212 539 96 12 34",
+    hours: {
+      weekdays: "12:00 PM - 3:00 PM, 7:00 PM - 11:00 PM",
+      weekend: "12:00 PM - 11:00 PM"
+    },
+    images: [
+      "/images/placeholder-restaurant.jpg",
+      "/images/placeholder-restaurant.jpg",
+      "/images/placeholder-restaurant.jpg"
+    ],
+    features: [
+      "Outdoor Terrace",
+      "Wine Selection",
+      "Vegetarian Options",
+      "Reservations Recommended"
+    ],
+    specialties: [
+      "Slow-cooked lamb tagine",
+      "Royal couscous",
+      "Pigeon pastilla",
+      "Mint tea ceremony"
+    ],
+    reviews: [
+      {
+        author: "Sarah M.",
+        rating: 5,
+        text: "Absolutely stunning food and atmosphere. The tagine was the best I've had in Morocco!",
+        date: "2024-01-15"
+      },
+      {
+        author: "James K.",
+        rating: 5,
+        text: "Exceptional service and authentic flavors. A must-visit in Tétouan.",
+        date: "2024-01-10"
+      }
+    ]
+  },
+  "2": {
+    id: 2,
+    name: "Café Panoramique",
+    category: "restaurants",
+    description: "Stunning views of the Mediterranean with fresh seafood specialties",
+    rating: 4.6,
+    priceRange: "$$",
+    cuisine: "Seafood & Mediterranean",
+    location: "Marina, Tétouan",
+    address: "Marina de Tétouan, 93000",
+    phone: "+212 539 97 23 45",
+    hours: {
+      weekdays: "11:00 AM - 10:00 PM",
+      weekend: "11:00 AM - 11:00 PM"
+    },
+    images: [
+      "/images/placeholder-restaurant.jpg",
+      "/images/placeholder-restaurant.jpg"
+    ],
+    features: [
+      "Sea View",
+      "Fresh Seafood",
+      "Outdoor Seating",
+      "Family Friendly"
+    ],
+    specialties: [
+      "Grilled sea bass",
+      "Seafood paella",
+      "Mediterranean mezze",
+      "Fresh oysters"
+    ],
+    reviews: []
+  },
+  "3": {
+    id: 3,
+    name: "Riad Restaurant",
+    category: "restaurants",
+    description: "Authentic tagines and couscous in a traditional riad setting",
+    rating: 4.9,
+    priceRange: "$$",
+    cuisine: "Traditional Moroccan",
+    location: "Old Medina, Tétouan",
+    address: "12 Derb El Hammam, Medina, Tétouan",
+    phone: "+212 539 98 34 56",
+    hours: {
+      weekdays: "12:00 PM - 10:00 PM",
+      weekend: "12:00 PM - 10:00 PM"
+    },
+    images: [
+      "/images/placeholder-restaurant.jpg"
+    ],
+    features: [
+      "Traditional Setting",
+      "Courtyard Dining",
+      "Live Music (Weekends)",
+      "Cooking Classes Available"
+    ],
+    specialties: [
+      "Chicken tagine with olives",
+      "Vegetable couscous",
+      "Harira soup",
+      "Moroccan pastries"
+    ],
+    reviews: []
+  }
+};
+
+const restaurant = restaurants[id as keyof typeof restaurants];
+
+if (!restaurant) {
+  return Astro.redirect('/guide/restaurants');
+}
+
+// Similar restaurants (excluding current)
+const similarRestaurants = Object.values(restaurants)
+  .filter(r => r.id !== restaurant.id)
+  .slice(0, 2);
+---
+
+<MainLayout title={`${restaurant.name} - Tétouan Guide`} lang={lang}>
+  <div class="py-20">
+    <div class="container-custom">
+      <!-- Breadcrumb -->
+      <div class="mb-8">
+        <a href="/guide" class="text-primary hover:underline">Guide</a>
+        <span class="mx-2">/</span>
+        <a href="/guide/restaurants" class="text-primary hover:underline">Restaurants</a>
+        <span class="mx-2">/</span>
+        <span class="text-gray-600">{restaurant.name}</span>
+      </div>
+
+      <!-- Header -->
+      <div class="mb-8">
+        <div class="flex justify-between items-start mb-4">
+          <h1 class="text-5xl font-serif font-bold">{restaurant.name}</h1>
+          <span class="text-2xl font-semibold text-primary">{restaurant.priceRange}</span>
+        </div>
+        <div class="flex items-center gap-4 text-lg">
+          <span class="flex items-center gap-2">
+            <span class="text-yellow-500">★</span>
+            <span class="font-semibold">{restaurant.rating}</span>
+          </span>
+          <span class="text-gray-600">•</span>
+          <span class="text-gray-600">{restaurant.cuisine}</span>
+          <span class="text-gray-600">•</span>
+          <span class="text-gray-600">{restaurant.location}</span>
+        </div>
+      </div>
+
+      <!-- Images Gallery -->
+      <div class="grid md:grid-cols-3 gap-4 mb-12">
+        {restaurant.images.map((img, idx) => (
+          <div class={`${idx === 0 ? 'md:col-span-2 md:row-span-2' : ''} aspect-video bg-gray-200 rounded-lg overflow-hidden`}>
+            <img src={img} alt={restaurant.name} class="w-full h-full object-cover" />
+          </div>
+        ))}
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-12">
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <!-- Description -->
+          <section class="mb-8">
+            <h2 class="text-3xl font-serif font-bold mb-4">About</h2>
+            <p class="text-lg text-gray-700 leading-relaxed">{restaurant.description}</p>
+          </section>
+
+          <!-- Specialties -->
+          <section class="mb-8">
+            <h2 class="text-3xl font-serif font-bold mb-4">Specialties</h2>
+            <ul class="grid md:grid-cols-2 gap-3">
+              {restaurant.specialties.map(specialty => (
+                <li class="flex items-center gap-2">
+                  <span class="text-primary">✓</span>
+                  <span>{specialty}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <!-- Features -->
+          <section class="mb-8">
+            <h2 class="text-3xl font-serif font-bold mb-4">Features</h2>
+            <div class="flex flex-wrap gap-3">
+              {restaurant.features.map(feature => (
+                <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                  {feature}
+                </span>
+              ))}
+            </div>
+          </section>
+
+          <!-- Reviews -->
+          {restaurant.reviews.length > 0 && (
+            <section class="mb-8">
+              <h2 class="text-3xl font-serif font-bold mb-6">Reviews</h2>
+              <div class="space-y-6">
+                {restaurant.reviews.map(review => (
+                  <div class="border-l-4 border-primary pl-6 py-2">
+                    <div class="flex items-center gap-4 mb-2">
+                      <span class="font-semibold">{review.author}</span>
+                      <span class="flex items-center gap-1 text-yellow-500">
+                        {Array.from({ length: review.rating }).map(() => "★")}
+                      </span>
+                      <span class="text-sm text-gray-500">{review.date}</span>
+                    </div>
+                    <p class="text-gray-700">{review.text}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="lg:col-span-1">
+          <!-- Contact Info -->
+          <div class="bg-gray-50 rounded-xl p-6 mb-6 sticky top-6">
+            <h3 class="text-xl font-serif font-bold mb-4">Information</h3>
+            
+            <div class="space-y-4">
+              <div>
+                <p class="text-sm text-gray-500 mb-1">Address</p>
+                <p class="font-medium">{restaurant.address}</p>
+              </div>
+
+              <div>
+                <p class="text-sm text-gray-500 mb-1">Phone</p>
+                <a href={`tel:${restaurant.phone}`} class="font-medium text-primary hover:underline">
+                  {restaurant.phone}
+                </a>
+              </div>
+
+              <div>
+                <p class="text-sm text-gray-500 mb-1">Hours</p>
+                <p class="font-medium">Mon-Fri: {restaurant.hours.weekdays}</p>
+                <p class="font-medium">Sat-Sun: {restaurant.hours.weekend}</p>
+              </div>
+            </div>
+
+            <div class="mt-6 space-y-3">
+              <button class="w-full bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition">
+                Reserve Table
+              </button>
+              <button class="w-full border border-primary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-primary/5 transition">
+                View on Map
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Similar Restaurants -->
+      {similarRestaurants.length > 0 && (
+        <section class="mt-16">
+          <h2 class="text-3xl font-serif font-bold mb-8">Similar Restaurants</h2>
+          <div class="grid md:grid-cols-2 gap-8">
+            {similarRestaurants.map(similar => (
+              <a 
+                href={`/guide/restaurants/${similar.id}`}
+                class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+              >
+                <div class="aspect-video bg-gray-200">
+                  <img src={similar.images[0]} alt={similar.name} class="w-full h-full object-cover" />
+                </div>
+                <div class="p-6">
+                  <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-2xl font-serif font-bold">{similar.name}</h3>
+                    <span class="text-primary font-semibold">{similar.priceRange}</span>
+                  </div>
+                  <p class="text-sm text-gray-500 mb-2">{similar.cuisine}</p>
+                  <p class="text-gray-600 mb-4">{similar.description}</p>
+                  <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                      <span class="text-yellow-500">★</span>
+                      <span class="font-semibold">{similar.rating}</span>
+                    </div>
+                    <span class="text-sm text-gray-500">{similar.location}</span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </div>
+</MainLayout>

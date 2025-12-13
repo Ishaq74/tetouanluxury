@@ -1,0 +1,296 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const pageTitle = "Analytics Dashboard | Admin Portal";
+
+// Mock analytics data
+const analytics = {
+  overview: {
+    totalRevenue: 245000,
+    revenueGrowth: 12.5,
+    totalBookings: 156,
+    bookingsGrowth: 8.3,
+    avgBookingValue: 1571,
+    avgValueGrowth: 5.2,
+    occupancyRate: 78,
+    occupancyGrowth: 3.1,
+  },
+  monthlyRevenue: [
+    { month: 'Jan', revenue: 18500 },
+    { month: 'Feb', revenue: 21000 },
+    { month: 'Mar', revenue: 19500 },
+    { month: 'Apr', revenue: 23000 },
+    { month: 'May', revenue: 27500 },
+    { month: 'Jun', revenue: 31000 },
+    { month: 'Jul', revenue: 35000 },
+    { month: 'Aug', revenue: 33500 },
+    { month: 'Sep', revenue: 25000 },
+    { month: 'Oct', revenue: 22000 },
+    { month: 'Nov', revenue: 20000 },
+    { month: 'Dec', revenue: 19000 },
+  ],
+  topVillas: [
+    { name: 'Villa Océane', bookings: 45, revenue: 78500, rating: 4.9 },
+    { name: 'Villa Montagne', bookings: 38, revenue: 65200, rating: 4.8 },
+    { name: 'Villa Palmier', bookings: 32, revenue: 54800, rating: 4.7 },
+    { name: 'Villa Jardin', bookings: 25, revenue: 38750, rating: 4.6 },
+    { name: 'Villa Sunset', bookings: 16, revenue: 27750, rating: 4.9 },
+  ],
+  bookingsBySource: [
+    { source: 'Direct Website', count: 78, percentage: 50 },
+    { source: 'Booking.com', count: 39, percentage: 25 },
+    { source: 'Airbnb', count: 23, percentage: 15 },
+    { source: 'Referral', count: 16, percentage: 10 },
+  ],
+  clientDemographics: [
+    { country: 'France', clients: 45, revenue: 98500 },
+    { country: 'USA', clients: 32, revenue: 75200 },
+    { country: 'UK', clients: 28, revenue: 62800 },
+    { country: 'Germany', clients: 22, revenue: 45700 },
+    { country: 'Spain', clients: 15, revenue: 28900 },
+    { country: 'Others', clients: 14, revenue: 33900 },
+  ],
+  recentActivity: [
+    { action: 'New booking', details: 'Villa Océane for 7 nights', time: '2 min ago', type: 'success' },
+    { action: 'Payment received', details: '€3,500 from John Smith', time: '15 min ago', type: 'success' },
+    { action: 'Review posted', details: '5 stars for Villa Montagne', time: '1 hour ago', type: 'info' },
+    { action: 'Inquiry received', details: 'Group booking request', time: '2 hours ago', type: 'warning' },
+    { action: 'Cancellation', details: 'Villa Palmier booking #1234', time: '3 hours ago', type: 'error' },
+  ],
+};
+
+const maxRevenue = Math.max(...analytics.monthlyRevenue.map(m => m.revenue));
+---
+
+<MainLayout title={pageTitle}>
+  <div class="min-h-screen bg-gray-50">
+    <!-- Admin Sidebar -->
+    <div class="flex">
+      <aside class="w-64 bg-white shadow-lg h-screen fixed left-0 top-0 overflow-y-auto">
+        <div class="p-6 border-b">
+          <h1 class="text-2xl font-bold text-gray-800">Admin Portal</h1>
+        </div>
+        <nav class="p-4">
+          <a href="/admin" class="block px-4 py-2 rounded hover:bg-gray-100">Dashboard</a>
+          <a href="/admin/analytics" class="block px-4 py-2 rounded bg-blue-100 text-blue-700">Analytics</a>
+          <a href="/admin/villas" class="block px-4 py-2 rounded hover:bg-gray-100">Villas</a>
+          <a href="/admin/bookings" class="block px-4 py-2 rounded hover:bg-gray-100">Bookings</a>
+          <a href="/admin/clients" class="block px-4 py-2 rounded hover:bg-gray-100">Clients</a>
+          <a href="/admin/staff" class="block px-4 py-2 rounded hover:bg-gray-100">Staff</a>
+          <a href="/admin/finance" class="block px-4 py-2 rounded hover:bg-gray-100">Finance</a>
+          <a href="/admin/marketing" class="block px-4 py-2 rounded hover:bg-gray-100">Marketing</a>
+          <a href="/admin/maintenance" class="block px-4 py-2 rounded hover:bg-gray-100">Maintenance</a>
+          <a href="/admin/inventory" class="block px-4 py-2 rounded hover:bg-gray-100">Inventory</a>
+          <a href="/admin/concierge" class="block px-4 py-2 rounded hover:bg-gray-100">Concierge</a>
+          <a href="/admin/guide" class="block px-4 py-2 rounded hover:bg-gray-100">Guide</a>
+          <a href="/admin/services" class="block px-4 py-2 rounded hover:bg-gray-100">Services</a>
+          <a href="/admin/blog" class="block px-4 py-2 rounded hover:bg-gray-100">Blog</a>
+          <a href="/admin/media" class="block px-4 py-2 rounded hover:bg-gray-100">Media</a>
+          <a href="/admin/settings" class="block px-4 py-2 rounded hover:bg-gray-100">Settings</a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="ml-64 flex-1 p-8">
+        <div class="mb-8 flex items-center justify-between">
+          <div>
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Analytics Dashboard</h2>
+            <p class="text-gray-600">Comprehensive insights and performance metrics</p>
+          </div>
+          <div class="flex gap-3">
+            <select class="px-4 py-2 border border-gray-300 rounded-md">
+              <option>Last 30 days</option>
+              <option>Last 90 days</option>
+              <option>Last 6 months</option>
+              <option>Last year</option>
+              <option>All time</option>
+            </select>
+            <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+              Export Report
+            </button>
+          </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-sm text-gray-600">Total Revenue</p>
+              <span class="text-green-600 text-sm font-medium">+{analytics.overview.revenueGrowth}%</span>
+            </div>
+            <p class="text-3xl font-bold text-gray-800">€{analytics.overview.totalRevenue.toLocaleString()}</p>
+            <div class="mt-4 flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              vs last period
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-sm text-gray-600">Total Bookings</p>
+              <span class="text-green-600 text-sm font-medium">+{analytics.overview.bookingsGrowth}%</span>
+            </div>
+            <p class="text-3xl font-bold text-gray-800">{analytics.overview.totalBookings}</p>
+            <div class="mt-4 flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              vs last period
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-sm text-gray-600">Avg Booking Value</p>
+              <span class="text-green-600 text-sm font-medium">+{analytics.overview.avgValueGrowth}%</span>
+            </div>
+            <p class="text-3xl font-bold text-gray-800">€{analytics.overview.avgBookingValue}</p>
+            <div class="mt-4 flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              vs last period
+            </div>
+          </div>
+
+          <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-sm text-gray-600">Occupancy Rate</p>
+              <span class="text-green-600 text-sm font-medium">+{analytics.overview.occupancyGrowth}%</span>
+            </div>
+            <p class="text-3xl font-bold text-gray-800">{analytics.overview.occupancyRate}%</p>
+            <div class="mt-4 flex items-center text-sm text-gray-600">
+              <svg class="w-4 h-4 mr-1 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              vs last period
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <!-- Revenue Chart -->
+          <div class="lg:col-span-2 bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-6">Monthly Revenue Trend</h3>
+            <div class="h-80 flex items-end justify-between gap-2">
+              {analytics.monthlyRevenue.map(month => {
+                const height = (month.revenue / maxRevenue) * 100;
+                return (
+                  <div class="flex-1 flex flex-col items-center group">
+                    <div class="w-full bg-blue-500 rounded-t hover:bg-blue-600 transition-colors cursor-pointer relative" style={`height: ${height}%`}>
+                      <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        €{month.revenue.toLocaleString()}
+                      </div>
+                    </div>
+                    <span class="text-xs text-gray-600 mt-2">{month.month}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <!-- Booking Sources -->
+          <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-6">Booking Sources</h3>
+            <div class="space-y-4">
+              {analytics.bookingsBySource.map(source => (
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-700">{source.source}</span>
+                    <span class="text-sm text-gray-600">{source.count} ({source.percentage}%)</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-600 h-2 rounded-full" style={`width: ${source.percentage}%`}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <!-- Top Performing Villas -->
+          <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-6">Top Performing Villas</h3>
+            <div class="space-y-4">
+              {analytics.topVillas.map((villa, index) => (
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div class="flex items-center gap-4">
+                    <span class="text-2xl font-bold text-gray-400">#{index + 1}</span>
+                    <div>
+                      <p class="font-medium text-gray-800">{villa.name}</p>
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="text-sm text-gray-600">{villa.bookings} bookings</span>
+                        <span class="text-yellow-500 text-sm">★ {villa.rating}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-lg font-bold text-green-600">€{villa.revenue.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Client Demographics -->
+          <div class="bg-white rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-6">Client Demographics</h3>
+            <div class="space-y-3">
+              {analytics.clientDemographics.map(demo => (
+                <div class="flex items-center justify-between p-3 hover:bg-gray-50 rounded">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                      <span class="text-sm font-bold text-blue-600">{demo.country.substring(0, 2).toUpperCase()}</span>
+                    </div>
+                    <div>
+                      <p class="font-medium text-gray-800">{demo.country}</p>
+                      <p class="text-sm text-gray-600">{demo.clients} clients</p>
+                    </div>
+                  </div>
+                  <span class="font-semibold text-gray-800">€{demo.revenue.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white rounded-lg shadow p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-6">Recent Activity</h3>
+          <div class="space-y-4">
+            {analytics.recentActivity.map(activity => (
+              <div class="flex items-center gap-4 p-4 border-l-4 bg-gray-50 rounded-r" class:list={[
+                activity.type === 'success' && 'border-green-500',
+                activity.type === 'info' && 'border-blue-500',
+                activity.type === 'warning' && 'border-yellow-500',
+                activity.type === 'error' && 'border-red-500',
+              ]}>
+                <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center" class:list={[
+                  activity.type === 'success' && 'bg-green-100',
+                  activity.type === 'info' && 'bg-blue-100',
+                  activity.type === 'warning' && 'bg-yellow-100',
+                  activity.type === 'error' && 'bg-red-100',
+                ]}>
+                  <svg class="w-5 h-5" class:list={[
+                    activity.type === 'success' && 'text-green-600',
+                    activity.type === 'info' && 'text-blue-600',
+                    activity.type === 'warning' && 'text-yellow-600',
+                    activity.type === 'error' && 'text-red-600',
+                  ]} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <p class="font-medium text-gray-800">{activity.action}</p>
+                  <p class="text-sm text-gray-600">{activity.details}</p>
+                </div>
+                <span class="text-sm text-gray-500">{activity.time}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</MainLayout>

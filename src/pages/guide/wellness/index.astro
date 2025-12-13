@@ -1,0 +1,104 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+
+const lang = 'en';
+
+const wellness = [
+  {
+    id: 1,
+    name: "Riad Spa & Hammam",
+    category: "wellness",
+    description: "Traditional Moroccan hammam and spa treatments in authentic riad setting",
+    rating: 4.9,
+    priceRange: "$$$",
+    image: "/images/placeholder-wellness.jpg",
+    type: "Spa & Hammam",
+    specialties: "Traditional Hammam, Massage"
+  },
+  {
+    id: 2,
+    name: "Yoga by the Sea",
+    category: "wellness",
+    description: "Beachfront yoga classes with Mediterranean views",
+    rating: 4.7,
+    priceRange: "$$",
+    image: "/images/placeholder-wellness.jpg",
+    type: "Yoga Studio",
+    specialties: "Hatha, Vinyasa"
+  },
+  {
+    id: 3,
+    name: "Wellness Retreat Center",
+    category: "wellness",
+    description: "Holistic wellness programs combining meditation, nutrition, and spa",
+    rating: 4.8,
+    priceRange: "$$$",
+    image: "/images/placeholder-wellness.jpg",
+    type: "Wellness Center",
+    specialties: "Meditation, Nutrition, Detox"
+  }
+];
+---
+
+<MainLayout title="Wellness in Tétouan - Local Guide" lang={lang}>
+  <div class="py-20">
+    <div class="container-custom">
+      <div class="mb-12">
+        <a href="/guide" class="text-primary hover:underline mb-4 inline-block">← Back to Guide</a>
+        <h1 class="text-5xl font-serif font-bold mb-6">Wellness in Tétouan</h1>
+        <p class="text-lg text-gray-600 max-w-2xl">
+          Relax and rejuvenate with traditional hammams, spa treatments, yoga, and wellness programs.
+        </p>
+      </div>
+
+      <div class="mb-8 flex gap-4 flex-wrap">
+        <input 
+          type="text" 
+          placeholder="Search wellness..." 
+          class="px-4 py-2 border rounded-lg flex-1 min-w-[200px]"
+        />
+        <select class="px-4 py-2 border rounded-lg">
+          <option value="">All Types</option>
+          <option value="spa">Spa & Hammam</option>
+          <option value="yoga">Yoga</option>
+          <option value="wellness">Wellness Centers</option>
+        </select>
+        <select class="px-4 py-2 border rounded-lg">
+          <option value="">All Prices</option>
+          <option value="$">Budget ($)</option>
+          <option value="$$">Moderate ($$)</option>
+          <option value="$$$">Premium ($$$)</option>
+        </select>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {wellness.map(place => (
+          <a 
+            href={`/guide/wellness/${place.id}`}
+            class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <div class="aspect-video bg-gray-200">
+              <img 
+                src={place.image} 
+                alt={place.name}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-2xl font-serif font-bold">{place.name}</h3>
+                <span class="text-primary font-semibold">{place.priceRange}</span>
+              </div>
+              <p class="text-sm text-gray-500 mb-2">{place.type}</p>
+              <p class="text-gray-600 mb-4">{place.description}</p>
+              <div class="flex items-center gap-2">
+                <span class="text-yellow-500">★</span>
+                <span class="font-semibold">{place.rating}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</MainLayout>

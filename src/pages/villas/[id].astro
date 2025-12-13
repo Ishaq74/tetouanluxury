@@ -1,0 +1,182 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const { id } = Astro.params;
+
+// Mock data - in production this would fetch from database
+const villa = {
+  id: id || '1',
+  name: 'Villa Azure',
+  pricePerNight: 450,
+  bedrooms: 4,
+  bathrooms: 3,
+  pool: true,
+  images: [
+    'https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200',
+    'https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=1200',
+    'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?q=80&w=1200',
+  ],
+  description: 'Experience luxury in this stunning modern villa with panoramic ocean views. This beautiful property features spacious living areas, a private heated pool, and state-of-the-art amenities.',
+  features: [
+    'Private heated swimming pool',
+    'Ocean views from all rooms',
+    'Fully equipped modern kitchen',
+    'High-speed fiber optic WiFi',
+    'Smart home automation',
+    'Private parking for 2 cars',
+    '24/7 security',
+    'Concierge service',
+  ],
+  location: 'Cabo Negro, Tétouan',
+  maxGuests: 8,
+};
+
+const lang = 'en';
+---
+
+<MainLayout title={`${villa.name} - Tétouan Luxury Villas`} lang={lang}>
+  <div class="py-8">
+    <!-- Image Gallery -->
+    <div class="container-custom mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="col-span-1">
+          <img 
+            src={villa.images[0]} 
+            alt={villa.name}
+            class="w-full h-96 object-cover rounded-lg"
+          />
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          {villa.images.slice(1).map((img) => (
+            <img 
+              src={img} 
+              alt={villa.name}
+              class="w-full h-44 object-cover rounded-lg"
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Villa Details -->
+    <div class="container-custom">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Content -->
+        <div class="lg:col-span-2">
+          <h1 class="text-4xl font-serif font-bold mb-4">{villa.name}</h1>
+          
+          <div class="flex items-center gap-6 text-gray-600 mb-6">
+            <span class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+              Up to {villa.maxGuests} guests
+            </span>
+            <span class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+              </svg>
+              {villa.bedrooms} Bedrooms
+            </span>
+            <span class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+              </svg>
+              {villa.bathrooms} Bathrooms
+            </span>
+          </div>
+
+          <div class="mb-8">
+            <h2 class="text-2xl font-serif font-bold mb-4">Description</h2>
+            <p class="text-gray-700 leading-relaxed">{villa.description}</p>
+          </div>
+
+          <div class="mb-8">
+            <h2 class="text-2xl font-serif font-bold mb-4">Features & Amenities</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {villa.features.map((feature) => (
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-success flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  <span class="text-gray-700">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 class="text-2xl font-serif font-bold mb-4">Location</h2>
+            <p class="text-gray-700 mb-4">{villa.location}</p>
+            <div class="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+              <p class="text-gray-500">Map integration coming soon</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Booking Card -->
+        <div class="lg:col-span-1">
+          <div class="card sticky top-24">
+            <div class="mb-6">
+              <div class="flex items-baseline gap-2">
+                <span class="text-4xl font-bold text-primary">€{villa.pricePerNight}</span>
+                <span class="text-gray-600">/ night</span>
+              </div>
+            </div>
+
+            <form class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Check-in</label>
+                <input 
+                  type="date" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  required
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Check-out</label>
+                <input 
+                  type="date" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent"
+                  required
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Guests</label>
+                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent">
+                  {Array.from({ length: villa.maxGuests }, (_, i) => i + 1).map((num) => (
+                    <option value={num}>{num} guest{num > 1 ? 's' : ''}</option>
+                  ))}
+                </select>
+              </div>
+
+              <button type="submit" class="btn-primary w-full text-lg">
+                Reserve Now
+              </button>
+            </form>
+
+            <div class="mt-6 pt-6 border-t border-gray-200">
+              <p class="text-sm text-gray-600 mb-2">You won't be charged yet</p>
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between">
+                  <span class="text-gray-600">€{villa.pricePerNight} × 7 nights</span>
+                  <span class="font-medium">€{villa.pricePerNight * 7}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Cleaning fee</span>
+                  <span class="font-medium">€150</span>
+                </div>
+                <div class="flex justify-between pt-2 border-t border-gray-200">
+                  <span class="font-bold">Total</span>
+                  <span class="font-bold text-lg">€{villa.pricePerNight * 7 + 150}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</MainLayout>

@@ -1,0 +1,165 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+const lang = 'en';
+
+const reviews = [
+  {
+    id: '1',
+    guestName: 'Sarah & Michael Thompson',
+    location: 'London, UK',
+    rating: 5,
+    date: '2024-08-15',
+    villa: 'Villa Azure',
+    category: 'FAMILY',
+    comment: 'Our stay at Villa Azure was absolutely perfect! The villa exceeded all expectations - pristine, beautifully decorated, and with every amenity we could need. The pool was a hit with our kids, and the beach was just a short walk away. The concierge team was incredibly helpful, arranging a private chef dinner that was the highlight of our trip. We will definitely be back!',
+    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100',
+  },
+  {
+    id: '2',
+    guestName: 'Jean-Pierre Dubois',
+    location: 'Paris, France',
+    rating: 5,
+    date: '2024-07-22',
+    villa: 'Villa Serenity',
+    category: 'COUPLE',
+    comment: 'Une expérience exceptionnelle! La villa était impeccable, le service irréprochable. La piscine privée et la vue sur la mer ont rendu notre séjour romantique inoubliable. L\'équipe de conciergerie a été aux petits soins. Nous recommandons vivement!',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=100',
+  },
+  {
+    id: '3',
+    guestName: 'Ahmed Al-Rashid',
+    location: 'Dubai, UAE',
+    rating: 5,
+    date: '2024-06-10',
+    villa: 'Villa Paradise',
+    category: 'GROUP',
+    comment: 'Spectacular property! We came with a group of friends and the villa had more than enough space for everyone. The modern amenities, especially the WiFi and smart home features, were excellent. The staff was professional and discrete. Location is perfect - close to both the beach and Tétouan\'s medina. Highly recommended for groups!',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100',
+  },
+  {
+    id: '4',
+    guestName: 'Isabella & Marco Rossi',
+    location: 'Milan, Italy',
+    rating: 5,
+    date: '2024-05-18',
+    villa: 'Villa Azure',
+    category: 'COUPLE',
+    comment: 'Che meraviglia! The villa was spotless and beautifully maintained. We loved the modern kitchen and the outdoor dining area by the pool. The surrounding area is charming with great restaurants and cafes. Perfect for a romantic getaway. The attention to detail and quality of service was outstanding.',
+    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=100',
+  },
+  {
+    id: '5',
+    guestName: 'David & Rachel Cohen',
+    location: 'New York, USA',
+    rating: 5,
+    date: '2024-04-25',
+    villa: 'Villa Serenity',
+    category: 'FAMILY',
+    comment: 'Best family vacation ever! The villa was perfect for our family of 5. Kids loved the pool and we appreciated the safety features. The housekeeping team kept everything pristine. Being able to walk to the beach was wonderful. The concierge helped us discover amazing local spots. Worth every penny!',
+    image: 'https://images.unsplash.com/photo-1463453091185-61582044d556?q=80&w=100',
+  },
+];
+
+const stats = {
+  averageRating: 5.0,
+  totalReviews: reviews.length,
+  recommendationRate: 100,
+};
+---
+
+<MainLayout title="Guest Reviews - Tétouan Luxury Villas" lang={lang}>
+  <div class="py-20">
+    <div class="container-custom">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-5xl font-serif font-bold mb-4">Guest Reviews</h1>
+        <p class="text-xl text-gray-600">See what our guests say about their stays</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+          <div class="flex items-center justify-center mb-4">
+            {Array.from({ length: 5 }).map(() => (
+              <svg class="w-8 h-8 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+            ))}
+          </div>
+          <p class="text-4xl font-bold text-primary mb-2">{stats.averageRating}</p>
+          <p class="text-gray-600">Average Rating</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+          <div class="mb-4">
+            <svg class="w-16 h-16 text-accent mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+          </div>
+          <p class="text-4xl font-bold text-primary mb-2">{stats.totalReviews}+</p>
+          <p class="text-gray-600">Happy Guests</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+          <div class="mb-4">
+            <svg class="w-16 h-16 text-accent mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+            </svg>
+          </div>
+          <p class="text-4xl font-bold text-primary mb-2">{stats.recommendationRate}%</p>
+          <p class="text-gray-600">Would Recommend</p>
+        </div>
+      </div>
+
+      <!-- Reviews -->
+      <div class="max-w-4xl mx-auto space-y-8">
+        {reviews.map((review) => (
+          <div class="bg-white rounded-lg shadow-lg p-8">
+            <div class="flex items-start gap-4 mb-4">
+              <img src={review.image} alt={review.guestName} class="w-16 h-16 rounded-full object-cover" />
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-2">
+                  <div>
+                    <h3 class="font-bold text-lg">{review.guestName}</h3>
+                    <p class="text-sm text-gray-600">{review.location}</p>
+                  </div>
+                  <div class="text-right">
+                    <div class="flex items-center gap-1 mb-1">
+                      {Array.from({ length: review.rating }).map(() => (
+                        <svg class="w-5 h-5 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                        </svg>
+                      ))}
+                    </div>
+                    <p class="text-sm text-gray-600">
+                      {new Date(review.date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                    {review.villa}
+                  </span>
+                  <span class="px-3 py-1 bg-accent/10 text-accent rounded-full text-sm">
+                    {review.category}
+                  </span>
+                </div>
+                <p class="text-gray-700 leading-relaxed">{review.comment}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-16 text-center bg-primary text-white rounded-lg shadow-lg p-12">
+        <h2 class="text-3xl font-serif font-bold mb-4">Ready to Create Your Own Story?</h2>
+        <p class="text-xl mb-8 text-gray-200">Join our happy guests and experience luxury in Tétouan</p>
+        <a href="/villas" class="btn-secondary text-lg">
+          Book Your Villa
+        </a>
+      </div>
+    </div>
+  </div>
+</MainLayout>

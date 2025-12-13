@@ -1,0 +1,111 @@
+---
+import MainLayout from '../../../layouts/MainLayout.astro';
+
+const lang = 'en';
+
+// Mock data - in production this would come from the database
+const restaurants = [
+  {
+    id: 1,
+    name: "La Table de Tétouan",
+    category: "restaurants",
+    description: "Fine dining with traditional Moroccan cuisine and modern twists",
+    rating: 4.8,
+    priceRange: "$$$",
+    image: "/images/placeholder-restaurant.jpg",
+    cuisine: "Moroccan Fine Dining",
+    location: "Medina, Tétouan"
+  },
+  {
+    id: 2,
+    name: "Café Panoramique",
+    category: "restaurants",
+    description: "Stunning views of the Mediterranean with fresh seafood specialties",
+    rating: 4.6,
+    priceRange: "$$",
+    image: "/images/placeholder-restaurant.jpg",
+    cuisine: "Seafood & Mediterranean",
+    location: "Marina, Tétouan"
+  },
+  {
+    id: 3,
+    name: "Riad Restaurant",
+    category: "restaurants",
+    description: "Authentic tagines and couscous in a traditional riad setting",
+    rating: 4.9,
+    priceRange: "$$",
+    image: "/images/placeholder-restaurant.jpg",
+    cuisine: "Traditional Moroccan",
+    location: "Old Medina, Tétouan"
+  }
+];
+---
+
+<MainLayout title="Restaurants in Tétouan - Local Guide" lang={lang}>
+  <div class="py-20">
+    <div class="container-custom">
+      <!-- Header -->
+      <div class="mb-12">
+        <a href="/guide" class="text-primary hover:underline mb-4 inline-block">← Back to Guide</a>
+        <h1 class="text-5xl font-serif font-bold mb-6">Restaurants in Tétouan</h1>
+        <p class="text-lg text-gray-600 max-w-2xl">
+          Discover the best dining experiences in Tétouan, from traditional Moroccan cuisine to international flavors.
+        </p>
+      </div>
+
+      <!-- Filters -->
+      <div class="mb-8 flex gap-4 flex-wrap">
+        <input 
+          type="text" 
+          placeholder="Search restaurants..." 
+          class="px-4 py-2 border rounded-lg flex-1 min-w-[200px]"
+        />
+        <select class="px-4 py-2 border rounded-lg">
+          <option value="">All Cuisines</option>
+          <option value="moroccan">Moroccan</option>
+          <option value="seafood">Seafood</option>
+          <option value="international">International</option>
+        </select>
+        <select class="px-4 py-2 border rounded-lg">
+          <option value="">All Prices</option>
+          <option value="$">Budget ($)</option>
+          <option value="$$">Moderate ($$)</option>
+          <option value="$$$">Upscale ($$$)</option>
+        </select>
+      </div>
+
+      <!-- Restaurant Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {restaurants.map(restaurant => (
+          <a 
+            href={`/guide/restaurants/${restaurant.id}`}
+            class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+          >
+            <div class="aspect-video bg-gray-200">
+              <img 
+                src={restaurant.image} 
+                alt={restaurant.name}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-2xl font-serif font-bold">{restaurant.name}</h3>
+                <span class="text-primary font-semibold">{restaurant.priceRange}</span>
+              </div>
+              <p class="text-sm text-gray-500 mb-2">{restaurant.cuisine}</p>
+              <p class="text-gray-600 mb-4">{restaurant.description}</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                  <span class="text-yellow-500">★</span>
+                  <span class="font-semibold">{restaurant.rating}</span>
+                </div>
+                <span class="text-sm text-gray-500">{restaurant.location}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</MainLayout>
