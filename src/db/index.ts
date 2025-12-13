@@ -1,6 +1,6 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import * as schema from './schema';
+import * as schema from '@db/schema';
 
 // Determine database connection based on environment
 const isProduction = process.env.NODE_ENV === 'production';
@@ -38,5 +38,9 @@ export async function closeConnection() {
 export const dbInfo = {
   isProduction,
   hasConnection: !!connectionString,
+};
+
+// Barrel export for alias support
+export * from './schema';
   database: isProduction ? 'NeonDB' : 'Local PostgreSQL',
 };

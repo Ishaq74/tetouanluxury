@@ -55,6 +55,8 @@ export const ar = {
   view_list: 'عرض القائمة',
   view_map: 'عرض الخريطة',
 
+  // Blog
+  // (doublons supprimés, voir fin du fichier pour la version finale)
   // Booking Flow
   step_dates: 'التواريخ',
   step_details: 'التفاصيل',

@@ -4,7 +4,6 @@ import { Menu, X, Globe, User, ShieldCheck, Bell, CloudSun, LogOut, LogIn } from
 import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 import { UserRole } from '../../types';
 import { MOCK_NOTIFICATIONS } from '../../constants';
-import { useLanguage } from '../../LanguageContext';
 import { useUser } from '../../auth/UserContext';
 
 const WeatherWidget: React.FC = () => {

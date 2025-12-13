@@ -8,10 +8,7 @@ import {
 } from 'lucide-react';
 import { PREMIUM_SERVICES, VILLAS } from '../constants';
 import { BookingStatus, ClientInteraction, Booking } from '../types';
-import { useLanguage } from '../LanguageContext';
-import { useData } from '../DataContext';
-import { useToast } from '../ToastContext';
-import { useUser } from '../auth/UserContext';
+import { t } from '@/lib/translations';
 import { generateRentalContract } from '../lib/pdf-generator';
 import { generateDoorCode } from '../lib/booking-logic';
 
@@ -27,12 +24,16 @@ const QuickAction = ({ icon: Icon, label, onClick, highlight = false }: any) => 
     </button>
 );
 
-export const PortalPage: React.FC = () => {
-    const { t } = useLanguage();
-    const { bookings, clientInteractions, addInteraction, updateClient, clients } = useData(); 
-    const { showToast } = useToast();
-    const { user } = useUser();
+// Props à passer depuis Astro : bookings, clientInteractions, user, addInteraction, showToast
+interface PortalPageProps {
+  bookings: Booking[];
+  clientInteractions: ClientInteraction[];
+  user: { name: string; email: string };
+  addInteraction: (interaction: ClientInteraction) => void;
+  showToast: (msg: string, type?: string) => void;
+}
 
+export const PortalPage: React.FC<PortalPageProps> = ({ bookings, clientInteractions, user, addInteraction, showToast }) => {
     // State
     const [activeTab, setActiveTab] = useState<'HOME' | 'BOOKINGS' | 'CHAT' | 'SERVICES'>('HOME');
     const [showWifiModal, setShowWifiModal] = useState(false);
@@ -47,7 +48,7 @@ export const PortalPage: React.FC = () => {
     const villa = VILLAS.find(v => v.id === displayBooking?.villaId);
     
     // Real Chat Data
-    const myClientId = 'CL-001'; // Mock ID for logged in user, in prod use user.id mapping
+    const myClientId = 'CL-001'; // Mock ID for logged in user, en prod utiliser user.id
     const myInteractions = clientInteractions.filter(i => i.clientId === myClientId).sort((a,b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     // Chat Scroll
@@ -104,7 +105,7 @@ export const PortalPage: React.FC = () => {
                 <div className="absolute bottom-0 left-0 p-6 w-full">
                     <div className="flex justify-between items-end">
                         <div>
-                            <p className="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">{t('portal_welcome')}</p>
+                            <p className="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">{t('portal_welcome', 'fr')}</p>
                             <h1 className="text-3xl font-serif text-slate-900 font-bold leading-none">{currentUserName.split(' ')[0]}</h1>
                         </div>
                         <div className="text-right bg-white/20 backdrop-blur-md p-2 rounded-lg border border-white/30 text-slate-800">

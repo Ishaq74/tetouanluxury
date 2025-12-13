@@ -1,5 +1,5 @@
 import { defineMiddleware } from 'astro:middleware';
-import { auth } from './auth';
+import { auth } from '@auth/index';
 
 const protectedRoutes = {
   admin: /^\/admin/,

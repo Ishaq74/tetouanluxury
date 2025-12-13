@@ -3,8 +3,8 @@
  * Run this script to populate the database with initial data
  */
 
-import { db } from './index';
-import { villas, users, clients, bookings, blogPosts } from './schema';
+import { db } from '@db/index';
+import { villas, users, clients, bookings, blogPosts } from '@db/schema';
 
 export async function seedDatabase() {
   try {

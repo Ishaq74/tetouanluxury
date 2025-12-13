@@ -1,17 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-    Download, MessageCircle, Wifi, Map as MapIcon, Coffee, X, ChefHat, Car, 
-    CheckCircle, Upload, ArrowRight, Check, User, Calendar, CreditCard, 
-    FileText, Star, ShoppingBag, Key, BellRing, Eraser, Send, Phone, MapPin,
-    ThermometerSun, Moon, Sun, Lock, BookOpen, Plus, Minus, ShoppingCart, Home
+        Download, MessageCircle, Wifi, Map as MapIcon, Coffee, X, ChefHat, Car, 
+        CheckCircle, Upload, ArrowRight, Check, User, Calendar, CreditCard, 
+        FileText, Star, ShoppingBag, Key, BellRing, Eraser, Send, Phone, MapPin,
+        ThermometerSun, Moon, Sun, Lock, BookOpen, Plus, Minus, ShoppingCart, Home
 } from 'lucide-react';
-import { PREMIUM_SERVICES, GROCERY_CATALOG, MOCK_CLIENT_INTERACTIONS, VILLAS } from '../constants';
-import { BookingStatus, ClientInteraction, ServiceRequest, Booking } from '../types';
-import { useLanguage } from '../LanguageContext';
-import { useData } from '../DataContext';
-import { useToast } from '../ToastContext';
-import { useUser } from '../auth/UserContext';
 import { PremiumImage } from '../design/components/Common';
+
+// Toutes les données et fonctions nécessaires sont passées via les props depuis Astro
+// bookings, user, showToast, t, PREMIUM_SERVICES, MOCK_CLIENT_INTERACTIONS, VILLAS
+
+type PortalProps = {
+    bookings: any[];
+    user: any;
+    showToast: (msg: string, type: string) => void;
+    t: (key: string) => string;
+    PREMIUM_SERVICES: any[];
+    MOCK_CLIENT_INTERACTIONS: any[];
+    VILLAS: any[];
+};
+
+const BookingStatus = {
+    CONFIRMED: 'CONFIRMED',
+    CHECKED_IN: 'CHECKED_IN',
+};
 
 // --- COMPONENTS ---
 
@@ -46,23 +58,17 @@ const ServiceCard = ({ service, onSelect }: any) => (
 
 // --- MAIN PAGE ---
 
-export const PortalPage: React.FC = () => {
-    const { t } = useLanguage();
-    const { bookings, serviceRequests, addServiceRequest } = useData(); 
-    const { showToast } = useToast();
-    const { user } = useUser();
-
+const Portal: React.FC<PortalProps> = ({ bookings, user, showToast, t, PREMIUM_SERVICES, MOCK_CLIENT_INTERACTIONS, VILLAS }) => {
     // State
     const [activeTab, setActiveTab] = useState<'HOME' | 'BOOKINGS' | 'CHAT' | 'SERVICES'>('HOME');
     const [showWifiModal, setShowWifiModal] = useState(false);
     const [showDoorCode, setShowDoorCode] = useState(false);
     const [showCheckIn, setShowCheckIn] = useState(false);
     const [chatMessage, setChatMessage] = useState('');
-    const [localChat, setLocalChat] = useState<ClientInteraction[]>([]);
-    
+    const [localChat, setLocalChat] = useState<any[]>([]);
+
     // User Data Handling
     const currentUserName = user?.name || 'Invité';
-    // Mock Logic: If logged in as specific demo user, show specific booking, else generic
     const myBookings = bookings.filter(b => b.clientName === currentUserName || b.clientEmail === user?.email);
     const displayBooking = myBookings.find(b => b.status === BookingStatus.CONFIRMED || b.status === BookingStatus.CHECKED_IN) || bookings[0];
     const villa = VILLAS.find(v => v.id === displayBooking?.villaId);
@@ -70,12 +76,12 @@ export const PortalPage: React.FC = () => {
     // Chat Scroll
     const chatEndRef = useRef<HTMLDivElement>(null);
     useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [localChat, activeTab]);
-    useEffect(() => { setLocalChat(MOCK_CLIENT_INTERACTIONS.filter(i => i.clientId === 'CL-001')); }, []);
+    useEffect(() => { setLocalChat(MOCK_CLIENT_INTERACTIONS.filter(i => i.clientId === 'CL-001')); }, [MOCK_CLIENT_INTERACTIONS]);
 
     const handleSendMessage = (e: React.FormEvent) => {
         e.preventDefault();
         if(!chatMessage.trim()) return;
-        const newMsg: ClientInteraction = { id: Date.now().toString(), clientId: 'CL-001', type: 'WHATSAPP', direction: 'INBOUND', content: chatMessage, date: 'Now' };
+        const newMsg = { id: Date.now().toString(), clientId: 'CL-001', type: 'WHATSAPP', direction: 'INBOUND', content: chatMessage, date: 'Now' };
         setLocalChat([...localChat, newMsg]);
         setChatMessage('');
         setTimeout(() => {
@@ -372,5 +378,6 @@ export const PortalPage: React.FC = () => {
     );
 };
 
+export default Portal;
 // Simple Icon component for placeholder
 const ConstructionIcon = (props: any) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="6" width="20" height="8" rx="1"/><path d="M17 14v7"/><path d="M7 14v7"/><path d="M17 3v3"/><path d="M7 3v3"/><path d="M10 14 2.3 6.3"/><path d="m14 6 7.7 7.7"/><path d="m8 6 8 8"/></svg>;

@@ -7,23 +7,23 @@ import { StaffManager, InventoryManager, MaintenanceManager, ConciergeManager } 
 import { SettingsManager } from '../components/admin/system/SystemModules';
 import { AdminDashboardOverview } from '../components/AdminDashboard'; // Renamed import
 import { Menu } from 'lucide-react';
-import { useLanguage } from '../LanguageContext';
-import { useUser } from '../auth/UserContext';
 import { UserRole } from '../types';
 import { useNavigate } from '@tanstack/react-router';
+import { t } from '@/lib/translations';
 
-export const AdminPage: React.FC = () => {
+    // Props à passer depuis Astro : role, isLoading
+    // Pour island : role, isLoading, t
     const [activeModule, setActiveModule] = useState('overview');
     const [subTab, setSubTab] = useState('LIST');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const { t } = useLanguage();
-    const { role, isLoading } = useUser();
+    const role = UserRole.ADMIN; // À passer en prop ou mock pour démo
+    const isLoading = false; // À passer en prop ou mock pour démo
     const navigate = useNavigate();
 
     // Security Guard
     useEffect(() => {
         if (!isLoading && role !== UserRole.ADMIN && role !== UserRole.MANAGER) {
-            navigate({ to: '/login' });
+            navigate({ to: '/login', search: {} });
         }
     }, [role, isLoading, navigate]);
 

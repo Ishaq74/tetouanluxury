@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-// import { db } from '../../db'; // TODO: Implement database integration
+// import { db } from '@db/index'; // TODO: Implement database integration
 
 export const GET: APIRoute = async ({ request }) => {
   try {

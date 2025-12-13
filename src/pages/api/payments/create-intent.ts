@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { createPaymentIntent } from '../../../lib/stripe';
+import { createPaymentIntent } from '@lib/stripe';
 
 export const POST: APIRoute = async ({ request }) => {
   try {

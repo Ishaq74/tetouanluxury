@@ -57,4 +57,10 @@ export const en = {
   contact_title: 'Get in Touch',
   contact_desc: 'Our concierge team is available 24/7 to assist with your reservation and any special requests.',
   contact_btn: 'Send Message',
+  // Blog
+  blog_title: 'Our Journal',
+  blog_subtitle: 'Stories, tips, and inspiration from Tétouan and our villas.',
+  blog_read_more: 'Read more',
+  blog_related: 'Related Posts',
+  blog_back: 'Back to Journal',
 };

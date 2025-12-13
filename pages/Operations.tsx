@@ -8,10 +8,7 @@ import {
     Plus, MapPin, ChevronRight, Luggage, BellRing, Car, ChefHat, LogIn, LogOut, Lock, Home,
     ThumbsUp, ThumbsDown, Users
 } from 'lucide-react';
-import { useData } from '../DataContext';
-import { useToast } from '../ToastContext';
-import { useUser } from '../auth/UserContext';
-import { useLanguage } from '../LanguageContext';
+import { t } from '@/lib/translations';
 import { Modal } from '../components/admin/AdminShared';
 
 // --- COMPOSANT : BADGE DE STATUT ---
@@ -40,15 +37,8 @@ const StatusBadge = ({ status }: { status: string }) => {
 // 1. VUE STAFF (MOBILE FIRST - HOSPITALITY OS)
 // ==================================================================================
 const EmployeeView = () => {
-    const { user } = useUser();
-    const { t } = useLanguage();
-    const { 
-        tasks, updateTask, addTask, 
-        bookings, updateBookingStatus, 
-        villas, villaStatuses, updateVillaStatus,
-        serviceRequests, updateServiceRequestStatus 
-    } = useData();
-    const { showToast } = useToast();
+    // Props à passer depuis Astro : user, tasks, bookings, villas, villaStatuses, serviceRequests, showToast, etc.
+    // const t = (key: string) => key; // fallback si besoin
     
     const [activeTab, setActiveTab] = useState<'DASH' | 'MOVE' | 'MISSIONS' | 'REQ'>('DASH');
     

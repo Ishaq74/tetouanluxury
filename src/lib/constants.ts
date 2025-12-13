@@ -2,7 +2,7 @@
 // FRONTEND DATA LAYER
 // Note: Seed data is now in src/db/seed.ts and managed by Drizzle ORM
 // The following constants are kept for backward compatibility with existing React components
-// import * as Seed from './database/seed';
+// import * as Seed from '@db/seed';
 
 // --- UI CONSTANTS ---
 export const COLORS = {

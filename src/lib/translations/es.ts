@@ -55,6 +55,8 @@ export const es = {
   view_list: 'Vista de Lista',
   view_map: 'Vista de Mapa',
 
+  // Blog
+  // (doublons supprimés, voir fin du fichier pour la version finale)
   // Booking Flow
   step_dates: 'Fechas',
   step_details: 'Detalles',

@@ -5,6 +5,12 @@ import { BookingStatus, Client, ServiceRequest, BlogPost, Villa, HomePageContent
 import { DollarSign, Calendar, Users, AlertCircle, TrendingUp } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 import { useData } from '../DataContext';
+import { useToast } from '@/ToastContext';
+import { useLanguage } from '@/LanguageContext';
+import { useData } from '@/DataContext';
+import { useToast } from '@/ToastContext';
+import { useLanguage } from '@/LanguageContext';
+import { useData } from '@/DataContext';
 
 // This component now ONLY renders the Overview. 
 // Other modules have been moved to their respective files in components/admin/...

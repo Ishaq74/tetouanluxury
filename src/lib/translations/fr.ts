@@ -57,4 +57,10 @@ export const fr = {
   contact_title: 'Contactez-nous',
   contact_desc: 'Notre équipe de conciergerie est disponible 24/7 pour vous assister dans votre réservation.',
   contact_btn: 'Envoyer le Message',
+  // Blog
+  blog_title: 'Notre Journal',
+  blog_subtitle: 'Histoires, conseils et inspiration de Tétouan et de nos villas.',
+  blog_read_more: 'Lire la suite',
+  blog_related: 'Articles similaires',
+  blog_back: 'Retour au journal',
 };
