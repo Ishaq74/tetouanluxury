@@ -1,0 +1,195 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+const lang = 'en';
+
+// Mock bookings data
+const bookings = [
+  {
+    id: 'BK-2024-001',
+    clientName: 'John Smith',
+    clientEmail: 'john.smith@example.com',
+    villaName: 'Villa Azure',
+    checkIn: '2024-12-20',
+    checkOut: '2024-12-27',
+    guests: 4,
+    totalPrice: 3150,
+    status: 'CONFIRMED',
+  },
+  {
+    id: 'BK-2024-002',
+    clientName: 'Marie Dubois',
+    clientEmail: 'marie.dubois@example.com',
+    villaName: 'Villa Serenity',
+    checkIn: '2024-12-22',
+    checkOut: '2024-12-29',
+    guests: 6,
+    totalPrice: 3150,
+    status: 'PENDING',
+  },
+  {
+    id: 'BK-2024-003',
+    clientName: 'Ahmed Hassan',
+    clientEmail: 'ahmed.hassan@example.com',
+    villaName: 'Villa Paradise',
+    checkIn: '2025-01-05',
+    checkOut: '2025-01-12',
+    guests: 8,
+    totalPrice: 3150,
+    status: 'CONFIRMED',
+  },
+];
+---
+
+<MainLayout title="Manage Bookings - Admin" lang={lang}>
+  <div class="min-h-screen bg-gray-100">
+    <div class="flex">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-primary text-white min-h-screen">
+        <div class="p-6">
+          <h2 class="text-2xl font-serif font-bold mb-8">
+            <a href="/admin">Admin Panel</a>
+          </h2>
+          
+          <nav class="space-y-2">
+            <div class="mb-6">
+              <h3 class="text-xs uppercase text-gray-400 mb-2">Commercial</h3>
+              <a href="/admin/bookings" class="block px-4 py-2 rounded bg-white/20">Bookings</a>
+              <a href="/admin/clients" class="block px-4 py-2 rounded hover:bg-white/10">Clients</a>
+              <a href="/admin/villas" class="block px-4 py-2 rounded hover:bg-white/10">Villas & Rates</a>
+            </div>
+            <div class="mb-6">
+              <h3 class="text-xs uppercase text-gray-400 mb-2">Operations</h3>
+              <a href="/admin/staff" class="block px-4 py-2 rounded hover:bg-white/10">Staff</a>
+              <a href="/admin/maintenance" class="block px-4 py-2 rounded hover:bg-white/10">Maintenance</a>
+            </div>
+            <div class="mb-6">
+              <h3 class="text-xs uppercase text-gray-400 mb-2">Content</h3>
+              <a href="/admin/blog" class="block px-4 py-2 rounded hover:bg-white/10">Blog</a>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-8">
+        <div class="mb-8 flex items-center justify-between">
+          <div>
+            <h1 class="text-4xl font-serif font-bold mb-2">Manage Bookings</h1>
+            <p class="text-gray-600">View and manage all reservations</p>
+          </div>
+          <button class="btn-primary">
+            <span class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+              New Booking
+            </span>
+          </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+              <select class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                <option>All Statuses</option>
+                <option>Pending</option>
+                <option>Confirmed</option>
+                <option>Checked In</option>
+                <option>Completed</option>
+                <option>Cancelled</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Villa</label>
+              <select class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                <option>All Villas</option>
+                <option>Villa Azure</option>
+                <option>Villa Serenity</option>
+                <option>Villa Paradise</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Date From</label>
+              <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Date To</label>
+              <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Bookings Table -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <table class="w-full">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="text-left py-4 px-6 font-medium text-gray-600">Ref</th>
+                <th class="text-left py-4 px-6 font-medium text-gray-600">Client</th>
+                <th class="text-left py-4 px-6 font-medium text-gray-600">Villa</th>
+                <th class="text-left py-4 px-6 font-medium text-gray-600">Check-in</th>
+                <th class="text-left py-4 px-6 font-medium text-gray-600">Check-out</th>
+                <th class="text-left py-4 px-6 font-medium text-gray-600">Guests</th>
+                <th class="text-left py-4 px-6 font-medium text-gray-600">Total</th>
+                <th class="text-left py-4 px-6 font-medium text-gray-600">Status</th>
+                <th class="text-left py-4 px-6 font-medium text-gray-600">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookings.map((booking) => (
+                <tr class="border-t hover:bg-gray-50">
+                  <td class="py-4 px-6">
+                    <span class="font-mono text-sm">{booking.id}</span>
+                  </td>
+                  <td class="py-4 px-6">
+                    <div>
+                      <div class="font-medium">{booking.clientName}</div>
+                      <div class="text-sm text-gray-600">{booking.clientEmail}</div>
+                    </div>
+                  </td>
+                  <td class="py-4 px-6">{booking.villaName}</td>
+                  <td class="py-4 px-6">{new Date(booking.checkIn).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</td>
+                  <td class="py-4 px-6">{new Date(booking.checkOut).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</td>
+                  <td class="py-4 px-6">{booking.guests}</td>
+                  <td class="py-4 px-6 font-medium">€{booking.totalPrice}</td>
+                  <td class="py-4 px-6">
+                    {booking.status === 'CONFIRMED' ? (
+                      <span class="px-3 py-1 bg-success/10 text-success rounded-full text-sm">Confirmed</span>
+                    ) : booking.status === 'PENDING' ? (
+                      <span class="px-3 py-1 bg-warning/10 text-warning rounded-full text-sm">Pending</span>
+                    ) : (
+                      <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">{booking.status}</span>
+                    )}
+                  </td>
+                  <td class="py-4 px-6">
+                    <div class="flex items-center gap-2">
+                      <button class="p-2 hover:bg-gray-100 rounded" title="View">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                      </button>
+                      <button class="p-2 hover:bg-gray-100 rounded" title="Edit">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                        </svg>
+                      </button>
+                      <button class="p-2 hover:bg-gray-100 rounded" title="Download Invoice">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+</MainLayout>
