@@ -1,0 +1,60 @@
+export const fr = {
+  // Navigation
+  nav_home: 'Accueil',
+  nav_villas: 'Les Villas',
+  nav_services: 'Services',
+  nav_reviews: 'Avis',
+  nav_journal: 'Journal',
+  nav_guide: 'Découvrir Tétouan',
+  nav_contact: 'Contact',
+  login_client: 'Espace Client',
+  login_staff: 'Accès Staff',
+  footer_rights: 'Tous droits réservés.',
+
+  // Common
+  btn_save: 'Enregistrer',
+  btn_cancel: 'Annuler',
+  btn_delete: 'Supprimer',
+  btn_edit: 'Éditer',
+  btn_add: 'Ajouter',
+  btn_search: 'Rechercher...',
+  btn_filter: 'Filtrer',
+  btn_view_all: 'Voir Tout',
+  btn_back: 'Retour',
+  label_date: 'Date',
+  label_status: 'Statut',
+  label_actions: 'Actions',
+  label_price: 'Prix',
+  label_email: 'Email',
+  label_phone: 'Téléphone',
+  label_name: 'Nom',
+
+  // Home
+  hero_title: 'Vivez le Luxe à Tétouan',
+  hero_subtitle: 'Villas Privées & Conciergerie',
+  home_section_title: 'Luxe Moderne et Héritage Marocain',
+  home_section_desc: 'Nichée sur la côte immaculée de Cabo Negro, notre collection de sept villas identiques offre un sanctuaire d\'intimité, d\'élégance et de confort.',
+  feat_secure: 'Sécurité & Intimité',
+  feat_secure_desc: 'Sécurité 24/7 dans une résidence fermée pour une tranquillité d\'esprit totale.',
+  feat_service: 'Service Premium',
+  feat_service_desc: 'Conciergerie, ménage quotidien et options de chef privé à votre service.',
+  feat_amenities: 'Équipements Modernes',
+  feat_amenities_desc: 'WiFi fibre optique, domotique et piscines privées chauffées.',
+
+  // Villas
+  title_our_collection: 'Notre Collection',
+  msg_booked: 'Réservé',
+  cta_view_details: 'Voir Détails',
+  cta_book_now: 'Réserver',
+  label_select_villa: 'Choisir une Villa',
+  label_night: '/ nuit',
+  label_bedrooms: 'Chambres',
+  label_bathrooms: 'Salles de bain',
+  label_pool: 'Piscine Privée',
+  label_guests: 'Voyageurs',
+
+  // Contact
+  contact_title: 'Contactez-nous',
+  contact_desc: 'Notre équipe de conciergerie est disponible 24/7 pour vous assister dans votre réservation.',
+  contact_btn: 'Envoyer le Message',
+};
