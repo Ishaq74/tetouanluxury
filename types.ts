@@ -72,9 +72,12 @@ export interface Booking {
   villaId: string;
   clientName: string;
   clientEmail: string;
-  startDate: string;
-  endDate: string;
-  totalPrice: number;
+  villaName?: string;
+  checkIn?: Date;
+  checkOut?: Date;
+  startDate: Date;
+  endDate: Date;
+  totalPrice: string;
   status: BookingStatus;
   guests: number;
   specialRequests?: string;
@@ -92,7 +95,8 @@ export interface Client {
   status: 'VIP' | 'NEW' | 'RETURNING';
   notes: string;
   pipelineStage: PipelineStage;
-  tags: string[];
+  tags?: string[];
+  lastStay?: Date;
 }
 
 export interface ClientInteraction {
@@ -211,7 +215,6 @@ export interface GroceryItem {
   category: 'FRUIT' | 'DAIRY' | 'DRINKS' | 'SNACKS' | 'BAKERY' | 'ESSENTIALS';
   price: number;
   unit: string;
-  image?: string;
 }
 
 export interface Expense {

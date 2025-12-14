@@ -1,0 +1,9 @@
+---
+
+const { t, lang: locale } = Astro.locals;
+const { category } = Astro.params;
+---
+
+<h1>{t(`services.category.${category}.title`)}</h1>
+<p>{t(`services.category.${category}.intro`)}</p>
+<!-- Rendu dynamique pour chaque catégorie de services -->

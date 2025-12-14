@@ -1,0 +1,131 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+const { slug } = Astro.params;
+const { t, lang: locale } = Astro.locals;
+
+// Mock blog post data - in production, fetch from database
+const blogPost = {
+  id: slug,
+  title: { en: 'Discovering Tétouan\'s Hidden Gems', fr: 'Découvrir les joyaux cachés de Tétouan', es: 'Descubriendo las joyas ocultas de Tetuán', ar: 'اكتشاف جواهر تطوان المخفية' },
+  excerpt: { en: 'A journey through the less-traveled paths of Morocco\'s white dove.', fr: 'Un voyage à travers les chemins moins fréquentés de la colombe blanche du Maroc.', es: 'Un viaje por los caminos menos transitados de la paloma blanca de Marruecos.', ar: 'رحلة عبر الممرات الأقل ترددًا لحمامة المغرب البيضاء.' },
+  content: { en: 'Full article content here...', fr: 'Contenu complet de l\'article ici...', es: 'Contenido completo del artículo aquí...', ar: 'محتوى المقال الكامل هنا...' },
+  category: 'local-life',
+  tags: ['Tétouan', 'Culture', 'Travel'],
+  author: 'Maria Rodriguez',
+  date: '2024-01-15',
+  image: 'https://picsum.photos/1200/600?random=1',
+  readTime: '5 min read',
+};
+
+const relatedPosts = [
+  {
+    id: 'moroccan-cuisine',
+    title: { en: 'Moroccan Cuisine Guide', fr: 'Guide de la cuisine marocaine', es: 'Guía de cocina marroquí', ar: 'دليل المطبخ المغربي' },
+    image: 'https://picsum.photos/400/300?random=2',
+    category: 'gastronomy',
+    date: '2024-01-10',
+  },
+  {
+    id: 'best-beaches',
+    title: { en: 'Best Beaches Near Tétouan', fr: 'Meilleures plages près de Tétouan', es: 'Mejores playas cerca de Tetuán', ar: 'أفضل الشواطئ بالقرب من تطوان' },
+    image: 'https://picsum.photos/400/300?random=3',
+    category: 'travel-tips',
+    date: '2024-01-05',
+  },
+];
+---
+
+<MainLayout title={blogPost.title[locale]} description={blogPost.excerpt[locale]}>
+  <article class="max-w-4xl mx-auto px-4 py-16">
+    <!-- Back button -->
+    <a href="/journal" class="inline-flex items-center text-slate-600 hover:text-slate-900 mb-8">
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      {t('blog.back')}
+    </a>
+
+    <!-- Article Header -->
+    <header class="mb-12">
+      <div class="flex items-center gap-4 text-sm text-slate-600 mb-4">
+        <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full font-medium">
+          {blogPost.category.replace('-', ' ')}
+        </span>
+        <span>{blogPost.date}</span>
+        <span>{blogPost.readTime}</span>
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 mb-6">
+        {blogPost.title[locale]}
+      </h1>
+      
+      <p class="text-xl text-slate-600 mb-6">
+        {blogPost.excerpt[locale]}
+      </p>
+
+      <div class="flex items-center gap-4">
+        <img src="https://ui-avatars.com/api/?name=Maria+Rodriguez" alt={blogPost.author} class="w-12 h-12 rounded-full" />
+        <div>
+          <div class="font-medium text-slate-900">{blogPost.author}</div>
+          <div class="text-sm text-slate-600">Author</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Featured Image -->
+    <img src={blogPost.image} alt={blogPost.title[locale]} class="w-full h-96 object-cover rounded-lg mb-12" />
+
+    <!-- Article Content -->
+    <div class="prose prose-lg max-w-none">
+      <p class="text-slate-700 leading-relaxed mb-6">
+        {blogPost.content[locale]}
+      </p>
+      
+      <p class="text-slate-700 leading-relaxed mb-6">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+      </p>
+
+      <h2 class="text-2xl font-serif font-bold text-slate-900 mt-8 mb-4">Exploring the Medina</h2>
+      
+      <p class="text-slate-700 leading-relaxed mb-6">
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+
+      <blockquote class="border-l-4 border-amber-500 pl-6 italic text-slate-600 my-8">
+        "Tétouan is a city that whispers stories of its past through every whitewashed wall and intricately tiled courtyard."
+      </blockquote>
+
+      <p class="text-slate-700 leading-relaxed mb-6">
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+      </p>
+    </div>
+
+    <!-- Tags -->
+    <div class="flex flex-wrap gap-2 mt-8 pt-8 border-t">
+      {blogPost.tags.map((tag) => (
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">
+          #{tag}
+        </span>
+      ))}
+    </div>
+
+    <!-- Related Posts -->
+    <section class="mt-16 pt-16 border-t">
+      <h2 class="text-2xl font-serif font-bold text-slate-900 mb-8">{t('blog_related')}</h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        {relatedPosts.map((post) => (
+          <a href={`/journal/${post.id}`} class="group block">
+            <img src={post.image} alt={post.title[locale]} class="w-full h-48 object-cover rounded-lg mb-4 group-hover:opacity-90 transition" />
+            <div class="text-sm text-slate-600 mb-2">
+              <span class="text-amber-600 font-medium">{post.category.replace('-', ' ')}</span> • {post.date}
+            </div>
+            <h3 class="text-xl font-serif font-bold text-slate-900 group-hover:text-amber-600 transition">
+              {post.title[locale]}
+            </h3>
+          </a>
+        ))}
+      </div>
+    </section>
+  </article>
+</MainLayout>

@@ -1,50 +1,29 @@
+
 ---
-import MainLayout from '@layouts/MainLayout.astro';
-
-const lang = 'en';
+import LoginForm from '@components/LoginForm.tsx';
+const { lang, t } = Astro.locals;
+// Simuler login/isLoading via Astro.actions ou mocks
+let isLoading = { value: false };
+function login(role, userData) {
+  // Ici, on pourrait utiliser Astro.actions ou un appel API
+  isLoading.value = true;
+  setTimeout(() => { isLoading.value = false; }, 500);
+}
 ---
 
-<MainLayout title="Login - Tétouan Luxury Villas" lang={lang}>
-  <div class="py-20">
-    <div class="container-custom">
-      <div class="max-w-md mx-auto">
-        <h1 class="text-4xl font-serif font-bold mb-6 text-center">Login</h1>
-        <div class="card">
-          <form class="space-y-6">
-            <div>
-              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent" 
-                required 
-              />
-            </div>
-
-            <div>
-              <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-              <input 
-                type="password" 
-                id="password" 
-                name="password" 
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent" 
-                required 
-              />
-            </div>
-
-            <button type="submit" class="btn-primary w-full text-lg">
-              Sign In
-            </button>
-          </form>
-
-          <div class="mt-6 text-center">
-            <p class="text-gray-600">
-              Authentication with Better Auth coming soon
-            </p>
-          </div>
-        </div>
-      </div>
+<div class="min-h-screen flex bg-stone-50 animate-fade-in">
+  <!-- SEO à réintégrer si composant disponible -->
+  <!-- <SEO title={t('login_title', lang)} description={t('login_subtitle', lang)} /> -->
+  <div class="hidden lg:block w-1/2 relative overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=1920" class="absolute inset-0 w-full h-full object-cover animate-ken-burns" alt="Luxury Villa" />
+    <div class="absolute inset-0 bg-slate-900/40 flex flex-col justify-end p-16 text-white">
+      <h2 class="font-serif text-4xl mb-4">{t('login_welcome', lang)}</h2>
+      <p class="text-slate-200 text-lg max-w-md">Connectez-vous pour gérer vos réservations, accéder à la conciergerie ou administrer les villas.</p>
     </div>
   </div>
-</MainLayout>
+  <div class="w-full lg:w-1/2 flex items-center justify-center p-8">
+    <LoginForm client:only lang={lang} t={t} login={login} isLoading={isLoading} />
+  </div>
+</div>
+
+<!-- MainLayout supprimé temporairement, à réintégrer si disponible. -->

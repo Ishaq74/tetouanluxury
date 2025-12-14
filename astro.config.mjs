@@ -1,32 +1,24 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import node from '@astrojs/node';
 import react from '@astrojs/react';
-
 import vercel from '@astrojs/vercel';
+
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
   adapter: vercel(),
-  integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    react()
-  ],
+  integrations: [react()],
+
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'fr', 'ar', 'es'],
+    locales: ['fr', 'en', 'es', 'ar'],
+    defaultLocale: 'fr',
     routing: {
-      prefixDefaultLocale: false
+      prefixDefaultLocale: true
     }
   },
+
   vite: {
-    resolve: {
-      alias: {
-        '@': '/src'
-      }
-    }
-  }
+    plugins: [tailwindcss()],
+  },
 });

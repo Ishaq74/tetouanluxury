@@ -1,28 +1,25 @@
 ---
 import MainLayout from '@layouts/MainLayout.astro';
-import { translations } from '@translations/index';
-
-const lang = 'en';
-const t = translations[lang];
+const { t, lang: locale } = Astro.locals;
 ---
 
-<MainLayout title="Tétouan Luxury Villas - Home" lang={lang}>
+<MainLayout title="Tétouan Luxury Villas - Home" lang={locale}>
   <!-- Hero Section -->
-  <section class="relative h-screen flex items-center justify-center bg-gradient-to-br from-primary to-gray-800">
-    <div class="absolute inset-0 bg-black/40"></div>
+          <h3 class="text-2xl font-serif font-bold mb-4">{t('feat_secure')}</h3>
+          <p class="text-gray-600">{t('feat_secure_desc')}</p>
     <div class="relative z-10 text-center text-white px-4">
       <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6">
-        {t.hero_title}
+        {t('home.hero_title')}
       </h1>
       <p class="text-xl md:text-2xl mb-8 text-gray-200">
-        {t.hero_subtitle}
+        {t('home.hero_subtitle')}
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="/villas" class="btn-primary text-lg">
-          {t.nav_villas}
-        </a>
+          <h3 class="text-2xl font-serif font-bold mb-4">{t('feat_service')}</h3>
+          <p class="text-gray-600">{t('feat_service_desc')}</p>
         <a href="/contact" class="btn-secondary text-lg">
-          {t.nav_contact}
+          {t('nav.contact')}
         </a>
       </div>
     </div>
@@ -30,8 +27,8 @@ const t = translations[lang];
     <!-- Scroll indicator -->
     <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-      </svg>
+          <h3 class="text-2xl font-serif font-bold mb-4">{t('feat_amenities')}</h3>
+          <p class="text-gray-600">{t('feat_amenities_desc')}</p>
     </div>
   </section>
 
@@ -40,10 +37,10 @@ const t = translations[lang];
     <div class="container-custom">
       <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6">
-          {t.home_section_title}
+          {t('home.section_title')}
         </h2>
         <p class="text-lg text-gray-700 leading-relaxed">
-          {t.home_section_desc}
+        {t('cta_view_details')}
         </p>
       </div>
     </div>
@@ -60,8 +57,8 @@ const t = translations[lang];
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
             </svg>
           </div>
-          <h3 class="text-2xl font-serif font-bold mb-4">{t.feat_secure}</h3>
-          <p class="text-gray-600">{t.feat_secure_desc}</p>
+          <h3 class="text-2xl font-serif font-bold mb-4">{t('feat_secure')}</h3>
+          <p class="text-gray-600">{t('feat_secure_desc')}</p>
         </div>
 
         <!-- Feature 2 -->
@@ -71,8 +68,8 @@ const t = translations[lang];
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
             </svg>
           </div>
-          <h3 class="text-2xl font-serif font-bold mb-4">{t.feat_service}</h3>
-          <p class="text-gray-600">{t.feat_service_desc}</p>
+          <h3 class="text-2xl font-serif font-bold mb-4">{t('feat_service')}</h3>
+          <p class="text-gray-600">{t('feat_service_desc')}</p>
         </div>
 
         <!-- Feature 3 -->
@@ -82,8 +79,8 @@ const t = translations[lang];
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
             </svg>
           </div>
-          <h3 class="text-2xl font-serif font-bold mb-4">{t.feat_amenities}</h3>
-          <p class="text-gray-600">{t.feat_amenities_desc}</p>
+          <h3 class="text-2xl font-serif font-bold mb-4">{t('feat_amenities')}</h3>
+          <p class="text-gray-600">{t('feat_amenities_desc')}</p>
         </div>
       </div>
     </div>
@@ -95,7 +92,7 @@ const t = translations[lang];
       <h2 class="text-4xl font-serif font-bold mb-6">Ready to Experience Luxury?</h2>
       <p class="text-xl mb-8 text-gray-200">Book your villa today and start planning your dream Moroccan getaway.</p>
       <a href="/villas" class="btn-secondary text-lg">
-        {t.cta_view_details}
+        {t('cta_view_details')}
       </a>
     </div>
   </section>

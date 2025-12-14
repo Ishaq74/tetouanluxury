@@ -2,7 +2,8 @@
 import MainLayout from '@layouts/MainLayout.astro';
 
 const lang = 'en';
-const { villa } = Astro.url.searchParams;
+const user = Astro.locals.user;
+const villa = Astro.url.searchParams.get('villa');
 
 // Mock villa data
 const selectedVilla = {

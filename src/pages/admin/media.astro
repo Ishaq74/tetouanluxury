@@ -3,17 +3,9 @@ import MainLayout from '@layouts/MainLayout.astro';
 
 const pageTitle = "Media Library | Admin Portal";
 
-// Mock media data
-const media = [
-  { id: 1, name: 'villa-ocean-view-1.jpg', type: 'image', size: '2.4 MB', uploadedAt: '2024-12-10', url: '/images/villa1.jpg', dimensions: '1920x1080' },
-  { id: 2, name: 'villa-mountain-2.jpg', type: 'image', size: '3.1 MB', uploadedAt: '2024-12-09', url: '/images/villa2.jpg', dimensions: '1920x1080' },
-  { id: 3, name: 'villa-pool-3.jpg', type: 'image', size: '2.8 MB', uploadedAt: '2024-12-08', url: '/images/villa3.jpg', dimensions: '1920x1080' },
-  { id: 4, name: 'interior-living-room.jpg', type: 'image', size: '2.2 MB', uploadedAt: '2024-12-07', url: '/images/interior1.jpg', dimensions: '1920x1080' },
-  { id: 5, name: 'bedroom-suite.jpg', type: 'image', size: '1.9 MB', uploadedAt: '2024-12-06', url: '/images/bedroom.jpg', dimensions: '1920x1080' },
-  { id: 6, name: 'kitchen-modern.jpg', type: 'image', size: '2.5 MB', uploadedAt: '2024-12-05', url: '/images/kitchen.jpg', dimensions: '1920x1080' },
-  { id: 7, name: 'promotional-video.mp4', type: 'video', size: '45.2 MB', uploadedAt: '2024-12-04', url: '/videos/promo.mp4', duration: '2:30' },
-  { id: 8, name: 'brand-logo.svg', type: 'document', size: '124 KB', uploadedAt: '2024-12-03', url: '/images/logo.svg', dimensions: '512x512' },
-];
+import { db } from '@db/index';
+import { mediaLibrary } from '@db/schema';
+const media = await db.select().from(mediaLibrary);
 
 const categories = ['All', 'Images', 'Videos', 'Documents'];
 const uploadStats = {

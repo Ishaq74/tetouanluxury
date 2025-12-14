@@ -3,42 +3,11 @@ import MainLayout from '@layouts/MainLayout.astro';
 
 const lang = 'en';
 
-// Mock bookings data
-const bookings = [
-  {
-    id: 'BK-2024-001',
-    clientName: 'John Smith',
-    clientEmail: 'john.smith@example.com',
-    villaName: 'Villa Azure',
-    checkIn: '2024-12-20',
-    checkOut: '2024-12-27',
-    guests: 4,
-    totalPrice: 3150,
-    status: 'CONFIRMED',
-  },
-  {
-    id: 'BK-2024-002',
-    clientName: 'Marie Dubois',
-    clientEmail: 'marie.dubois@example.com',
-    villaName: 'Villa Serenity',
-    checkIn: '2024-12-22',
-    checkOut: '2024-12-29',
-    guests: 6,
-    totalPrice: 3150,
-    status: 'PENDING',
-  },
-  {
-    id: 'BK-2024-003',
-    clientName: 'Ahmed Hassan',
-    clientEmail: 'ahmed.hassan@example.com',
-    villaName: 'Villa Paradise',
-    checkIn: '2025-01-05',
-    checkOut: '2025-01-12',
-    guests: 8,
-    totalPrice: 3150,
-    status: 'CONFIRMED',
-  },
-];
+import { db } from '@db/index';
+import { bookings } from '@db/schema';
+// import type { Booking } from '../../../types';
+const bookingsList = await db.select().from(bookings);
+
 ---
 
 <MainLayout title="Manage Bookings - Admin" lang={lang}>
@@ -139,7 +108,7 @@ const bookings = [
               </tr>
             </thead>
             <tbody>
-              {bookings.map((booking) => (
+              {bookingsList.map((booking) => (
                 <tr class="border-t hover:bg-gray-50">
                   <td class="py-4 px-6">
                     <span class="font-mono text-sm">{booking.id}</span>
@@ -150,9 +119,9 @@ const bookings = [
                       <div class="text-sm text-gray-600">{booking.clientEmail}</div>
                     </div>
                   </td>
-                  <td class="py-4 px-6">{booking.villaName}</td>
-                  <td class="py-4 px-6">{new Date(booking.checkIn).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</td>
-                  <td class="py-4 px-6">{new Date(booking.checkOut).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</td>
+                  <td class="py-4 px-6">{booking.villaName ?? '-'}</td>
+                  <td class="py-4 px-6">{booking.checkIn ? new Date(booking.checkIn).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '-'}</td>
+                  <td class="py-4 px-6">{booking.checkOut ? new Date(booking.checkOut).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '-'}</td>
                   <td class="py-4 px-6">{booking.guests}</td>
                   <td class="py-4 px-6 font-medium">€{booking.totalPrice}</td>
                   <td class="py-4 px-6">

@@ -1,7 +1,6 @@
 ---
 import MainLayout from '@layouts/MainLayout.astro';
-
-const lang = 'en';
+const { t, lang: locale } = Astro.locals;
 
 const reviews = [
   {
@@ -68,7 +67,7 @@ const stats = {
 };
 ---
 
-<MainLayout title="Guest Reviews - Tétouan Luxury Villas" lang={lang}>
+<MainLayout title="Guest Reviews - Tétouan Luxury Villas" lang={locale}>
   <div class="py-20">
     <div class="container-custom">
       <!-- Header -->

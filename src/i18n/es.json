@@ -1,0 +1,36 @@
+{
+	"nav_home": "Inicio",
+	"nav_villas": "Villas",
+	"nav_services": "Servicios",
+	"nav_reviews": "Reseñas",
+	"nav_journal": "Diario",
+	"nav_contact": "Contacto",
+	"dashboard": "Panel",
+	"login": "Iniciar sesión",
+	"logout": "Cerrar sesión",
+	"book_now": "Reservar",
+	"notifications": "Notificaciones",
+	"no_notifications": "No hay notificaciones nuevas"
+	,
+	"login_client": "Portal del cliente",
+	"footer_rights": "Todos los derechos reservados.",
+	"login_title": "Inicia sesión en tu cuenta",
+	"login_subtitle": "Accede a tu portal de cliente o staff.",
+	"login_tab_client": "Cliente",
+	"login_tab_staff": "Staff",
+	"login_label_email": "Correo electrónico",
+	"login_label_ref": "Referencia de reserva",
+	"login_label_password": "Contraseña",
+	"login_btn": "Iniciar sesión",
+	"login_back": "Volver al inicio"
+	,
+		"feat_secure": "Seguridad premium",
+		"feat_secure_desc": "Tu tranquilidad es nuestra prioridad: seguridad 24/7, acceso privado, privacidad total.",
+		"feat_service": "Servicios exclusivos",
+		"feat_service_desc": "Conserjería, chef privado, traslados VIP y más para una estancia a medida.",
+		"feat_amenities": "Comodidades de lujo",
+		"feat_amenities_desc": "Piscinas privadas, spas, jardines exuberantes y todas las comodidades modernas.",
+		"cta_view_details": "Ver villas"
+		,
+			"blog_related": "Artículos relacionados"
+}

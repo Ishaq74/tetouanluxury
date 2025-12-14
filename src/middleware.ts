@@ -1,5 +1,6 @@
 import { defineMiddleware } from 'astro:middleware';
 import { auth } from '@auth/index';
+import { t } from '@lib/translations';
 
 const protectedRoutes = {
   admin: /^\/admin/,
@@ -8,7 +9,21 @@ const protectedRoutes = {
 };
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const { pathname } = context.url;
+  const { pathname, searchParams } = context.url;
+
+  // Détection de la langue par l'URL ou fallback navigateur
+  let lang = 'fr';
+  const urlParts = pathname.split('/');
+  if (['fr', 'en', 'es', 'ar'].includes(urlParts[1])) {
+    lang = urlParts[1];
+  } else if (context.request.headers.get('accept-language')) {
+    const accept = context.request.headers.get('accept-language')!;
+    if (accept.startsWith('en')) lang = 'en';
+    else if (accept.startsWith('es')) lang = 'es';
+    else if (accept.startsWith('ar')) lang = 'ar';
+  }
+  context.locals.lang = lang;
+  context.locals.t = (key: string) => t(key, lang);
 
   // Check if route needs protection
   const needsAuth = Object.values(protectedRoutes).some(pattern => 

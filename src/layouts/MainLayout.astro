@@ -1,6 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import Navigation from '@components/Navigation.astro';
+import { Navigation } from '@components/partials/Navigation.tsx';
 import Footer from '@components/Footer.astro';
 
 interface Props {
@@ -10,10 +10,23 @@ interface Props {
 }
 
 const { title, description, lang } = Astro.props;
+
+const userRole = Astro.locals.user?.role;
+const logoutUrl = '/api/auth/logout';
 ---
 
 <BaseLayout title={title} description={description} lang={lang}>
-  <Navigation lang={lang} />
+  {/**
+    On injecte le user/role depuis Astro.locals (middleware Better Auth)
+    et on passe à l'island React Navigation
+  */}
+  <Navigation 
+    userRole={userRole}
+    logout={() => { window.location.href = logoutUrl; }}
+    lang={lang}
+    t={Astro.locals.t}
+    locale={Astro.locals.lang}
+  />
   <main class="min-h-screen">
     <slot />
   </main>

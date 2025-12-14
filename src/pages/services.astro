@@ -1,15 +1,12 @@
 ---
 import MainLayout from '@layouts/MainLayout.astro';
-import { translations } from '@translations/index';
-
-const lang = 'en';
-const t = translations[lang];
+const { t, lang: locale } = Astro.locals;
 ---
 
-<MainLayout title="Services - Tétouan Luxury Villas" lang={lang}>
+<MainLayout title="Services - Tétouan Luxury Villas" lang={locale}>
   <div class="py-20">
     <div class="container-custom">
-      <h1 class="text-5xl font-serif font-bold mb-6 text-center">{t.nav_services}</h1>
+      <h1 class="text-5xl font-serif font-bold mb-6 text-center">{t('nav.services')}</h1>
       <p class="text-lg text-gray-600 mb-12 text-center max-w-2xl mx-auto">
         Enhance your stay with our premium concierge services designed to make your vacation unforgettable.
       </p>

@@ -1,0 +1,41 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import { BlogManager, GuideManager, ServiceManager, MediaManager, TranslationManager } from '@components/admin/cms/CMSModules';
+import { db } from '@db/index';
+import { categories, indexPageSettings } from '@db/schema';
+
+// Récupération des données réelles depuis Drizzle
+const rawCategories = await db.select().from(categories);
+const categoriesList = rawCategories.map(cat => ({
+  ...cat,
+  type: cat.type as 'BLOG' | 'GUIDE' | 'SERVICE',
+  name: JSON.parse(cat.name),
+  description: cat.description ? JSON.parse(cat.description) : { EN: '', FR: '', ES: '', AR: '' },
+  seo: cat.seo ? JSON.parse(cat.seo) : undefined
+}));
+const indexPageSettingsList = await db.select().from(indexPageSettings);
+
+// Fonctions fictives à remplacer par des appels API ou actions Astro/Drizzle réelles
+const addCategory = (cat) => {};
+const updateCategory = (cat) => {};
+const deleteCategory = (id) => {};
+const updateIndexPageSettings = (settings) => {};
+const showToast = (msg, type) => {};
+
+---
+
+<MainLayout title="CMS Management - Admin" lang="en">
+  <BlogManager
+    categories={categoriesList}
+    blogPosts={[]}
+    addBlogPost={() => {}}
+    updateBlogPost={() => {}}
+    deleteBlogPost={() => {}}
+    addCategory={addCategory}
+    updateCategory={updateCategory}
+    deleteCategory={deleteCategory}
+    indexPageSettings={indexPageSettingsList}
+    updateIndexPageSettings={updateIndexPageSettings}
+    showToast={showToast}
+  />
+</MainLayout>

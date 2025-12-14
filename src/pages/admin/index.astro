@@ -1,43 +1,22 @@
+
 ---
-import MainLayout from '@layouts/MainLayout.astro';
+// i18n natif Astro
+import AdminPanel from '@components/AdminPanel.tsx';
 
-const lang = 'en';
+const { t, lang: locale } = Astro.locals;
 ---
 
-<MainLayout title="Admin Dashboard - Tétouan Luxury Villas" lang={lang}>
-  <div class="min-h-screen bg-gray-100">
-    <!-- Admin Sidebar -->
-    <div class="flex">
-      <!-- Sidebar -->
-      <aside class="w-64 bg-primary text-white min-h-screen">
-        <div class="p-6">
-          <h2 class="text-2xl font-serif font-bold mb-8">Admin Panel</h2>
-          
-          <nav class="space-y-2">
-            <!-- Commercial -->
-            <div class="mb-6">
-              <h3 class="text-xs uppercase text-gray-400 mb-2">Commercial</h3>
-              <a href="/admin/bookings" class="block px-4 py-2 rounded hover:bg-white/10 transition-colors">
-                Bookings
-              </a>
-              <a href="/admin/crm" class="block px-4 py-2 rounded hover:bg-white/10 transition-colors">
-                CRM & Clients
-              </a>
-              <a href="/admin/villas" class="block px-4 py-2 rounded hover:bg-white/10 transition-colors">
-                Villas & Rates
-              </a>
-            </div>
-
-            <!-- Operations -->
-            <div class="mb-6">
-              <h3 class="text-xs uppercase text-gray-400 mb-2">Operations</h3>
-              <a href="/admin/staff" class="block px-4 py-2 rounded hover:bg-white/10 transition-colors">
-                Staff & Schedule
-              </a>
-              <a href="/admin/maintenance" class="block px-4 py-2 rounded hover:bg-white/10 transition-colors">
-                Maintenance
-              </a>
-              <a href="/admin/inventory" class="block px-4 py-2 rounded hover:bg-white/10 transition-colors">
+<div class="min-h-screen bg-stone-50">
+  <!-- SEO à réintégrer si composant disponible -->
+  <!-- <SEO title={t('admin_title')} description={t('admin_subtitle')} /> -->
+  <AdminPanel 
+    client:only 
+    t={t} 
+    lang={locale} 
+    role={Astro.locals.user && 'role' in Astro.locals.user ? Astro.locals.user.role : 'GUEST'}
+    logout={() => { window.location.href = '/api/auth/logout'; }}
+  />
+</div>
                 Inventory
               </a>
             </div>

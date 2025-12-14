@@ -1,0 +1,36 @@
+{
+	"nav_home": "الرئيسية",
+	"nav_villas": "الفلل",
+	"nav_services": "الخدمات",
+	"nav_reviews": "المراجعات",
+	"nav_journal": "اليومية",
+	"nav_contact": "اتصل",
+	"dashboard": "لوحة التحكم",
+	"login": "تسجيل الدخول",
+	"logout": "تسجيل الخروج",
+	"book_now": "احجز الآن",
+	"notifications": "الإشعارات",
+	"no_notifications": "لا توجد إشعارات جديدة"
+	,
+	"login_client": "بوابة العملاء",
+	"footer_rights": "جميع الحقوق محفوظة.",
+	"login_title": "تسجيل الدخول إلى حسابك",
+	"login_subtitle": "الوصول إلى بوابة العميل أو الموظف.",
+	"login_tab_client": "عميل",
+	"login_tab_staff": "الموظفين",
+	"login_label_email": "البريد الإلكتروني",
+	"login_label_ref": "رقم الحجز",
+	"login_label_password": "كلمة المرور",
+	"login_btn": "تسجيل الدخول",
+	"login_back": "العودة للرئيسية"
+	,
+		"feat_secure": "أمان فائق",
+		"feat_secure_desc": "راحتك وسلامتك أولويتنا: حراسة 24/7، دخول خاص، خصوصية تامة.",
+		"feat_service": "خدمات حصرية",
+		"feat_service_desc": "كونسيرج، شيف خاص، نقل VIP والمزيد لإقامة مصممة خصيصًا لك.",
+		"feat_amenities": "مرافق فاخرة",
+		"feat_amenities_desc": "مسابح خاصة، سبا، حدائق غنّاء وجميع وسائل الراحة الحديثة.",
+		"cta_view_details": "عرض الفلل"
+		,
+			"blog_related": "مقالات ذات صلة"
+}

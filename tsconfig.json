@@ -18,18 +18,20 @@
     "moduleDetection": "force",
     "allowJs": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@components/*": ["./src/components/*"],
-      "@layouts/*": ["./src/layouts/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@translations/*": ["./src/lib/translations/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@assets/*": ["./src/assets/*"]
-      ,"@db/*": ["./src/db/*"]
-      ,"@auth/*": ["./src/auth/*"]
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@lib/*": ["src/lib/*"],
+      "@styles/*": ["src/styles/*"],
+      "@templates/*": ["src/components/templates/*"],
+      "@assets/*": ["src/assets/*"],
+      "@db/*": ["src/db/*"],
+      "@images/*": ["public/images/*"],
+      "@i18n/*": ["src/i18n/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@auth/*": ["src/auth/*"]
     },
     "allowImportingTsExtensions": true,
     "noEmit": true

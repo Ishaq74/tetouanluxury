@@ -1,0 +1,86 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const { t, lang: locale } = Astro.locals;
+const { category } = Astro.params;
+const blogPosts = [
+  {
+    id: 'hidden-gems-tetouan',
+    title: 'Découvrir les joyaux cachés de Tétouan',
+    excerpt: 'Un voyage à travers les chemins moins fréquentés.',
+    category: 'local-life',
+    image: 'https://picsum.photos/800/500?random=1',
+    date: '2024-01-15',
+    author: 'Maria Rodriguez',
+  },
+  {
+    id: 'moroccan-cuisine',
+    title: 'Cuisine Marocaine: Un Voyage Culinaire',
+    excerpt: 'Des tajines aux pastillas, explorez les saveurs riches du Maroc.',
+    category: 'gastronomy',
+    image: 'https://picsum.photos/800/500?random=2',
+    date: '2024-01-10',
+    author: 'Chef Hassan',
+  },
+  {
+    id: 'andalusian-architecture',
+    title: 'Architecture Andalouse à Tétouan',
+    excerpt: 'Le patrimoine de l’UNESCO rencontre les efforts de préservation modernes.',
+    category: 'culture',
+    image: 'https://picsum.photos/800/500?random=3',
+    date: '2024-01-05',
+    author: 'Dr. Fatima Zahra',
+  },
+  {
+    id: 'beach-guide',
+    title: 'Meilleures Plages près de Tétouan',
+    excerpt: 'Votre guide complet du littoral méditerranéen.',
+    category: 'travel-tips',
+    image: 'https://picsum.photos/800/500?random=4',
+    date: '2023-12-28',
+    author: 'Travel Team',
+  },
+];
+---
+
+<MainLayout title={t('blog_title')} lang={locale}>
+  <div class="bg-slate-900 text-white py-24 px-4 text-center">
+    <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">{t('blog_title')}</h1>
+    <p class="text-slate-300 text-lg max-w-2xl mx-auto">{t('blog_subtitle')}</p>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 py-16">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {blogPosts.filter((post) => post.category === category).map((post) => (
+        <article class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+          <a href={getRelativeLocaleUrl(`/blog/${post.category}/${post.id}`)}>
+            <img src={post.image} alt={post.title} class="w-full h-56 object-cover" />
+          </a>
+          <div class="p-6">
+            <div class="flex items-center gap-3 text-sm text-slate-600 mb-3">
+              <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full font-medium capitalize">
+                {post.category.replace('-', ' ')}
+              </span>
+              <span>{post.date}</span>
+            </div>
+            <a href={getRelativeLocaleUrl(`/blog/${post.category}/${post.id}`)}>
+              <h2 class="text-xl font-serif font-bold text-slate-900 mb-3 hover:text-amber-600 transition">
+                {post.title}
+              </h2>
+            </a>
+            <p class="text-slate-600 mb-4">
+              {post.excerpt}
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-slate-500">Par {post.author}</span>
+              <a href={getRelativeLocaleUrl(`/blog/${post.category}/${post.id}`)} class="text-amber-600 hover:text-amber-700 font-medium text-sm">
+                {t('blog_read_more')} →
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</MainLayout>

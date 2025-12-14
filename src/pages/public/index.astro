@@ -1,0 +1,9 @@
+---
+import PublicPanel from '@components/PublicPanel.tsx';
+
+
+const { t, lang: locale } = Astro.locals;
+
+<div class="min-h-screen bg-stone-50">
+  <PublicPanel client:only t={t} lang={locale} />
+</div>

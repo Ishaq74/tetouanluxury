@@ -26,8 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
           await db
             .update(bookings)
             .set({
-              status: 'confirmed',
-              paymentStatus: 'paid',
+              status: 'CONFIRMED',
               updatedAt: new Date(),
             })
             .where(eq(bookings.id, bookingId));
@@ -46,7 +45,6 @@ export const POST: APIRoute = async ({ request }) => {
           await db
             .update(bookings)
             .set({
-              paymentStatus: 'failed',
               updatedAt: new Date(),
             })
             .where(eq(bookings.id, bookingId));

@@ -1,7 +1,0 @@
-{
-  "name": "Morocco Luxury Villas V3",
-  "description": "A comprehensive platform for luxury villa management in Tétouan, featuring a public showcase, booking engine, CRM, ERP, and Owner Dashboard.",
-  "requestFramePermissions": [
-    "camera"
-  ]
-}

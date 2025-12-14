@@ -1,0 +1,13 @@
+---
+// TODO: Remplacer par la fonction de traduction réelle
+const t = (key, lang) => key;
+const lang = 'fr';
+import BlogPanel from '@components/BlogPanel.tsx';
+---
+---
+
+<div class="min-h-screen bg-stone-50">
+  <!-- SEO à réintégrer si composant disponible -->
+  <!-- <SEO title={t('blog_title', lang)} description={t('blog_subtitle', lang)} /> -->
+  <BlogPanel client:only />
+</div>

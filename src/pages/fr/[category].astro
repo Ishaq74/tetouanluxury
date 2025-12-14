@@ -1,0 +1,20 @@
+---
+const { t, lang: locale } = Astro.locals;
+export async function getStaticPaths() {
+  // Remplacez par vos vraies catégories dynamiques
+  return [
+    { params: { category: 'blog' } },
+    { params: { category: 'booking' } },
+    { params: { category: 'guide' } },
+    { params: { category: 'journal' } },
+    { params: { category: 'villas' } },
+    { params: { category: 'services' } },
+    { params: { category: 'reviews' } },
+  ];
+}
+const { category } = Astro.params;
+---
+
+<h1>{t(`category.${category}.title`)}</h1>
+<p>{t(`category.${category}.intro`)}</p>
+<!-- Ajoutez ici le rendu dynamique pour chaque catégorie -->

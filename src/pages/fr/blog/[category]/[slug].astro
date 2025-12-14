@@ -1,0 +1,121 @@
+---
+import MainLayout from '@layouts/MainLayout.astro';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const { t, lang: locale } = Astro.locals;
+const { category, slug } = Astro.params;
+const blogPosts = [
+  {
+    id: 'hidden-gems-tetouan',
+    title: 'Découvrir les joyaux cachés de Tétouan',
+    excerpt: 'Un voyage à travers les chemins moins fréquentés.',
+    content: 'Contenu complet de l’article sur les joyaux cachés de Tétouan.',
+    category: 'local-life',
+    tags: ['Tétouan', 'Culture', 'Voyage'],
+    author: 'Maria Rodriguez',
+    date: '2024-01-15',
+    image: 'https://picsum.photos/1200/600?random=1',
+    readTime: '5 min de lecture',
+  },
+  {
+    id: 'moroccan-cuisine',
+    title: 'Cuisine Marocaine: Un Voyage Culinaire',
+    excerpt: 'Des tajines aux pastillas, explorez les saveurs riches du Maroc.',
+    content: 'Contenu complet de l’article sur la cuisine marocaine.',
+    category: 'gastronomy',
+    tags: ['Cuisine', 'Maroc', 'Saveurs'],
+    author: 'Chef Hassan',
+    date: '2024-01-10',
+    image: 'https://picsum.photos/1200/600?random=2',
+    readTime: '4 min de lecture',
+  },
+  {
+    id: 'andalusian-architecture',
+    title: 'Architecture Andalouse à Tétouan',
+    excerpt: 'Le patrimoine de l’UNESCO rencontre les efforts de préservation modernes.',
+    content: 'Contenu complet de l’article sur l’architecture andalouse.',
+    category: 'culture',
+    tags: ['Architecture', 'UNESCO', 'Tétouan'],
+    author: 'Dr. Fatima Zahra',
+    date: '2024-01-05',
+    image: 'https://picsum.photos/1200/600?random=3',
+    readTime: '6 min de lecture',
+  },
+  {
+    id: 'beach-guide',
+    title: 'Meilleures Plages près de Tétouan',
+    excerpt: 'Votre guide complet du littoral méditerranéen.',
+    content: 'Contenu complet de l’article sur les plages.',
+    category: 'travel-tips',
+    tags: ['Plages', 'Voyage', 'Tétouan'],
+    author: 'Travel Team',
+    date: '2023-12-28',
+    image: 'https://picsum.photos/1200/600?random=4',
+    readTime: '3 min de lecture',
+  },
+];
+const blogPost = blogPosts.find((p) => p.id === slug && p.category === category);
+const relatedPosts = blogPosts.filter((p) => p.category === category && p.id !== slug).slice(0, 3);
+---
+
+<MainLayout title={blogPost?.title} description={blogPost?.excerpt} lang={locale}>
+  <article class="max-w-4xl mx-auto px-4 py-16">
+    <a href={getRelativeLocaleUrl(`/blog/${category}`)} class="inline-flex items-center text-slate-600 hover:text-slate-900 mb-8">
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      {t('blog_back')}
+    </a>
+    <header class="mb-12">
+      <div class="flex items-center gap-4 text-sm text-slate-600 mb-4">
+        <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full font-medium">
+          {blogPost?.category.replace('-', ' ')}
+        </span>
+        <span>{blogPost?.date}</span>
+        <span>{blogPost?.readTime}</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 mb-6">
+        {blogPost?.title}
+      </h1>
+      <p class="text-xl text-slate-600 mb-6">
+        {blogPost?.excerpt}
+      </p>
+      <div class="flex items-center gap-4">
+        <img src="https://ui-avatars.com/api/?name={blogPost?.author}" alt={blogPost?.author} class="w-12 h-12 rounded-full" />
+        <div>
+          <div class="font-medium text-slate-900">{blogPost?.author}</div>
+          <div class="text-sm text-slate-600">Auteur</div>
+        </div>
+      </div>
+    </header>
+    <img src={blogPost?.image} alt={blogPost?.title} class="w-full h-96 object-cover rounded-lg mb-12" />
+    <div class="prose prose-lg max-w-none">
+      <p class="text-slate-700 leading-relaxed mb-6">
+        {blogPost?.content}
+      </p>
+    </div>
+    <div class="flex flex-wrap gap-2 mt-8 pt-8 border-t">
+      {blogPost?.tags.map((tag) => (
+        <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">
+          #{tag}
+        </span>
+      ))}
+    </div>
+    <section class="mt-16 pt-16 border-t">
+      <h2 class="text-2xl font-serif font-bold text-slate-900 mb-8">{t('blog_related')}</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        {relatedPosts.map((post) => (
+          <a href={getRelativeLocaleUrl(`/blog/${post.category}/${post.id}`)} class="group block">
+            <img src={post.image} alt={post.title} class="w-full h-48 object-cover rounded-lg mb-4 group-hover:opacity-90 transition" />
+            <div class="text-sm text-slate-600 mb-2">
+              <span class="text-amber-600 font-medium">{post.category.replace('-', ' ')}</span> • {post.date}
+            </div>
+            <h3 class="text-xl font-serif font-bold text-slate-900 group-hover:text-amber-600 transition">
+              {post.title}
+            </h3>
+          </a>
+        ))}
+      </div>
+    </section>
+  </article>
+</MainLayout>

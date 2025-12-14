@@ -1,12 +1,9 @@
 ---
 import MainLayout from '@layouts/MainLayout.astro';
-import { translations } from '@translations/index';
-
-const lang = 'es';
-const t = translations[lang];
+const { t, lang: locale } = Astro.locals;
 ---
 
-<MainLayout title="Tétouan Luxury Villas - Inicio" lang={lang}>
+<MainLayout title={t('home.title')} lang={locale}>
   <!-- Hero Section -->
   <section class="relative h-screen flex items-center justify-center bg-gradient-to-br from-primary to-gray-800">
     <div class="absolute inset-0 bg-black/40"></div>

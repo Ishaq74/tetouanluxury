@@ -1,43 +1,26 @@
 ---
-import MainLayout from '@layouts/MainLayout.astro';
-
-const lang = 'en';
-
-// Mock user data - would come from session in production
-const user = {
-  name: 'John Smith',
-  email: 'john.smith@example.com',
-  memberSince: '2023-06-15',
-};
-
-// Mock bookings
-const upcomingBookings = [
-  {
-    id: 'BK-2024-001',
-    villa: 'Villa Azure',
-    checkIn: '2024-12-20',
-    checkOut: '2024-12-27',
-    guests: 4,
-    status: 'CONFIRMED',
-    accessCode: '4857',
-  },
-];
-
-const pastBookings = [
-  {
-    id: 'BK-2023-156',
-    villa: 'Villa Serenity',
-    checkIn: '2023-08-15',
-    checkOut: '2023-08-22',
-    guests: 6,
-    status: 'COMPLETED',
-  },
-];
+import PortalPanel from '@components/PortalPanel.tsx';
+const { t, lang: locale } = Astro.locals;
+const user = { name: 'John Smith', email: 'john.smith@example.com', memberSince: '2023-06-15' };
+const bookings = [];
+const PREMIUM_SERVICES = [];
+const VILLAS = [];
+const showToast = (msg, type) => {};
+const upcomingBookings = [];
+const pastBookings = [];
 ---
 
-<MainLayout title="Client Portal - Tétouan Luxury Villas" lang={lang}>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
+<div class="min-h-screen bg-stone-50">
+  <PortalPanel client:only
+    bookings={bookings}
+    user={user}
+    showToast={showToast}
+    t={t}
+    lang={locale}
+    PREMIUM_SERVICES={PREMIUM_SERVICES}
+    VILLAS={VILLAS}
+  />
+</div>
     <div class="bg-primary text-white">
       <div class="container-custom py-8">
         <div class="flex items-center justify-between">
@@ -58,17 +41,6 @@ const pastBookings = [
             Dashboard
           </a>
           <a href="/portal/bookings" class="px-4 py-4 border-b-2 border-transparent hover:text-accent transition-colors">
-            My Stays
-          </a>
-          <a href="/portal/services" class="px-4 py-4 border-b-2 border-transparent hover:text-accent transition-colors">
-            Services
-          </a>
-          <a href="/portal/profile" class="px-4 py-4 border-b-2 border-transparent hover:text-accent transition-colors">
-            Profile
-          </a>
-        </nav>
-      </div>
-    </div>
 
     <!-- Main Content -->
     <div class="container-custom py-8">
@@ -78,7 +50,7 @@ const pastBookings = [
           <!-- Upcoming Stays -->
           <div class="bg-white rounded-lg shadow-lg p-6">
             <h2 class="text-2xl font-serif font-bold mb-4">Upcoming Stays</h2>
-            {upcomingBookings.length > 0 ? (
+                lang={locale}
               <div class="space-y-4">
                 {upcomingBookings.map((booking) => (
                   <div class="border border-gray-200 rounded-lg p-4">

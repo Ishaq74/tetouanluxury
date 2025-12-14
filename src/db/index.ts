@@ -38,9 +38,8 @@ export async function closeConnection() {
 export const dbInfo = {
   isProduction,
   hasConnection: !!connectionString,
+  database: isProduction ? 'NeonDB' : 'Local PostgreSQL',
 };
 
 // Barrel export for alias support
 export * from './schema';
-  database: isProduction ? 'NeonDB' : 'Local PostgreSQL',
-};

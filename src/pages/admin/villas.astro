@@ -3,36 +3,9 @@ import MainLayout from '@layouts/MainLayout.astro';
 
 const lang = 'en';
 
-// Mock villas data - would come from database in production
-const villas = [
-  {
-    id: '1',
-    name: 'Villa Azure',
-    pricePerNight: 450,
-    bedrooms: 4,
-    bathrooms: 3,
-    isAvailable: true,
-    maintenanceMode: false,
-  },
-  {
-    id: '2',
-    name: 'Villa Serenity',
-    pricePerNight: 450,
-    bedrooms: 4,
-    bathrooms: 3,
-    isAvailable: true,
-    maintenanceMode: false,
-  },
-  {
-    id: '3',
-    name: 'Villa Paradise',
-    pricePerNight: 450,
-    bedrooms: 4,
-    bathrooms: 3,
-    isAvailable: false,
-    maintenanceMode: false,
-  },
-];
+import { db } from '@db/index';
+import { villas } from '@db/schema';
+const villasList = await db.select().from(villas);
 ---
 
 <MainLayout title="Manage Villas - Admin" lang={lang}>
@@ -95,7 +68,7 @@ const villas = [
               </tr>
             </thead>
             <tbody>
-              {villas.map((villa) => (
+              {villasList.map((villa) => (
                 <tr class="border-t hover:bg-gray-50">
                   <td class="py-4 px-6">
                     <div class="font-medium">{villa.name}</div>

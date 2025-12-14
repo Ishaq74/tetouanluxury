@@ -9,9 +9,9 @@ const connectionString = isProduction
 export default defineConfig({
   schema: './src/db/schema.ts',
   out: './drizzle',
-  dialect: 'postgresql',
+  driver: 'pg',
   dbCredentials: {
-    url: connectionString,
+    connectionString: connectionString,
   },
   verbose: true,
   strict: true,

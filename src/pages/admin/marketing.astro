@@ -3,55 +3,16 @@ import MainLayout from '@layouts/MainLayout.astro';
 
 const lang = 'en';
 
-// Mock marketing campaigns data
-const campaigns = [
-  {
-    id: 'MC-001',
-    name: 'Summer 2024 Promotion',
-    type: 'EMAIL',
-    status: 'SENT',
-    date: '2024-06-15',
-    sentCount: 450,
-    openRate: 68,
-    clickRate: 32,
-  },
-  {
-    id: 'MC-002',
-    name: 'WhatsApp Welcome Series',
-    type: 'WHATSAPP',
-    status: 'SENT',
-    date: '2024-12-01',
-    sentCount: 120,
-    openRate: 92,
-    clickRate: 45,
-  },
-  {
-    id: 'MC-003',
-    name: 'Holiday Special Offers',
-    type: 'EMAIL',
-    status: 'SCHEDULED',
-    date: '2024-12-20',
-    sentCount: 0,
-    openRate: 0,
-    clickRate: 0,
-  },
-  {
-    id: 'MC-004',
-    name: 'New Villa Launch',
-    type: 'EMAIL',
-    status: 'DRAFT',
-    date: '2025-01-10',
-    sentCount: 0,
-    openRate: 0,
-    clickRate: 0,
-  },
-];
+import { db } from '@db/index';
+import { marketingCampaigns } from '@db/schema';
+const campaigns = await db.select().from(marketingCampaigns);
+
 
 const sentCampaigns = campaigns.filter(c => c.status === 'SENT');
 const analytics = {
   totalCampaigns: campaigns.length,
   activeCampaigns: campaigns.filter(c => c.status === 'SENT' || c.status === 'SCHEDULED').length,
-  avgOpenRate: sentCampaigns.length > 0 ? Math.round(sentCampaigns.reduce((sum, c) => sum + c.openRate, 0) / sentCampaigns.length) : 0,
+  avgOpenRate: sentCampaigns.length > 0 ? Math.round(sentCampaigns.reduce((sum, c) => sum + Number(c.openRate), 0) / sentCampaigns.length) : 0,
   totalReach: campaigns.reduce((sum, c) => sum + c.sentCount, 0),
 };
 ---
@@ -205,10 +166,10 @@ const analytics = {
                   <div>
                     <div class="flex justify-between text-xs mb-1">
                       <span class="text-gray-500">Click Rate</span>
-                      <span class="font-bold text-success">{campaign.clickRate}%</span>
+                      <span class="font-bold text-success">{Number(campaign.openRate)}%</span>
                     </div>
                     <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                      <div class="bg-success h-full transition-all duration-1000" style={`width: ${campaign.clickRate}%`}></div>
+                      <div class="bg-success h-full transition-all duration-1000" style={`width: ${Number(campaign.openRate)}%`}></div>
                     </div>
                   </div>
                 </div>

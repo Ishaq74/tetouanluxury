@@ -3,42 +3,10 @@ import MainLayout from '@layouts/MainLayout.astro';
 
 const lang = 'en';
 
-// Mock maintenance tickets
-const tickets = [
-  {
-    id: 'MT-001',
-    villa: 'Villa Azure',
-    title: 'Pool heater not working',
-    description: 'Pool temperature is not maintaining set point',
-    priority: 'HIGH',
-    status: 'OPEN',
-    assignedTo: 'Ahmed Benali',
-    createdDate: '2024-12-12',
-    dueDate: '2024-12-13',
-  },
-  {
-    id: 'MT-002',
-    villa: 'Villa Serenity',
-    title: 'Air conditioning unit making noise',
-    description: 'Master bedroom AC making unusual sounds',
-    priority: 'MEDIUM',
-    status: 'IN_PROGRESS',
-    assignedTo: 'Ahmed Benali',
-    createdDate: '2024-12-10',
-    dueDate: '2024-12-14',
-  },
-  {
-    id: 'MT-003',
-    villa: 'Villa Paradise',
-    title: 'Garden irrigation system check',
-    description: 'Scheduled monthly maintenance',
-    priority: 'LOW',
-    status: 'SCHEDULED',
-    assignedTo: null,
-    createdDate: '2024-12-08',
-    dueDate: '2024-12-20',
-  },
-];
+import { db } from '@db/index';
+import { maintenanceTickets } from '@db/schema';
+const tickets = await db.select().from(maintenanceTickets);
+
 ---
 
 <MainLayout title="Maintenance Management - Admin" lang={lang}>
@@ -172,11 +140,10 @@ const tickets = [
               {tickets.map((ticket) => (
                 <tr class="border-t hover:bg-gray-50">
                   <td class="py-4 px-6 font-mono text-sm">{ticket.id}</td>
-                  <td class="py-4 px-6 font-medium">{ticket.villa}</td>
+                  <td class="py-4 px-6 font-medium">{ticket.villaId}</td>
                   <td class="py-4 px-6">
                     <div>
-                      <div class="font-medium">{ticket.title}</div>
-                      <div class="text-sm text-gray-600">{ticket.description}</div>
+                      <div class="font-medium">{ticket.description}</div>
                     </div>
                   </td>
                   <td class="py-4 px-6">
@@ -200,7 +167,7 @@ const tickets = [
                     )}
                   </td>
                   <td class="py-4 px-6 text-sm">{ticket.assignedTo || <span class="text-gray-400 italic">Unassigned</span>}</td>
-                  <td class="py-4 px-6 text-sm">{new Date(ticket.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</td>
+                    <td class="py-4 px-6 text-sm">{ticket.createdAt ? new Date(ticket.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : ''}</td>
                   <td class="py-4 px-6">
                     <div class="flex items-center gap-2">
                       <button class="p-2 hover:bg-gray-100 rounded" title="View">

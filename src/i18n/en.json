@@ -1,0 +1,34 @@
+{
+	"nav_home": "Home",
+	"nav_villas": "Villas",
+	"nav_services": "Services",
+	"nav_reviews": "Reviews",
+	"nav_journal": "Journal",
+	"nav_contact": "Contact",
+	"dashboard": "Dashboard",
+	"login": "Login",
+	"logout": "Logout",
+	"book_now": "Book Now",
+	"notifications": "Notifications",
+	"no_notifications": "No new notifications"
+	,
+	"login_client": "Client Portal",
+	"footer_rights": "All rights reserved.",
+	"login_title": "Sign in to your account",
+	"login_subtitle": "Access your client or staff portal.",
+	"login_tab_client": "Client",
+	"login_tab_staff": "Staff",
+	"login_label_email": "Email address",
+	"login_label_ref": "Booking reference",
+	"login_label_password": "Password",
+	"login_btn": "Sign in",
+	"login_back": "Back to home"
+	,"feat_secure": "Premium Security"
+	,"feat_secure_desc": "Your peace of mind is our priority: 24/7 security, private access, total privacy."
+	,"feat_service": "Exclusive Services"
+	,"feat_service_desc": "Concierge, private chef, VIP transfers and more for a tailor-made stay."
+	,"feat_amenities": "High-end Amenities"
+	,"feat_amenities_desc": "Private pools, spas, lush gardens and all modern comforts."
+	,"cta_view_details": "View Villas"
+	,"blog_related": "Related articles"
+}
