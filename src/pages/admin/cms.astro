@@ -13,7 +13,12 @@ const categoriesList = rawCategories.map(cat => ({
   description: cat.description ? JSON.parse(cat.description) : { EN: '', FR: '', ES: '', AR: '' },
   seo: cat.seo ? JSON.parse(cat.seo) : undefined
 }));
-const indexPageSettingsList = await db.select().from(indexPageSettings);
+const indexPageSettingsList = (await db.select().from(indexPageSettings)).map(s => ({
+  ...s,
+  heroTitle: s.heroTitle ? JSON.parse(s.heroTitle) : { EN: '', FR: '', ES: '', AR: '' },
+  heroSubtitle: s.heroSubtitle ? JSON.parse(s.heroSubtitle) : { EN: '', FR: '', ES: '', AR: '' },
+  seo: s.seo ? JSON.parse(s.seo) : { title: { EN: '', FR: '', ES: '', AR: '' }, description: { EN: '', FR: '', ES: '', AR: '' }, keywords: [] }
+}));
 
 // Fonctions fictives à remplacer par des appels API ou actions Astro/Drizzle réelles
 const addCategory = (cat) => {};

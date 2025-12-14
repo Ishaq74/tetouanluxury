@@ -9,8 +9,6 @@ import {
     PieChart as PieChartIcon, ArrowUpRight, ArrowDownRight, Printer, Share2, Clock, Lock
 } from 'lucide-react';
 import { BookingStatus, Villa, Booking, PipelineStage, Client, Expense, Invoice, MarketingCampaign, UserRole } from '../../../../types';
-import { useToast } from '../../../ToastContext';
-import { useData } from '../../../DataContext';
 import { TranslatableInput, MediaPicker, FullScreenEditor, StandardToolbar, SEOPreview, Modal } from '../AdminShared';
 
 // --- HELPER: CURRENCY FORMATTER ---
@@ -19,9 +17,13 @@ const formatCurrency = (amount: number) => {
 };
 
 // --- MODULE: PROPERTIES MANAGER ---
-export const PropertiesManager = () => {
-    const { villas, updateVilla, addVilla, deleteVilla } = useData();
-    const { showToast } = useToast();
+export const PropertiesManager = ({ villas, updateVilla, addVilla, deleteVilla, showToast }: {
+    villas: Villa[];
+    updateVilla: (villa: Villa) => void;
+    addVilla: (villa: Villa) => void;
+    deleteVilla: (id: string) => void;
+    showToast: (msg: string, type?: string) => void;
+}) => {
     const [editingVilla, setEditingVilla] = useState<Villa | null>(null);
     const [showMediaPicker, setShowMediaPicker] = useState(false);
     const [search, setSearch] = useState('');
@@ -195,9 +197,11 @@ export const PropertiesManager = () => {
 };
 
 // --- MODULE: CRM MANAGER ---
-export const CRMManager = () => {
-    const { clients, updateClient } = useData();
-    const { showToast } = useToast();
+export const CRMManager = ({ clients, updateClient, showToast }: {
+    clients: Client[];
+    updateClient: (client: Client) => void;
+    showToast: (msg: string, type?: string) => void;
+}) => {
     const [view, setView] = useState<'LIST' | 'PIPELINE'>('PIPELINE');
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -289,9 +293,16 @@ export const CRMManager = () => {
 };
 
 // --- MODULE: FINANCE MANAGER 2.0 (REMASTERED) ---
-export const FinanceManager = () => {
-    const { expenses, invoices, bookings, addExpense, deleteExpense, deleteInvoice, addInvoice } = useData(); 
-    const { showToast } = useToast();
+export const FinanceManager = ({ expenses, invoices, bookings, addExpense, deleteExpense, deleteInvoice, addInvoice, showToast }: {
+    expenses: Expense[];
+    invoices: Invoice[];
+    bookings: Booking[];
+    addExpense: (expense: Expense) => void;
+    deleteExpense: (id: string) => void;
+    deleteInvoice: (id: string) => void;
+    addInvoice: (invoice: Invoice) => void;
+    showToast: (msg: string, type?: string) => void;
+}) => {
     const [view, setView] = useState<'DASHBOARD' | 'TRANSACTIONS' | 'INVOICES'>('DASHBOARD');
     const [showExpenseModal, setShowExpenseModal] = useState(false);
     const [newExpense, setNewExpense] = useState<Partial<Expense>>({ category: 'UTILITIES', date: new Date().toISOString().split('T')[0] });
@@ -552,9 +563,12 @@ export const FinanceManager = () => {
 };
 
 // --- MODULE: MARKETING MANAGER 2.0 (REMASTERED) ---
-export const MarketingManager = () => {
-    const { marketingCampaigns, addMarketingCampaign, updateCampaignStatus } = useData();
-    const { showToast } = useToast();
+export const MarketingManager = ({ marketingCampaigns, addMarketingCampaign, updateCampaignStatus, showToast }: {
+    marketingCampaigns: MarketingCampaign[];
+    addMarketingCampaign: (c: MarketingCampaign) => void;
+    updateCampaignStatus: (id: string, status: string) => void;
+    showToast: (msg: string, type?: string) => void;
+}) => {
     const [showModal, setShowModal] = useState(false);
     const [wizardStep, setWizardStep] = useState(1);
     const [newCampaign, setNewCampaign] = useState<Partial<MarketingCampaign>>({ status: 'DRAFT' });
@@ -666,11 +680,16 @@ export const MarketingManager = () => {
 };
 
 // --- MODULE: BOOKINGS MANAGER (Standard) ---
-export const BookingsManager = () => {
-    const { bookings, villas, addBooking, deleteBooking, updateBooking } = useData();
-    const { showToast } = useToast();
+export const BookingsManager = ({ bookings, villas, addBooking, deleteBooking, updateBooking, showToast }: {
+    bookings: Booking[];
+    villas: Villa[];
+    addBooking: (booking: Booking) => void;
+    deleteBooking: (id: string) => void;
+    updateBooking: (booking: Booking) => void;
+    showToast: (msg: string, type?: string) => void;
+}) => {
     const [showModal, setShowModal] = useState(false);
-    const [editingBooking, setEditingBooking] = useState<Partial<Booking>>({});
+    const [editingBooking, setEditingBooking] = useState<Partial<Booking & { startDate: string; endDate: string; totalPrice: string }>>({});
     const [selectedVillas, setSelectedVillas] = useState<string[]>([]);
     const [isMaintenanceBlock, setIsMaintenanceBlock] = useState(false);
 
@@ -680,18 +699,17 @@ export const BookingsManager = () => {
         if (!editingBooking.startDate || !editingBooking.endDate) return showToast('Dates requises', 'ERROR');
         
         // Use selected villas or the single one from edit mode
-        const targetVillas = editingBooking.id ? [editingBooking.villaId] : selectedVillas;
+        const targetVillas = editingBooking.id ? [editingBooking.villaId!] : selectedVillas;
         if (targetVillas.length === 0) return showToast('Sélectionnez au moins une villa', 'ERROR');
 
         targetVillas.forEach((vid, index) => {
             if(!vid) return;
-            
             // Calculate price per villa if not manually set
             let price = editingBooking.totalPrice;
-            if ((!price || price === 0) && editingBooking.startDate && editingBooking.endDate && !isMaintenanceBlock) {
+            if ((!price || price === '' || price === '0') && editingBooking.startDate && editingBooking.endDate && !isMaintenanceBlock) {
                 const days = Math.ceil((new Date(editingBooking.endDate).getTime() - new Date(editingBooking.startDate).getTime()) / (1000*3600*24));
                 const villa = villas.find(v => v.id === vid);
-                if (villa) price = days * villa.pricePerNight;
+                if (villa) price = String(days * villa.pricePerNight);
             }
 
             const bookingData = {
@@ -700,9 +718,11 @@ export const BookingsManager = () => {
                 villaId: vid,
                 clientName: isMaintenanceBlock ? 'MAINTENANCE / BLOCAGE' : (editingBooking.clientName || 'Client'),
                 clientEmail: isMaintenanceBlock ? 'admin@villas.ma' : (editingBooking.clientEmail || ''),
-                totalPrice: isMaintenanceBlock ? 0 : (price || 0),
+                totalPrice: isMaintenanceBlock ? '0' : (price || '0'),
                 status: isMaintenanceBlock ? BookingStatus.CONFIRMED : (editingBooking.status || BookingStatus.CONFIRMED),
-                specialRequests: isMaintenanceBlock ? 'Blocage Administratif' : editingBooking.specialRequests
+                specialRequests: isMaintenanceBlock ? 'Blocage Administratif' : editingBooking.specialRequests,
+                startDate: editingBooking.startDate,
+                endDate: editingBooking.endDate
             } as Booking;
 
             if(editingBooking.id) {
@@ -746,10 +766,10 @@ export const BookingsManager = () => {
                                     {b.clientName === 'MAINTENANCE / BLOCAGE' ? <span className="text-red-500 flex items-center"><Lock size={12} className="mr-1"/> BLOQUÉ</span> : b.clientName}
                                 </td>
                                 <td className="p-4 text-sm">{villas.find(v => v.id === b.villaId)?.name}</td>
-                                <td className="p-4 text-xs">{b.startDate} → {b.endDate}</td>
+                                <td className="p-4 text-xs">{typeof b.startDate === 'string' ? b.startDate : b.startDate?.toISOString().split('T')[0]} → {typeof b.endDate === 'string' ? b.endDate : b.endDate?.toISOString().split('T')[0]}</td>
                                 <td className="p-4"><span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${b.status === 'CONFIRMED' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>{b.status}</span></td>
                                 <td className="p-4 text-right flex justify-end space-x-2">
-                                    <button onClick={() => { setEditingBooking(b); setShowModal(true); }} className="text-slate-400 hover:text-amber-600"><Edit size={16}/></button>
+                                    <button onClick={() => { setEditingBooking({ ...b, startDate: typeof b.startDate === 'string' ? b.startDate : b.startDate?.toISOString().split('T')[0], endDate: typeof b.endDate === 'string' ? b.endDate : b.endDate?.toISOString().split('T')[0], totalPrice: b.totalPrice }) ; setShowModal(true); }} className="text-slate-400 hover:text-amber-600"><Edit size={16}/></button>
                                     <button onClick={() => { if(confirm('Supprimer ?')) deleteBooking(b.id); }} className="text-slate-400 hover:text-red-600"><Trash2 size={16}/></button>
                                 </td>
                             </tr>
@@ -802,12 +822,12 @@ export const BookingsManager = () => {
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
-                            <input type="date" className="input-std" value={editingBooking.startDate || ''} onChange={e => setEditingBooking({...editingBooking, startDate: e.target.value})} />
-                            <input type="date" className="input-std" value={editingBooking.endDate || ''} onChange={e => setEditingBooking({...editingBooking, endDate: e.target.value})} />
+                            <input type="date" className="input-std" value={typeof editingBooking.startDate === 'string' ? editingBooking.startDate : editingBooking.startDate?.toISOString().split('T')[0] || ''} onChange={e => setEditingBooking({...editingBooking, startDate: e.target.value})} />
+                            <input type="date" className="input-std" value={typeof editingBooking.endDate === 'string' ? editingBooking.endDate : editingBooking.endDate?.toISOString().split('T')[0] || ''} onChange={e => setEditingBooking({...editingBooking, endDate: e.target.value})} />
                         </div>
                         
                         {!isMaintenanceBlock && (
-                            <input type="number" className="input-std" placeholder="Prix Total (Laisser vide pour auto)" value={editingBooking.totalPrice || ''} onChange={e => setEditingBooking({...editingBooking, totalPrice: Number(e.target.value)})} />
+                            <input type="number" className="input-std" placeholder="Prix Total (Laisser vide pour auto)" value={editingBooking.totalPrice || ''} onChange={e => setEditingBooking({...editingBooking, totalPrice: e.target.value})} />
                         )}
 
                         <select className="input-std" value={editingBooking.status || 'CONFIRMED'} onChange={e => setEditingBooking({...editingBooking, status: e.target.value as any})}>

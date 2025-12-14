@@ -230,9 +230,14 @@ type BlogManagerProps = {
     updateBlogPost: (post: BlogPost) => void;
     deleteBlogPost: (id: string) => void;
     categories: Category[];
+    addCategory: (cat: Category) => void;
+    updateCategory: (cat: Category) => void;
+    deleteCategory: (id: string) => void;
+    indexPageSettings: IndexPageSettings[];
+    updateIndexPageSettings: (settings: IndexPageSettings) => void;
     showToast: (msg: string, type?: string) => void;
 };
-export const BlogManager = ({ subTab, setSubTab, blogPosts, addBlogPost, updateBlogPost, deleteBlogPost, categories, showToast }: BlogManagerProps) => {
+export const BlogManager = ({ subTab, setSubTab, blogPosts, addBlogPost, updateBlogPost, deleteBlogPost, categories, addCategory, updateCategory, deleteCategory, indexPageSettings, updateIndexPageSettings, showToast }: BlogManagerProps) => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [editorTab, setEditorTab] = useState('CONTENT');
     const [editingPost, setEditingPost] = useState<Partial<BlogPost>>({});

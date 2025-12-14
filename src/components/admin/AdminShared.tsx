@@ -2,7 +2,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Bold, Italic, List, Heading, Link as LinkIcon, Save, ArrowLeft, Settings, X, Plus, Image as ImageIcon, Search, LayoutGrid, List as ListIcon, MoreHorizontal, Filter, Upload, Loader, Folder } from 'lucide-react';
-import { useData } from '../../DataContext';
 import { LocalizedString } from '../../../types';
 
 // --- PORTAL HELPER (FIX Z-INDEX ISSUES) ---
@@ -224,7 +223,9 @@ export const TranslatableInput: React.FC<TranslatableInputProps> = ({ label, val
 
 // --- MEDIA PICKER (REALISTIC BASE64) ---
 export const MediaPicker = ({ onSelect, onClose }: { onSelect: (url: string) => void, onClose: () => void }) => {
-    const { mediaLibrary, addMedia } = useData();
+    // TODO: Passer mediaLibrary et addMedia en props depuis Astro
+
+    // Remplacer toute utilisation de mediaLibrary et addMedia par des props ou supprimer les blocs concernés
     const [activeFolder, setActiveFolder] = useState('All');
     const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);

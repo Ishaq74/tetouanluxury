@@ -8,7 +8,6 @@ import {
     X 
 } from 'lucide-react';
 
-import { useLanguage } from '../../LanguageContext';
 
 interface AdminSidebarProps {
     activeModule: string;
@@ -20,7 +19,6 @@ interface AdminSidebarProps {
 }
 
 export const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeModule, subTab, onNavigate, mobileOpen, onMobileClose, logout }) => {
-    const { t } = useLanguage();
     
     const NavItem = ({ id, label, icon: Icon, defaultSub = 'LIST' }: { id: string, label: string, icon: any, defaultSub?: string }) => (
         <button 
@@ -54,38 +52,38 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeModule, subTab
             </div>
 
             <nav className="flex-1 pb-10 overflow-y-auto custom-scrollbar">
-                <NavItem id="overview" label={t('admin_nav_overview')} icon={LayoutDashboard} />
+                <NavItem id="overview" label="Tableau de bord" icon={LayoutDashboard} />
 
-                <GroupLabel label={t('admin_group_commercial')} />
-                <NavItem id="bookings" label={t('admin_nav_bookings')} icon={CalendarDays} />
-                <NavItem id="crm" label={t('admin_nav_crm')} icon={UserCheck} defaultSub="PIPELINE" />
-                <NavItem id="properties" label={t('admin_nav_properties')} icon={Home} />
+                <GroupLabel label="Commercial" />
+                <NavItem id="bookings" label="Réservations" icon={CalendarDays} />
+                <NavItem id="crm" label="CRM" icon={UserCheck} defaultSub="PIPELINE" />
+                <NavItem id="properties" label="Villas" icon={Home} />
 
-                <GroupLabel label={t('admin_group_ops')} />
-                <NavItem id="operations" label={t('admin_nav_staff')} icon={Users} defaultSub="STAFF" />
-                <NavItem id="maintenance" label={t('admin_nav_maintenance')} icon={Wrench} />
-                <NavItem id="inventory" label={t('admin_nav_inventory')} icon={Box} />
-                <NavItem id="concierge" label={t('admin_nav_concierge')} icon={BellRing} />
+                <GroupLabel label="Opérations" />
+                <NavItem id="operations" label="Équipe" icon={Users} defaultSub="STAFF" />
+                <NavItem id="maintenance" label="Maintenance" icon={Wrench} />
+                <NavItem id="inventory" label="Inventaire" icon={Box} />
+                <NavItem id="concierge" label="Conciergerie" icon={BellRing} />
 
-                <GroupLabel label={t('admin_group_finance')} />
-                <NavItem id="finance" label={t('admin_nav_finance')} icon={Wallet} defaultSub="INVOICES" />
-                <NavItem id="marketing" label={t('admin_nav_marketing')} icon={Megaphone} defaultSub="CAMPAIGNS" />
+                <GroupLabel label="Finance" />
+                <NavItem id="finance" label="Comptabilité" icon={Wallet} defaultSub="INVOICES" />
+                <NavItem id="marketing" label="Marketing" icon={Megaphone} defaultSub="CAMPAIGNS" />
 
-                <GroupLabel label={t('admin_group_cms')} />
-                <NavItem id="cms_blog" label={t('admin_nav_blog')} icon={FileText} defaultSub="POSTS" />
-                <NavItem id="cms_guide" label={t('admin_nav_guide')} icon={MapPin} defaultSub="PLACES" />
-                <NavItem id="cms_services" label={t('admin_nav_services')} icon={Star} defaultSub="ITEMS" />
-                <NavItem id="cms_media" label={t('admin_nav_media')} icon={ImageIcon} />
-                <NavItem id="cms_faq" label={t('admin_nav_faq')} icon={HelpCircle} />
-                <NavItem id="cms_translations" label={t('admin_nav_translations')} icon={Globe} />
+                <GroupLabel label="CMS" />
+                <NavItem id="cms_blog" label="Blog" icon={FileText} defaultSub="POSTS" />
+                <NavItem id="cms_guide" label="Guide" icon={MapPin} defaultSub="PLACES" />
+                <NavItem id="cms_services" label="Services" icon={Star} defaultSub="ITEMS" />
+                <NavItem id="cms_media" label="Médias" icon={ImageIcon} />
+                <NavItem id="cms_faq" label="FAQ" icon={HelpCircle} />
+                <NavItem id="cms_translations" label="Traductions" icon={Globe} />
 
-                <GroupLabel label={t('admin_group_system')} />
+                <GroupLabel label="Système" />
                 <NavItem id="settings" label={t('admin_nav_settings')} icon={Settings} />
             </nav>
 
             <div className="p-4 border-t border-slate-800 shrink-0">
                 <button onClick={logout} className="flex items-center text-xs font-bold text-slate-500 hover:text-red-400 transition w-full px-4 py-2 rounded hover:bg-slate-800">
-                    <LogOut size={14} className="mr-2" /> {t('admin_btn_logout')}
+                    <LogOut size={14} className="mr-2" /> Déconnexion
                 </button>
             </div>
         </div>
