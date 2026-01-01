@@ -20,7 +20,9 @@ export const BookingCalendar: React.FC<CalendarProps> = ({ bookings, villaId, on
     const dateStr = date.toISOString().split('T')[0];
     return bookings.some(b => {
       if (b.villaId !== villaId || b.status === BookingStatus.CANCELLED) return false;
-      return dateStr >= b.startDate && dateStr <= b.endDate;
+      const startStr = b.startDate instanceof Date ? b.startDate.toISOString().split('T')[0] : String(b.startDate).split('T')[0];
+      const endStr = b.endDate instanceof Date ? b.endDate.toISOString().split('T')[0] : String(b.endDate).split('T')[0];
+      return dateStr >= startStr && dateStr <= endStr;
     });
   };
 

@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, Globe, User, ShieldCheck, Bell, Cookie, CloudSun, LogOut } from 'lucide-react';
 import { Link, useLocation, useNavigate } from '@tanstack/react-router';
 import { UserRole } from '../../types';
-import { MOCK_NOTIFICATIONS } from '../../constants';
-import { useLanguage } from '../LanguageContext';
+import { MOCK_NOTIFICATIONS } from '../lib/constants';
+import { useLanguage } from './LanguageContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -40,10 +40,10 @@ const Layout: React.FC<LayoutProps> = ({ children, userRole, onRoleChange }) => 
 
   const handleRoleSwitch = (newRole: UserRole) => {
       onRoleChange(newRole);
-      if(newRole === UserRole.MANAGER) navigate({ to: '/admin' });
-      else if(newRole === UserRole.STAFF_CLEANING) navigate({ to: '/operations' });
-      else if(newRole === UserRole.CLIENT) navigate({ to: '/portal' });
-      else navigate({ to: '/' });
+      if(newRole === UserRole.MANAGER) navigate({ to: '/admin' } as any);
+      else if(newRole === UserRole.STAFF_CLEANING) navigate({ to: '/operations' } as any);
+      else if(newRole === UserRole.CLIENT) navigate({ to: '/portal' } as any);
+      else navigate({ to: '/' } as any);
   };
 
   const currentPath = location.pathname;
@@ -97,7 +97,7 @@ const Layout: React.FC<LayoutProps> = ({ children, userRole, onRoleChange }) => 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <Link to="/" className="flex-shrink-0 flex items-center cursor-pointer group">
+            <Link to="/" search={{} as any} className="flex-shrink-0 flex items-center cursor-pointer group">
               <div className={`w-10 h-10 rounded-sm flex items-center justify-center transition-colors duration-300 ${logoBg} ${isRTL ? 'ml-3' : 'mr-3'}`}>
                 <span className="font-serif font-bold text-xl">T</span>
               </div>
@@ -127,12 +127,13 @@ const Layout: React.FC<LayoutProps> = ({ children, userRole, onRoleChange }) => 
                 <div className={`hidden md:flex items-center ${isHomePage && !scrolled ? 'text-white' : ''}`}>
                     <WeatherWidget />
                 </div>
-                <Link to="/login" className={`hidden md:flex items-center space-x-2 text-xs font-bold uppercase transition ${iconColor}`}>
+                <Link to="/login" search={{} as any} className={`hidden md:flex items-center space-x-2 text-xs font-bold uppercase transition ${iconColor}`}>
                     <User size={18} />
                     <span>Login</span>
                 </Link>
                 <Link 
                     to="/booking"
+                    search={{} as any}
                     className={`hidden md:inline-block px-6 py-3 rounded-sm text-xs font-bold uppercase tracking-widest transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 ${
                         isHomePage && !scrolled ? 'bg-white text-slate-900 hover:bg-amber-50' : 'bg-slate-900 text-white hover:bg-slate-800'
                     }`}
@@ -156,7 +157,7 @@ const Layout: React.FC<LayoutProps> = ({ children, userRole, onRoleChange }) => 
                 </Link>
               ))}
               <div className="pt-6">
-                 <Link to="/booking" onClick={() => setIsMenuOpen(false)} className="block w-full text-center bg-amber-600 text-white py-4 font-bold uppercase tracking-widest shadow-lg rounded-sm">
+                 <Link to="/booking" search={{} as any} onClick={() => setIsMenuOpen(false)} className="block w-full text-center bg-amber-600 text-white py-4 font-bold uppercase tracking-widest shadow-lg rounded-sm">
                     Book Your Stay
                   </Link>
               </div>

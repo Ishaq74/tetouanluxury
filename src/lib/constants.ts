@@ -20,6 +20,12 @@ export const COLORS = {
 // Note: Mock data exports commented out - use database queries instead
 // In Astro, fetch data using API routes or direct database queries
 // Example: const villas = await db.select().from(villas);
+
+// Temporary exports for components that still reference these
+export const VILLAS: any[] = [];
+export const PREMIUM_SERVICES: any[] = [];
+export const MOCK_NOTIFICATIONS: any[] = [];
+
 /*
 export const VILLAS = Seed.VILLAS;
 export const MOCK_TASKS = Seed.MOCK_TASKS;

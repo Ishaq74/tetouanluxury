@@ -1,5 +1,5 @@
 ---
-import { translations } from '@translations/index';
+import { t } from '@lib/translations';
 import type { Language } from '@lib/i18n';
 
 interface Props {
@@ -7,7 +7,6 @@ interface Props {
 }
 
 const { lang = 'en' } = Astro.props;
-const t = translations[lang as Language] || translations.en;
 const currentYear = new Date().getFullYear();
 ---
 

@@ -32,17 +32,17 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   if (needsAuth) {
     // Get session from Better Auth
-    const session = await auth.api.getSession({
+    const sessionData = await auth.api.getSession({
       headers: context.request.headers,
     });
 
-    if (!session) {
+    if (!sessionData) {
       // Redirect to login if no session
       return context.redirect('/login?redirect=' + encodeURIComponent(pathname));
     }
 
     // Check role-based access
-    const user = session.user;
+    const user = sessionData.user as any;
     
     if (protectedRoutes.admin.test(pathname) && user.role !== 'admin') {
       return context.redirect('/unauthorized');
@@ -52,9 +52,9 @@ export const onRequest = defineMiddleware(async (context, next) => {
       return context.redirect('/unauthorized');
     }
 
-    // Attach user to context
+    // Attach user and session to context
     context.locals.user = user;
-    context.locals.session = session;
+    context.locals.session = sessionData.session;
   }
 
   return next();
