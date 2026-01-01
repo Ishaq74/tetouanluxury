@@ -36,7 +36,8 @@ export default function AdminPanel({ role = UserRole.ADMIN, isLoading = false, t
 
   useEffect(() => {
     if (!isLoading && role !== UserRole.ADMIN && role !== UserRole.MANAGER) {
-      navigate({ to: '/login', search: {} as any });
+      // @ts-ignore - TanStack Router search type mismatch
+      navigate({ to: '/login', search: {} });
     }
   }, [role, isLoading, navigate]);
 
