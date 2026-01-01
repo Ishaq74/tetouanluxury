@@ -6,7 +6,7 @@ import { StaffManager, InventoryManager, MaintenanceManager, ConciergeManager } 
 import { SettingsManager } from './admin/system/SystemModules';
 import { AdminDashboardOverview } from './AdminDashboard';
 import { Menu } from 'lucide-react';
-import { UserRole } from '@/types';
+import { UserRole } from '../../types';
 import { useNavigate } from '@tanstack/react-router';
 import { t } from '@/lib/translations';
 
@@ -36,7 +36,7 @@ export default function AdminPanel({ role = UserRole.ADMIN, isLoading = false, t
 
   useEffect(() => {
     if (!isLoading && role !== UserRole.ADMIN && role !== UserRole.MANAGER) {
-      navigate({ to: '/login', search: {} });
+      navigate({ to: '/login', search: {} as any });
     }
   }, [role, isLoading, navigate]);
 
@@ -55,15 +55,70 @@ export default function AdminPanel({ role = UserRole.ADMIN, isLoading = false, t
     
     switch(activeModule) {
       case 'overview': return <AdminDashboardOverview t={t} lang={lang} />;
-      case 'bookings': return <BookingsManager />;
-      case 'crm': return <CRMManager />;
-      case 'properties': return <PropertiesManager />;
-      case 'finance': return <FinanceManager />;
-      case 'marketing': return <MarketingManager />;
-      case 'operations': return <StaffManager />;
-      case 'maintenance': return <MaintenanceManager />;
-      case 'inventory': return <InventoryManager />;
-      case 'concierge': return <ConciergeManager />;
+      case 'bookings': return <BookingsManager 
+        bookings={[]}
+        villas={[]}
+        addBooking={defaultEmpty}
+        deleteBooking={defaultEmpty}
+        updateBooking={defaultEmpty}
+        showToast={defaultShowToast}
+      />;
+      case 'crm': return <CRMManager 
+        clients={[]}
+        updateClient={defaultEmpty}
+        showToast={defaultShowToast}
+      />;
+      case 'properties': return <PropertiesManager 
+        villas={[]}
+        updateVilla={defaultEmpty}
+        addVilla={defaultEmpty}
+        deleteVilla={defaultEmpty}
+        showToast={defaultShowToast}
+      />;
+      case 'finance': return <FinanceManager 
+        expenses={[]}
+        invoices={[]}
+        bookings={[]}
+        addExpense={defaultEmpty}
+        deleteExpense={defaultEmpty}
+        deleteInvoice={defaultEmpty}
+        addInvoice={defaultEmpty}
+        showToast={defaultShowToast}
+      />;
+      case 'marketing': return <MarketingManager 
+        marketingCampaigns={[]}
+        addMarketingCampaign={defaultEmpty}
+        updateCampaignStatus={defaultEmpty}
+        showToast={defaultShowToast}
+      />;
+      case 'operations': return <StaffManager 
+        staff={[]}
+        updateStaffSchedule={defaultEmpty}
+        addStaffMember={defaultEmpty}
+        updateStaffMember={defaultEmpty}
+        deleteStaffMember={defaultEmpty}
+        showToast={defaultShowToast}
+      />;
+      case 'maintenance': return <MaintenanceManager 
+        tickets={[]}
+        addTicket={defaultEmpty}
+        updateTicketStatus={defaultEmpty}
+        deleteTicket={defaultEmpty}
+        showToast={defaultShowToast}
+      />;
+      case 'inventory': return <InventoryManager 
+        inventory={[]}
+        updateInventory={defaultEmpty}
+        addInventoryItem={defaultEmpty}
+        updateInventoryItem={defaultEmpty}
+        deleteInventoryItem={defaultEmpty}
+        showToast={defaultShowToast}
+      />;
+      case 'concierge': return <ConciergeManager 
+        serviceRequests={[]}
+        updateServiceRequestStatus={defaultEmpty}
+        showToast={defaultShowToast}
+      />;
       case 'cms_blog': return <BlogManager 
         subTab={subTab} 
         setSubTab={setSubTab}
