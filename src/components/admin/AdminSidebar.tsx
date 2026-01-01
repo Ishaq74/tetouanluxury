@@ -78,7 +78,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeModule, subTab
                 <NavItem id="cms_translations" label="Traductions" icon={Globe} />
 
                 <GroupLabel label="Système" />
-                <NavItem id="settings" label={t('admin_nav_settings')} icon={Settings} />
+                <NavItem id="settings" label="Paramètres" icon={Settings} />
             </nav>
 
             <div className="p-4 border-t border-slate-800 shrink-0">

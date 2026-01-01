@@ -3,20 +3,26 @@ import React, { useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, BarChart, Bar, Legend } from 'recharts';
 import { BookingStatus, Client, ServiceRequest, BlogPost, Villa, HomePageContent, FAQItem, PremiumService, GuideItem, Booking, InventoryItem, MaintenanceTicket, StaffMember, UserRole, Expense, Supplier, MarketingCampaign } from '../../types';
 import { DollarSign, Calendar, Users, AlertCircle, TrendingUp } from 'lucide-react';
-import { useLanguage } from '../LanguageContext';
-import { useData } from '../DataContext';
-import { useToast } from '@/ToastContext';
-import { useLanguage } from '@/LanguageContext';
-import { useData } from '@/DataContext';
-import { useToast } from '@/ToastContext';
-import { useLanguage } from '@/LanguageContext';
-import { useData } from '@/DataContext';
+
 
 // This component now ONLY renders the Overview. 
 // Other modules have been moved to their respective files in components/admin/...
-export const AdminDashboardOverview: React.FC = () => {
-    const { t } = useLanguage();
-    const { bookings, villas, clients, tickets, serviceRequests } = useData();
+
+type AdminDashboardOverviewProps = {
+  t?: (key: string) => string;
+  lang?: string;
+};
+
+export const AdminDashboardOverview: React.FC<AdminDashboardOverviewProps> = ({ t: tProp, lang }) => {
+    // Simple fallback translation function
+    const t = tProp || ((key: string) => key);
+    
+    // Mock data - in production this would come from context or props
+    const bookings: Booking[] = [];
+    const villas: Villa[] = [];
+    const clients: Client[] = [];
+    const tickets: MaintenanceTicket[] = [];
+    const serviceRequests: ServiceRequest[] = [];
 
     // Calculate Real KPIs
     const totalRevenue = bookings
