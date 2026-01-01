@@ -20,21 +20,21 @@ export default function LoginForm({ lang = 'fr', t, login, isLoading }: { lang?:
       if (activeTab === 'CLIENT') {
         if (email.includes('karim')) {
           login(UserRole.CLIENT, { name: 'Karim Benjelloun', email });
-          navigate({ to: '/portal', search: {} });
+          navigate({ to: '/portal' } as any);
         } else {
           login(UserRole.CLIENT, { name: 'Invité Demo', email });
-          navigate({ to: '/portal', search: {} });
+          navigate({ to: '/portal' } as any);
         }
       } else {
         if (email.includes('admin')) {
           login(UserRole.MANAGER, { name: 'Administrateur', email });
-          navigate({ to: '/admin', search: {} });
+          navigate({ to: '/admin' } as any);
         } else if (email.includes('clean')) {
           login(UserRole.STAFF_CLEANING, { name: 'Fatima (Ménage)', email });
-          navigate({ to: '/operations', search: {} });
+          navigate({ to: '/operations' } as any);
         } else {
           login(UserRole.STAFF_MAINTENANCE, { name: 'Hassan (Tech)', email });
-          navigate({ to: '/operations', search: {} });
+          navigate({ to: '/operations' } as any);
         }
       }
       isLoading.value = false;
@@ -142,7 +142,7 @@ export default function LoginForm({ lang = 'fr', t, login, isLoading }: { lang?:
         </div>
       </div>
       <div className="mt-8 text-center">
-        <button onClick={() => navigate({ to: '/', search: {} })} className="text-slate-500 hover:text-slate-800 text-sm font-bold border-b border-transparent hover:border-slate-800 transition pb-1">
+        <button onClick={() => navigate({ to: '/' } as any)} className="text-slate-500 hover:text-slate-800 text-sm font-bold border-b border-transparent hover:border-slate-800 transition pb-1">
           {t('login_back', lang)}
         </button>
       </div>

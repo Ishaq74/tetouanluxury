@@ -159,6 +159,8 @@ export default function AdminPanel({ role = UserRole.ADMIN, isLoading = false, l
           addPremiumService={mockFn}
           updatePremiumService={mockFn}
           deletePremiumService={mockFn}
+          indexPageSettings={{} as any}
+          updateIndexPageSettings={mockFn}
           showToast={mockShowToast}
         />;
       case 'cms_media': 
