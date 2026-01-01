@@ -54,7 +54,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
     // Attach user to context
     context.locals.user = user;
-    context.locals.session = session;
+    context.locals.session = session.session;
   }
 
   return next();
