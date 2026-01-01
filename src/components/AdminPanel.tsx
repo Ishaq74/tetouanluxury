@@ -6,7 +6,7 @@ import { StaffManager, InventoryManager, MaintenanceManager, ConciergeManager } 
 import { SettingsManager } from './admin/system/SystemModules';
 import { AdminDashboardOverview } from './AdminDashboard';
 import { Menu } from 'lucide-react';
-import { UserRole } from '@/types';
+import { UserRole } from '../../types';
 import { useNavigate } from '@tanstack/react-router';
 import { t } from '@/lib/translations';
 
@@ -18,43 +18,26 @@ type AdminPanelProps = {
   logout?: () => void;
 };
 
-export default function AdminPanel({ role = UserRole.ADMIN, isLoading = false, t, lang }: AdminPanelProps) {
+export default function AdminPanel({ role = UserRole.ADMIN, isLoading = false, logout }: AdminPanelProps) {
   const [activeModule, setActiveModule] = useState('overview');
   const [subTab, setSubTab] = useState('LIST');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const navigate = useNavigate(); // Navigation hook
-    const renderModule = () => {
-      switch(activeModule) {
-        case 'overview': return <AdminDashboardOverview t={t} lang={lang} />;
-        case 'bookings': return <BookingsManager t={t} lang={lang} />;
-        case 'crm': return <CRMManager t={t} lang={lang} />;
-        case 'properties': return <PropertiesManager t={t} lang={lang} />;
-        case 'finance': return <FinanceManager t={t} lang={lang} />;
-        case 'marketing': return <MarketingManager t={t} lang={lang} />;
-        case 'staff': return <StaffManager t={t} lang={lang} />;
-        case 'inventory': return <InventoryManager t={t} lang={lang} />;
-        case 'maintenance': return <MaintenanceManager t={t} lang={lang} />;
-        case 'concierge': return <ConciergeManager t={t} lang={lang} />;
-        case 'cms-blog': return <BlogManager t={t} lang={lang} />;
-        case 'cms-guide': return <GuideManager t={t} lang={lang} />;
-        case 'cms-services': return <ServiceManager t={t} lang={lang} />;
-        case 'cms-translation': return <TranslationManager t={t} lang={lang} />;
-        case 'cms-faq': return <FAQManager t={t} lang={lang} />;
-        case 'cms-media': return <MediaManager t={t} lang={lang} />;
-        case 'settings': return <SettingsManager t={t} lang={lang} />;
-        default: return <AdminDashboardOverview t={t} lang={lang} />;
-      }
-    };
+  const navigate = useNavigate();
+  
+  // Mock data and functions for components
+  const mockData: any[] = [];
+  const mockFn = () => {};
+  const mockShowToast = (msg: string, type?: string) => {};
 
   useEffect(() => {
     if (!isLoading && role !== UserRole.ADMIN && role !== UserRole.MANAGER) {
-      navigate({ to: '/login', search: {} });
+      navigate({ to: '/login' });
     }
   }, [role, isLoading, navigate]);
 
   if (isLoading) return <div className="min-h-screen bg-stone-50 flex items-center justify-center">Chargement...</div>;
 
-  const handleNavigate = (module, sub = 'LIST') => {
+  const handleNavigate = (module: any, sub = 'LIST') => {
     setActiveModule(module);
     setSubTab(sub);
     setMobileMenuOpen(false);
@@ -63,22 +46,146 @@ export default function AdminPanel({ role = UserRole.ADMIN, isLoading = false, t
   const renderModule = () => {
     switch(activeModule) {
       case 'overview': return <AdminDashboardOverview />;
-      case 'bookings': return <BookingsManager />;
-      case 'crm': return <CRMManager />;
-      case 'properties': return <PropertiesManager />;
-      case 'finance': return <FinanceManager />;
-      case 'marketing': return <MarketingManager />;
-      case 'operations': return <StaffManager />;
-      case 'maintenance': return <MaintenanceManager />;
-      case 'inventory': return <InventoryManager />;
-      case 'concierge': return <ConciergeManager />;
-      case 'cms_blog': return <BlogManager subTab={subTab} setSubTab={setSubTab} />;
-      case 'cms_guide': return <GuideManager subTab={subTab} setSubTab={setSubTab} />;
-      case 'cms_services': return <ServiceManager subTab={subTab} setSubTab={setSubTab} />;
-      case 'cms_media': return <MediaManager />;
-      case 'cms_faq': return <FAQManager />;
-      case 'cms_translations': return <TranslationManager />;
-      case 'settings': return <SettingsManager />;
+      case 'bookings': 
+        return <BookingsManager 
+          bookings={mockData} 
+          villas={mockData} 
+          addBooking={mockFn} 
+          deleteBooking={mockFn} 
+          updateBooking={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'crm': 
+        return <CRMManager 
+          clients={mockData} 
+          updateClient={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'properties': 
+        return <PropertiesManager 
+          villas={mockData} 
+          updateVilla={mockFn} 
+          addVilla={mockFn} 
+          deleteVilla={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'finance': 
+        return <FinanceManager 
+          expenses={mockData} 
+          invoices={mockData} 
+          bookings={mockData} 
+          addExpense={mockFn} 
+          deleteExpense={mockFn} 
+          deleteInvoice={mockFn} 
+          addInvoice={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'marketing': 
+        return <MarketingManager 
+          marketingCampaigns={mockData} 
+          addMarketingCampaign={mockFn} 
+          updateCampaignStatus={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'operations': 
+        return <StaffManager 
+          staff={mockData} 
+          updateStaffSchedule={mockFn} 
+          addStaffMember={mockFn} 
+          updateStaffMember={mockFn} 
+          deleteStaffMember={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'maintenance': 
+        return <MaintenanceManager 
+          tickets={mockData} 
+          addTicket={mockFn} 
+          updateTicketStatus={mockFn} 
+          deleteTicket={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'inventory': 
+        return <InventoryManager 
+          inventory={mockData} 
+          updateInventory={mockFn} 
+          addInventoryItem={mockFn} 
+          updateInventoryItem={mockFn} 
+          deleteInventoryItem={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'concierge': 
+        return <ConciergeManager 
+          serviceRequests={mockData} 
+          updateServiceRequestStatus={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'cms_blog': 
+        return <BlogManager 
+          subTab={subTab} 
+          setSubTab={setSubTab}
+          blogPosts={mockData}
+          addBlogPost={mockFn}
+          updateBlogPost={mockFn}
+          deleteBlogPost={mockFn}
+          categories={mockData}
+          addCategory={mockFn}
+          updateCategory={mockFn}
+          deleteCategory={mockFn}
+          indexPageSettings={{} as any}
+          updateIndexPageSettings={mockFn}
+          showToast={mockShowToast}
+        />;
+      case 'cms_guide': 
+        return <GuideManager 
+          subTab={subTab} 
+          setSubTab={setSubTab}
+          guideItems={mockData}
+          addGuideItem={mockFn}
+          updateGuideItem={mockFn}
+          deleteGuideItem={mockFn}
+          categories={mockData}
+          addCategory={mockFn}
+          updateCategory={mockFn}
+          deleteCategory={mockFn}
+          indexPageSettings={{} as any}
+          updateIndexPageSettings={mockFn}
+          showToast={mockShowToast}
+        />;
+      case 'cms_services': 
+        return <ServiceManager 
+          subTab={subTab} 
+          setSubTab={setSubTab}
+          premiumServices={mockData}
+          addPremiumService={mockFn}
+          updatePremiumService={mockFn}
+          deletePremiumService={mockFn}
+          showToast={mockShowToast}
+        />;
+      case 'cms_media': 
+        return <MediaManager 
+          mediaLibrary={mockData} 
+          addMedia={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'cms_faq': 
+        return <FAQManager 
+          faqs={mockData} 
+          addFAQ={mockFn} 
+          updateFAQ={mockFn} 
+          deleteFAQ={mockFn} 
+          showToast={mockShowToast} 
+        />;
+      case 'cms_translations': 
+        return <TranslationManager 
+          translations={{}} 
+          updateTranslation={mockFn} 
+        />;
+      case 'settings': 
+        return <SettingsManager 
+          showToast={mockShowToast} 
+          resetData={mockFn} 
+          staff={mockData} 
+        />;
       default: return <AdminDashboardOverview />;
     }
   };
@@ -91,6 +198,7 @@ export default function AdminPanel({ role = UserRole.ADMIN, isLoading = false, t
         onNavigate={handleNavigate} 
         mobileOpen={mobileMenuOpen}
         onMobileClose={() => setMobileMenuOpen(false)}
+        logout={logout || (() => {})}
       />
       {mobileMenuOpen && (
         <div 

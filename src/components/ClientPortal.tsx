@@ -6,7 +6,7 @@ import {
     FileText, Star, ShoppingBag, Key, BellRing, Eraser, Send, Phone, MapPin,
     ThermometerSun, Lock, BookOpen, Plus, Home
 } from 'lucide-react';
-import { PREMIUM_SERVICES, VILLAS } from '../../constants';
+import { PREMIUM_SERVICES, VILLAS } from '../lib/constants';
 import { BookingStatus, ClientInteraction, Booking } from '../../types';
 import { t } from '@/lib/translations';
 import { generateRentalContract } from '../lib/pdf-generator';
@@ -123,7 +123,13 @@ export const PortalPage: React.FC<PortalPageProps> = ({ bookings, clientInteract
                     <div className="flex justify-between items-start mb-4">
                         <div>
                             <h3 className="font-bold text-slate-800">{villa?.name}</h3>
-                            <p className="text-xs text-slate-500">{displayBooking?.startDate} — {displayBooking?.endDate}</p>
+                            <p className="text-xs text-slate-500">
+                                {displayBooking?.startDate instanceof Date 
+                                    ? displayBooking.startDate.toLocaleDateString() 
+                                    : displayBooking?.startDate} — {displayBooking?.endDate instanceof Date 
+                                    ? displayBooking.endDate.toLocaleDateString() 
+                                    : displayBooking?.endDate}
+                            </p>
                         </div>
                         <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide flex items-center">
                             <CheckCircle size={10} className="mr-1"/> {t('portal_booking_confirmed')}
@@ -231,8 +237,7 @@ export const PortalPage: React.FC<PortalPageProps> = ({ bookings, clientInteract
             if (e.target.files && e.target.files[0]) {
                 const reader = new FileReader();
                 reader.onload = (ev) => {
-                    const client = clients.find(c => c.id === myClientId);
-                    if(client) updateClient({...client, passportVerified: true}); // Fake update for demo
+                    // Mock passport verification - in real app, would call API
                     setIsUploaded(true);
                     showToast('Passeport reçu', 'SUCCESS');
                 };
